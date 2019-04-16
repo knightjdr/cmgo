@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/knightjdr/cmgo/fs"
+	"github.com/knightjdr/cmgo/organelle"
 	"github.com/spf13/afero"
 	"github.com/stretchr/testify/assert"
 )
@@ -61,7 +62,7 @@ func TestCompare(t *testing.T) {
 	// Create test directory and files.
 	fs.Instance.MkdirAll("test", 0755)
 
-	compartments := Compartments{
+	compartments := organelle.Compartments{
 		{
 			Name:     "compartment 1",
 			Proteins: []string{"a", "b", "c"},

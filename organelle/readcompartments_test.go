@@ -1,4 +1,4 @@
-package overlap
+package organelle
 
 import (
 	"testing"
@@ -43,6 +43,6 @@ func TestReadCompartments(t *testing.T) {
 			Proteins: []string{"d", "e", "f"},
 		},
 	}
-	compartments := readCompartments("test/testfile.json")
+	compartments := ReadCompartments("test/testfile.json")
 	assert.Equal(t, wanted, compartments, "Should read JSON into struct")
 }

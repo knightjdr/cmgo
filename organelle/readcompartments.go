@@ -1,4 +1,4 @@
-package overlap
+package organelle
 
 import (
 	"encoding/json"
@@ -16,7 +16,8 @@ type Compartments []struct {
 	Proteins []string `json:"proteins"`
 }
 
-func readCompartments(filename string) Compartments {
+// ReadCompartments reads JSON file with compartments and their proteins
+func ReadCompartments(filename string) Compartments {
 	byteValue, err := afero.ReadFile(fs.Instance, filename)
 	if err != nil {
 		fmt.Println(filename)

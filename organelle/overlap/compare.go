@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/knightjdr/cmgo/fs"
+	"github.com/knightjdr/cmgo/organelle"
 	"github.com/knightjdr/cmgo/stats"
 	"github.com/spf13/afero"
 )
@@ -34,7 +35,7 @@ func rangeIndex(source, target string, dict1, dict2 map[string]bool) int {
 	return -1
 }
 
-func compare(compartments Compartments, similarity map[string]map[string]float64, outfile string) {
+func compare(compartments organelle.Compartments, similarity map[string]map[string]float64, outfile string) {
 	compartmentDict1 := compartmentDict(compartments[0].Proteins)
 	compartmentDict2 := compartmentDict(compartments[1].Proteins)
 

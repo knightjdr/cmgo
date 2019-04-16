@@ -1,4 +1,4 @@
-package overlap
+package shared
 
 import (
 	"errors"
@@ -17,33 +17,39 @@ func TestParseFlags(t *testing.T) {
 	os.Args = []string{
 		"cmd",
 		"-compartmentFile", "compartments.json",
+		"-fdr", "0.01",
 		"-outFile", "out.txt",
-		"-similarityFile", "sim.txt",
+		"-regionFile", "regions.txt",
+		"-saintFile", "saint.txt",
 	}
 	fileOptions := map[string]interface{}{}
-	wantArgs := map[string]string{
-		"compartmentFile": "compartments.json",
-		"outFile":         "out.txt",
-		"similarityFile":  "sim.txt",
+	wantArgs := parameters{
+		compartmentFile: "compartments.json",
+		fdr:             0.01,
+		outFile:         "out.txt",
+		regionFile:      "regions.txt",
+		saintFile:       "saint.txt",
 	}
 	args, err := parseFlags(fileOptions)
 	assert.Nil(t, err, "Should not return an error when all required command line arguments are present")
 	assert.Equal(t, wantArgs, args, "Should return arguments as options")
 
-	// TEST2: return default name for out file.
+	// TEST2: return default name for out file and FDR.
 	os.Args = []string{
 		"cmd",
 		"-compartmentFile", "compartments.json",
-		"-similarityFile", "sim.txt",
+		"-regionFile", "regions.txt",
+		"-saintFile", "saint.txt",
 	}
 	args, err = parseFlags(fileOptions)
-	assert.Equal(t, "organelle-comparison.txt", args["outFile"], "Should return default outfile name")
+	assert.Equal(t, float64(0), args.fdr, "Should return default fdr")
+	assert.Equal(t, "organelle-shared.txt", args.outFile, "Should return default outfile name")
 
 	// TEST3: returns error when parameters are missing.
 	os.Args = []string{
 		"cmd",
 	}
-	wantErr := errors.New("missing JSON file with list of compartments to compare; missing search result peptide file")
+	wantErr := errors.New("missing JSON file with list of compartments to compare; missing region file; missing SAINT file")
 	args, err = parseFlags(fileOptions)
 	assert.NotNil(t, err, "Should return error when missing arguments")
 	assert.Equal(t, wantErr, err, "Should return correct error message")
@@ -53,12 +59,16 @@ func TestParseFlags(t *testing.T) {
 		"cmd",
 	}
 	fileOptions["compartmentFile"] = "file-compartments.json"
+	fileOptions["fdr"] = 0.01
 	fileOptions["outFile"] = "file-out.txt"
-	fileOptions["similarityFile"] = "file-sim.txt"
-	wantArgs = map[string]string{
-		"compartmentFile": "file-compartments.json",
-		"outFile":         "file-out.txt",
-		"similarityFile":  "file-sim.txt",
+	fileOptions["regionFile"] = "file-regions.txt"
+	fileOptions["saintFile"] = "file-saint.txt"
+	wantArgs = parameters{
+		compartmentFile: "file-compartments.json",
+		fdr:             0.01,
+		outFile:         "file-out.txt",
+		regionFile:      "file-regions.txt",
+		saintFile:       "file-saint.txt",
 	}
 	args, err = parseFlags(fileOptions)
 	assert.Nil(t, err, "Should not return an error when all required parameters are present")
