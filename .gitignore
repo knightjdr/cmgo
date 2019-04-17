@@ -13,3 +13,5 @@
 
 # Test files and folders
 testfiles
+*.svg
+*.txt
