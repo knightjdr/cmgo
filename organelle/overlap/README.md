@@ -1,6 +1,6 @@
 # Module name: `organelle-overlap`
 
-Takes two lists of proteins and a txt file with similarity scores between proteins and outputs metrics on the similarity within and between the lists.
+> Takes two lists of proteins and a txt file with similarity scores between proteins and outputs metrics on the similarity within and between the lists.
 
 | parameters | definition | default |
 |------------|------------|---------|

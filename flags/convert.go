@@ -11,6 +11,15 @@ func ConvertFloat(arg interface{}) float64 {
 	return converted
 }
 
+// ConvertInt changes an argument of interface type to a int.
+func ConvertInt(arg interface{}) int {
+	var converted int
+	if arg != nil {
+		converted, _ = strconv.Atoi(arg.(string))
+	}
+	return converted
+}
+
 // ConvertString changes an argument of interface type to a string.
 func ConvertString(arg interface{}) string {
 	var converted string

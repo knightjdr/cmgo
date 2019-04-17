@@ -6,17 +6,10 @@ import (
 
 	"github.com/knightjdr/cmgo/fs"
 	"github.com/knightjdr/cmgo/organelle"
+	"github.com/knightjdr/cmgo/slice"
 	"github.com/knightjdr/cmgo/stats"
 	"github.com/spf13/afero"
 )
-
-func compartmentDict(proteins []string) map[string]bool {
-	dict := make(map[string]bool, len(proteins))
-	for _, val := range proteins {
-		dict[val] = true
-	}
-	return dict
-}
 
 func rangeIndex(source, target string, dict1, dict2 map[string]bool) int {
 	if _, okSource := dict1[source]; okSource {
@@ -36,8 +29,8 @@ func rangeIndex(source, target string, dict1, dict2 map[string]bool) int {
 }
 
 func compare(compartments organelle.Compartments, similarity map[string]map[string]float64, outfile string) {
-	compartmentDict1 := compartmentDict(compartments[0].Proteins)
-	compartmentDict2 := compartmentDict(compartments[1].Proteins)
+	compartmentDict1 := slice.Dict(compartments[0].Proteins)
+	compartmentDict2 := slice.Dict(compartments[1].Proteins)
 
 	ranges := make([][]float64, 3)
 	ranges[0] = make([]float64, 0)

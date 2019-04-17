@@ -1,10 +1,11 @@
-# Module name: `organelle-shareddomain`
+# Module name: `organelle-sharedregion`
 
-Takes two lists of proteins and outputs metrics on the domains/motifs shared between common preys.
+> Takes two lists of proteins and outputs metrics on the regions (domains/motifs) shared between common preys.
 
 | parameters | definition | default |
 |------------|------------|---------|
 | compartmentFile | JSON file with lists of proteins to compare | |
+| minPreyOccurrence | The minimum number of baits that a prey must be found with in each compartment | 1 |
 | outFile | output file name | organelle-shared.txt |
 | regionFile | text file with protein name and domains/motifs | |
 | saintFile | SAINT file | |
@@ -43,4 +44,10 @@ A3GALT2	transmembrane
 
 ### Output (example)
 ```
+region  no. preys  preys       preys not containing region
+-       4          a, b, c, d
+regionC 4          a, b, c, d
+regionD 3          a, c, d     b
+regionA 2          a, b        c, d
+regionB 1          b           a, c, d
 ```

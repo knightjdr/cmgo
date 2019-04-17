@@ -18,23 +18,25 @@ func TestParseFlags(t *testing.T) {
 		"cmd",
 		"-compartmentFile", "compartments.json",
 		"-fdr", "0.01",
+		"-minPreyOccurrence", "2",
 		"-outFile", "out.txt",
 		"-regionFile", "regions.txt",
 		"-saintFile", "saint.txt",
 	}
 	fileOptions := map[string]interface{}{}
 	wantArgs := parameters{
-		compartmentFile: "compartments.json",
-		fdr:             0.01,
-		outFile:         "out.txt",
-		regionFile:      "regions.txt",
-		saintFile:       "saint.txt",
+		compartmentFile:   "compartments.json",
+		fdr:               0.01,
+		minPreyOccurrence: 2,
+		outFile:           "out.txt",
+		regionFile:        "regions.txt",
+		saintFile:         "saint.txt",
 	}
 	args, err := parseFlags(fileOptions)
 	assert.Nil(t, err, "Should not return an error when all required command line arguments are present")
 	assert.Equal(t, wantArgs, args, "Should return arguments as options")
 
-	// TEST2: return default name for out file and FDR.
+	// TEST2: return default name for FDR, min. baits and out file.
 	os.Args = []string{
 		"cmd",
 		"-compartmentFile", "compartments.json",
@@ -43,6 +45,7 @@ func TestParseFlags(t *testing.T) {
 	}
 	args, err = parseFlags(fileOptions)
 	assert.Equal(t, float64(0), args.fdr, "Should return default fdr")
+	assert.Equal(t, 1, args.minPreyOccurrence, "Should return default minimum bait number")
 	assert.Equal(t, "organelle-shared.txt", args.outFile, "Should return default outfile name")
 
 	// TEST3: returns error when parameters are missing.
@@ -60,15 +63,17 @@ func TestParseFlags(t *testing.T) {
 	}
 	fileOptions["compartmentFile"] = "file-compartments.json"
 	fileOptions["fdr"] = 0.01
+	fileOptions["minPreyOccurrence"] = float64(2)
 	fileOptions["outFile"] = "file-out.txt"
 	fileOptions["regionFile"] = "file-regions.txt"
 	fileOptions["saintFile"] = "file-saint.txt"
 	wantArgs = parameters{
-		compartmentFile: "file-compartments.json",
-		fdr:             0.01,
-		outFile:         "file-out.txt",
-		regionFile:      "file-regions.txt",
-		saintFile:       "file-saint.txt",
+		compartmentFile:   "file-compartments.json",
+		fdr:               0.01,
+		minPreyOccurrence: 2,
+		outFile:           "file-out.txt",
+		regionFile:        "file-regions.txt",
+		saintFile:         "file-saint.txt",
 	}
 	args, err = parseFlags(fileOptions)
 	assert.Nil(t, err, "Should not return an error when all required parameters are present")

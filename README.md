@@ -29,3 +29,9 @@ Module specific parameters can be found in the README files in the corresponding
 * folder `organelle/overlap`
 
 Takes two lists of proteins and a txt file with similarity scores between proteins and outputs metrics on the similarity within and between the lists.
+
+### Module name: `organelle-sharedregion`
+
+* folder `organelle/shared`
+
+Takes two lists of proteins and outputs metrics on the regions (domains/motifs) shared between common preys.

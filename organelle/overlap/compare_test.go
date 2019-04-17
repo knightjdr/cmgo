@@ -9,16 +9,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCompartmentDict(t *testing.T) {
-	wanted := map[string]bool{
-		"a": true,
-		"b": true,
-		"c": true,
-	}
-	dict := compartmentDict([]string{"a", "b", "c"})
-	assert.Equal(t, wanted, dict, "Should convert slice to hash")
-}
-
 func TestRangeIndex(t *testing.T) {
 	dict1 := map[string]bool{
 		"a": true,
@@ -79,8 +69,8 @@ func TestCompare(t *testing.T) {
 		"d": {"e": 0.4, "f": 0.2},
 		"e": {"f": 0.2},
 	}
-	want := "\tmedian\tmean\tmin\tmax\ncompartment 1\t0.500\t0.450\t0.250\t0.600\ncompartment 2\t0.200\t0.267\t0.200\t0.400\nbetween\t0.300\t0.344\t0.100\t0.700\n"
+	wanted := "\tmedian\tmean\tmin\tmax\ncompartment 1\t0.500\t0.450\t0.250\t0.600\ncompartment 2\t0.200\t0.267\t0.200\t0.400\nbetween\t0.300\t0.344\t0.100\t0.700\n"
 	compare(compartments, similarity, "test/out.txt")
 	bytes, _ := afero.ReadFile(fs.Instance, "test/out.txt")
-	assert.Equal(t, want, string(bytes), "Should write summary metrics to file")
+	assert.Equal(t, wanted, string(bytes), "Should write summary metrics to file")
 }

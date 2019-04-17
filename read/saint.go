@@ -10,7 +10,7 @@ import (
 	"github.com/knightjdr/cmgo/fs"
 )
 
-// SaintRow defines the headers in a SAINT file
+// SaintRow defines the headers in a SAINT file.
 type SaintRow struct {
 	Bait               string
 	PreyGene           string
@@ -44,8 +44,29 @@ func mapLine(line []string) SaintRow {
 	return row
 }
 
-// Saint reads a SAINT file and filters by FDR
-func Saint(filename string, filter float64) []SaintRow {
+func filterBaits(rows []SaintRow, minBaits int) []SaintRow {
+	// Filter by bait number.
+	if minBaits <= 1 {
+		return rows
+	}
+
+	// Count how many times a prey occurs
+	preys := make(map[string]int, 0)
+	for _, row := range rows {
+		preys[row.PreyGene]++
+	}
+
+	filteredRows := make([]SaintRow, 0)
+	for _, row := range rows {
+		if preys[row.PreyGene] >= minBaits {
+			filteredRows = append(filteredRows, row)
+		}
+	}
+	return filteredRows
+}
+
+// Saint reads a SAINT file and filters by FDR.
+func Saint(filename string, fdr float64, minBaits int) []SaintRow {
 	file, err := fs.Instance.Open(filename)
 	if err != nil {
 		log.Fatalln(err)
@@ -53,6 +74,7 @@ func Saint(filename string, filter float64) []SaintRow {
 
 	reader := csv.NewReader(file)
 	reader.Comma = '\t'
+	reader.FieldsPerRecord = -1
 	reader.LazyQuotes = true
 
 	// Skip header.
@@ -61,6 +83,7 @@ func Saint(filename string, filter float64) []SaintRow {
 		log.Fatalln(err)
 	}
 
+	// Read file and filter by FDR.
 	rows := make([]SaintRow, 0)
 	for {
 		line, err := reader.Read()
@@ -72,10 +95,13 @@ func Saint(filename string, filter float64) []SaintRow {
 		}
 
 		row := mapLine(line)
-
-		if row.FDR <= filter {
+		if row.FDR <= fdr {
 			rows = append(rows, row)
 		}
 	}
+
+	// Filter by bait number.
+	rows = filterBaits(rows, minBaits)
+
 	return rows
 }
