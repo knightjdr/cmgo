@@ -1,5 +1,5 @@
-// Package heatmap creates a heat map to display enriched regions across compartments.
-package heatmap
+// Package subset filters an NMF basis (prey) matrix to only include preys enriched all specified rank.
+package subset
 
 import (
 	"fmt"
@@ -13,18 +13,24 @@ import (
 	"github.com/spf13/afero"
 )
 
-// Region a heat map from enrichment data.
-func Region(fileOptions map[string]interface{}) {
+// NMF filters and NMF basis matrix and outputs an SVG of the result.
+func NMF(fileOptions map[string]interface{}) {
 	options, err := parseFlags(fileOptions)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	enrichment := readEnrichment(options.enrichmentFile, options.pValue)
-	matrix, columns, rows := enrichmentMatrix(enrichment)
+	basis, columns, rows := readBasis(options.basisMatrix)
+
+	// Define columns that are specifed by rank names and filter matrix
+	rank1Indices, rank2Indices, err := defineColumns(columns, options.ranks1, options.ranks2)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	basis, rows = filterBasis(basis, rows, rank1Indices, rank2Indices, options.threshold)
 
 	// Clustering
-	matrix, columns, rows = cluster.Process(matrix, columns, rows, options.distanceMetric, options.clusteringMethod)
+	basis, columns, rows = cluster.Process(basis, columns, rows, options.distanceMetric, options.clusteringMethod)
 
 	parameters := heatmap.Settings{
 		AbundanceCap: options.abundanceCap,
@@ -33,13 +39,13 @@ func Region(fileOptions map[string]interface{}) {
 		InvertColor:  false,
 		MinAbundance: options.minAbundance,
 	}
-	heatmap.Draw(matrix, columns, rows, parameters)
+	heatmap.Draw(basis, columns, rows, parameters)
 
 	// legend
 	dir := filepath.Dir(options.outFile)
 	outFile := filepath.Base(options.outFile)
 
-	legendTitle := fmt.Sprintf("Fold enrichment (log2) - %s", outFile)
+	legendTitle := fmt.Sprintf("NMF value - %s", outFile)
 	distanceLegend := legend.Gradient("blueBlack", legendTitle, 101, options.minAbundance, options.abundanceCap, false)
 
 	legendFileName := fmt.Sprintf("%s/legend-%s", dir, outFile)

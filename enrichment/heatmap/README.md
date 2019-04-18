@@ -1,6 +1,6 @@
 # Module name: `enrichment-heatmap`
 
-> Creates a heat map visualizing region (domain/motif) fold enrichment (scaled to Log2) across NMF or SAFE compartments.
+> Creates a heat map visualizing region (domain/motif) fold enrichment (scaled to log2) across NMF or SAFE compartments.
 
 | parameters | definition | default |
 |------------|------------|---------|

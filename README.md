@@ -30,6 +30,14 @@ Module specific parameters can be found in the README files in the corresponding
 
 Creates a heat map visualizing region (domain/motif) fold enrichment (scaled to Log2) across NMF or SAFE compartments.
 
+## NMF
+
+### Module name: `nmf-subset`
+
+* folder `nmf/enrichment`
+
+> Subset an NMF basis (prey) matrix to only include preys enriched on two specified compartments.
+
 ## Organelle comparison
 
 ### Module name: `organelle-overlap`
