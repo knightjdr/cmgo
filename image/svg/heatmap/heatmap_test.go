@@ -1,4 +1,4 @@
-package svg
+package heatmap
 
 import (
 	"testing"
@@ -24,7 +24,7 @@ func TestHeatmap(t *testing.T) {
 	}
 	columns := []string{"bait1", "bait2", "bait3"}
 	rows := []string{"prey1", "prey2", "prey3"}
-	parameters := HeatmapSettings{
+	parameters := Settings{
 		FillColor:    "blueBlack",
 		AbundanceCap: 50,
 		MinAbundance: 0,
@@ -54,7 +54,7 @@ func TestHeatmap(t *testing.T) {
 		"\t\t<rect fill=\"#adc2ff\" y=\"40\" x=\"40\" width=\"20\" height=\"20\" />\n" +
 		"\t</g>\n" +
 		"</svg>\n"
-	svg := Heatmap(matrix, columns, rows, parameters)
+	svg := Draw(matrix, columns, rows, parameters)
 	assert.Equal(t, wanted, svg, "Should return SVG string")
 
 	// TEST: full heatmap image writing to file
@@ -82,7 +82,7 @@ func TestHeatmap(t *testing.T) {
 		"\t\t<rect fill=\"#adc2ff\" y=\"40\" x=\"40\" width=\"20\" height=\"20\" />\n" +
 		"\t</g>\n" +
 		"</svg>\n"
-	svg = Heatmap(matrix, columns, rows, parameters)
+	svg = Draw(matrix, columns, rows, parameters)
 	bytes, _ := afero.ReadFile(fs.Instance, "test/heatmap.svg")
 	assert.Equal(t, "", svg, "Should return null when writing to file")
 	assert.Equal(t, wanted, string(bytes), "Should write SVG to file")

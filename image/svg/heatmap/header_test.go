@@ -1,4 +1,4 @@
-package svg
+package heatmap
 
 import (
 	"testing"

@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"io"
 	"log"
+	"math"
 	"strconv"
 
 	"github.com/knightjdr/cmgo/fs"
@@ -43,7 +44,7 @@ func readEnrichment(filename string, pValue float64) map[string]map[string]float
 			if _, ok := enrichment[compartment]; !ok {
 				enrichment[compartment] = make(map[string]float64, 0)
 			}
-			enrichment[compartment][term] = foldEnrichment
+			enrichment[compartment][term] = math.Log2(foldEnrichment)
 		}
 	}
 	return enrichment

@@ -9,31 +9,14 @@ import (
 
 func parseFlags(fileOptions map[string]interface{}) (map[string]string, error) {
 	args := flags.Parse()
-	compartmentFile := flags.ConvertString(args["compartmentFile"])
-	outFile := flags.ConvertString(args["outFile"])
-	similarityFile := flags.ConvertString(args["similarityFile"])
+	compartmentFile := flags.SetString("compartmentFile", args, fileOptions, "")
+	outFile := flags.SetString("outFile", args, fileOptions, "organelle-comparison.txt")
+	similarityFile := flags.SetString("similarityFile", args, fileOptions, "")
 
-	// Copy arguments from options file.
-	options := map[string]string{}
-	if fileOptions["compartmentFile"] != nil {
-		options["compartmentFile"] = fileOptions["compartmentFile"].(string)
-	}
-	if fileOptions["outFile"] != nil {
-		options["outFile"] = fileOptions["outFile"].(string)
-	}
-	if fileOptions["similarityFile"] != nil {
-		options["similarityFile"] = fileOptions["similarityFile"].(string)
-	}
-
-	// Overwrite options file arguments if specified
-	if compartmentFile != "" {
-		options["compartmentFile"] = compartmentFile
-	}
-	if outFile != "" {
-		options["outFile"] = outFile
-	}
-	if similarityFile != "" {
-		options["similarityFile"] = similarityFile
+	options := map[string]string{
+		"compartmentFile": compartmentFile,
+		"outFile":         outFile,
+		"similarityFile":  similarityFile,
 	}
 
 	// Check for missing arguments.
@@ -43,9 +26,6 @@ func parseFlags(fileOptions map[string]interface{}) (map[string]string, error) {
 	}
 	if options["similarityFile"] == "" {
 		messages = append(messages, "missing search result peptide file")
-	}
-	if options["outFile"] == "" {
-		options["outFile"] = "organelle-comparison.txt"
 	}
 
 	// Format error message

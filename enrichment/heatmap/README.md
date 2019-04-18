@@ -1,11 +1,15 @@
 # Module name: `enrichment-heatmap`
 
-> Creates a heat map visualizing region (domain/motif) enrichment across NMF or SAFE compartments.
+> Creates a heat map visualizing region (domain/motif) fold enrichment (scaled to Log2) across NMF or SAFE compartments.
 
 | parameters | definition | default |
 |------------|------------|---------|
+| abundanceCap | the value to cap cell color on the heat map | 10 |
+| clusteringMethod | the hierarchical clustering method | complete |
 | compartmentSummary | files with names defining compartments | |
+| distanceMetric | the distance metric | euclidean |
 | enrichmentFile | text file with compartment name and enriched domains/motifs | |
+| minAbundance | the minimum abundance for limiting the color on the heat map | 0 |
 | outFile | output file name | region-heatmap.svg |
 | pValue | pValue cutoff for including a region | 0.01 |
 
@@ -29,3 +33,7 @@ rank	term	matched	background_size	fold enrichment	pvalue	adj. pvalue	bhfdr	genes
 2	Bromodomain	13	24	6.259	1.29285132936678e-08	1.70043585864132e-06	6.77200902934537e-05	ATAD2,BPTF,BRD1
 2	PWWP	10	14	8.254	1.53538226513889e-08	1.70043585864132e-06	9.0293453724605e-05	BRD1,BRPF3,DNMT3A,GLYR1
 ```
+
+### Output
+* heat map as svg
+* legend for fold enrichment

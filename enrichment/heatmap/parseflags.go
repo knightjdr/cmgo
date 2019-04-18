@@ -8,62 +8,37 @@ import (
 )
 
 type parameters struct {
+	abundanceCap       float64
 	clusteringMethod   string
 	compartmentSummary string
 	distanceMetric     string
 	enrichmentFile     string
+	minAbundance       float64
 	outFile            string
 	pValue             float64
 }
 
 func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	args := flags.Parse()
-	clusteringMethod := flags.ConvertString(args["clusteringMethod"])
-	compartmentSummary := flags.ConvertString(args["compartmentSummary"])
-	distanceMetric := flags.ConvertString(args["distanceMetric"])
-	enrichmentFile := flags.ConvertString(args["enrichmentFile"])
-	outFile := flags.ConvertString(args["outFile"])
-	pValue := flags.ConvertFloat(args["pValue"])
+	abundanceCap := flags.SetFloat("abundanceCap", args, fileOptions, 10)
+	clusteringMethod := flags.SetString("clusteringMethod", args, fileOptions, "complete")
+	compartmentSummary := flags.SetString("compartmentSummary", args, fileOptions, "")
+	distanceMetric := flags.SetString("distanceMetric", args, fileOptions, "euclidean")
+	enrichmentFile := flags.SetString("enrichmentFile", args, fileOptions, "")
+	minAbundance := flags.SetFloat("minAbundance", args, fileOptions, 0)
+	outFile := flags.SetString("outFile", args, fileOptions, "region-heatmap.svg")
+	pValue := flags.SetFloat("pValue", args, fileOptions, 0.01)
 
 	// Copy arguments from options file.
-	options := parameters{}
-	if fileOptions["clusteringMethod"] != nil {
-		options.clusteringMethod = fileOptions["clusteringMethod"].(string)
-	}
-	if fileOptions["compartmentSummary"] != nil {
-		options.compartmentSummary = fileOptions["compartmentSummary"].(string)
-	}
-	if fileOptions["distanceMetric"] != nil {
-		options.distanceMetric = fileOptions["distanceMetric"].(string)
-	}
-	if fileOptions["enrichmentFile"] != nil {
-		options.enrichmentFile = fileOptions["enrichmentFile"].(string)
-	}
-	if fileOptions["outFile"] != nil {
-		options.outFile = fileOptions["outFile"].(string)
-	}
-	if fileOptions["pValue"] != nil {
-		options.pValue = fileOptions["pValue"].(float64)
-	}
-
-	// Overwrite options file arguments if specified
-	if clusteringMethod != "" {
-		options.clusteringMethod = clusteringMethod
-	}
-	if compartmentSummary != "" {
-		options.compartmentSummary = compartmentSummary
-	}
-	if distanceMetric != "" {
-		options.distanceMetric = distanceMetric
-	}
-	if enrichmentFile != "" {
-		options.enrichmentFile = enrichmentFile
-	}
-	if outFile != "" {
-		options.outFile = outFile
-	}
-	if pValue != 0 {
-		options.pValue = pValue
+	options := parameters{
+		abundanceCap:       abundanceCap,
+		clusteringMethod:   clusteringMethod,
+		compartmentSummary: compartmentSummary,
+		distanceMetric:     distanceMetric,
+		enrichmentFile:     enrichmentFile,
+		minAbundance:       minAbundance,
+		outFile:            outFile,
+		pValue:             pValue,
 	}
 
 	// Check for missing arguments.
@@ -73,18 +48,6 @@ func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	}
 	if options.enrichmentFile == "" {
 		messages = append(messages, "missing enriched region file")
-	}
-	if options.clusteringMethod == "" {
-		options.clusteringMethod = "complete"
-	}
-	if options.distanceMetric == "" {
-		options.distanceMetric = "euclidean"
-	}
-	if options.outFile == "" {
-		options.outFile = "region-heatmap.svg"
-	}
-	if options.pValue == 0 {
-		options.pValue = 0.01
 	}
 
 	// Format error message

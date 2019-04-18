@@ -1,19 +1,20 @@
-package svg
+package heatmap
 
 import (
 	"fmt"
 
 	"github.com/knightjdr/cmgo/function"
+	"github.com/knightjdr/cmgo/image/svg"
 )
 
 func heatmapRows(
 	matrix [][]float64,
 	dims heatmapDimensions,
-	parameters HeatmapSettings,
+	parameters Settings,
 	writeString func(string),
 ) {
 	// Get color gradient.
-	colorGradient := colorGradient(parameters.FillColor, 101, parameters.InvertColor)
+	colorGradient := svg.ColorGradient(parameters.FillColor, 101, parameters.InvertColor)
 
 	// Get range function
 	getIndex := function.SetRange(parameters.MinAbundance, parameters.AbundanceCap, 0, 100)

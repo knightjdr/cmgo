@@ -11,8 +11,8 @@ import (
 
 func parseFlags() (map[string]interface{}, error) {
 	args := flags.Parse()
-	module := flags.ConvertString(args["module"])
-	optionsFile := flags.ConvertString(args["options"])
+	module := flags.SetString("module", args, map[string]interface{}{}, "")
+	optionsFile := flags.SetString("options", args, map[string]interface{}{}, "")
 
 	var err error
 	var options map[string]interface{}

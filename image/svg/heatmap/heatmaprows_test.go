@@ -1,4 +1,4 @@
-package svg
+package heatmap
 
 import (
 	"testing"
@@ -24,7 +24,7 @@ func TestHeatmapRows(t *testing.T) {
 		leftMargin: 50,
 		topMargin:  50,
 	}
-	parameters := HeatmapSettings{
+	parameters := Settings{
 		FillColor:    "blueBlack",
 		AbundanceCap: 50,
 		InvertColor:  false,

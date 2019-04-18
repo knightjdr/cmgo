@@ -44,7 +44,7 @@ func TestParseFlags(t *testing.T) {
 		"-saintFile", "saint.txt",
 	}
 	args, err = parseFlags(fileOptions)
-	assert.Equal(t, float64(0), args.fdr, "Should return default fdr")
+	assert.Equal(t, 0.01, args.fdr, "Should return default fdr")
 	assert.Equal(t, 1, args.minPreyOccurrence, "Should return default minimum bait number")
 	assert.Equal(t, "organelle-shared.txt", args.outFile, "Should return default outfile name")
 

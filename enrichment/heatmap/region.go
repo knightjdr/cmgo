@@ -2,10 +2,15 @@
 package heatmap
 
 import (
+	"fmt"
 	"log"
+	"path/filepath"
 
-	"github.com/knightjdr/cmgo/image/svg"
+	"github.com/knightjdr/cmgo/fs"
+	"github.com/knightjdr/cmgo/image/svg/heatmap"
+	"github.com/knightjdr/cmgo/image/svg/legend"
 	"github.com/knightjdr/hclust"
+	"github.com/spf13/afero"
 )
 
 // Region a heat map from enrichment data.
@@ -42,12 +47,22 @@ func Region(fileOptions map[string]interface{}) {
 	sortedAbundance, _ := hclust.Sort(matrix, columns, colTree.Order, "column")
 	sortedAbundance, _ = hclust.Sort(sortedAbundance, rows, rowTree.Order, "row")
 
-	parameters := svg.HeatmapSettings{
+	parameters := heatmap.Settings{
+		AbundanceCap: options.abundanceCap,
 		Filename:     options.outFile,
 		FillColor:    "blueBlack",
-		AbundanceCap: 50,
-		MinAbundance: 0,
 		InvertColor:  false,
+		MinAbundance: options.minAbundance,
 	}
-	svg.Heatmap(sortedAbundance, colTree.Order, rowTree.Order, parameters)
+	heatmap.Draw(sortedAbundance, colTree.Order, rowTree.Order, parameters)
+
+	// legend
+	dir := filepath.Dir(options.outFile)
+	outFile := filepath.Base(options.outFile)
+
+	legendTitle := fmt.Sprintf("Fold enrichment (log2) - %s", outFile)
+	distanceLegend := legend.Gradient("blueBlack", legendTitle, 101, options.minAbundance, options.abundanceCap, false)
+
+	legendFileName := fmt.Sprintf("%s/legend-%s", dir, outFile)
+	afero.WriteFile(fs.Instance, legendFileName, []byte(distanceLegend), 0644)
 }

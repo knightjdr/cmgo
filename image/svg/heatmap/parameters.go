@@ -1,4 +1,4 @@
-package svg
+package heatmap
 
 const idealCellSize int = 20
 const idealCircleSpace float64 = 1.5

@@ -22,6 +22,14 @@ cmgo -options="config.json"
 
 Module specific parameters can be found in the README files in the corresponding folder.
 
+## Enrichment
+
+### Module name: `enrichment-heatmap`
+
+* folder `enrichment/heatmap`
+
+Creates a heat map visualizing region (domain/motif) fold enrichment (scaled to Log2) across NMF or SAFE compartments.
+
 ## Organelle comparison
 
 ### Module name: `organelle-overlap`

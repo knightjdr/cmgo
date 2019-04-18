@@ -1,5 +1,5 @@
-// Package svg creates svg files for various image types.
-package svg
+// Package heatmap creates svg files for various image types.
+package heatmap
 
 import (
 	"github.com/knightjdr/cmgo/image/file"
@@ -7,8 +7,8 @@ import (
 	"github.com/spf13/afero"
 )
 
-// HeatmapSettings configuration for drawing heatmap
-type HeatmapSettings struct {
+// Settings configuration for drawing heatmap
+type Settings struct {
 	Filename     string
 	FillColor    string
 	AbundanceCap float64
@@ -27,8 +27,8 @@ func write(svg *[]string, file afero.File) func(str string) {
 	}
 }
 
-// Heatmap creates a heatmap from an input matrix of abundance.
-func Heatmap(matrix [][]float64, columns, rows []string, parameters HeatmapSettings) string {
+// Draw creates a heatmap from an input matrix of abundance.
+func Draw(matrix [][]float64, columns, rows []string, parameters Settings) string {
 	svg := make([]string, 0)
 	dims := dimensions(matrix, columns, rows)
 

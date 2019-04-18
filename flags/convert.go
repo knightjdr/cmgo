@@ -1,27 +1,45 @@
 package flags
 
-import "strconv"
+import (
+	"math"
+	"strconv"
+)
 
-// ConvertFloat changes an argument of interface type to a float.
-func ConvertFloat(arg interface{}) float64 {
+func convertFloat(arg interface{}) float64 {
 	var converted float64
 	if arg != nil {
-		converted, _ = strconv.ParseFloat(arg.(string), 64)
+		switch arg.(type) {
+		default:
+			converted = float64(0)
+		case float64:
+			converted = arg.(float64)
+		case int:
+			converted = float64(arg.(int))
+		case string:
+			converted, _ = strconv.ParseFloat(arg.(string), 64)
+		}
 	}
 	return converted
 }
 
-// ConvertInt changes an argument of interface type to a int.
-func ConvertInt(arg interface{}) int {
+func convertInt(arg interface{}) int {
 	var converted int
 	if arg != nil {
-		converted, _ = strconv.Atoi(arg.(string))
+		switch arg.(type) {
+		default:
+			converted = 0
+		case float64:
+			converted = int(math.Round(arg.(float64)))
+		case int:
+			converted = arg.(int)
+		case string:
+			converted, _ = strconv.Atoi(arg.(string))
+		}
 	}
 	return converted
 }
 
-// ConvertString changes an argument of interface type to a string.
-func ConvertString(arg interface{}) string {
+func convertString(arg interface{}) string {
 	var converted string
 	if arg != nil {
 		converted = arg.(string)
