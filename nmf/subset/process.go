@@ -27,7 +27,11 @@ func NMF(fileOptions map[string]interface{}) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	basis, rows = filterBasis(basis, rows, rank1Indices, rank2Indices, options.threshold)
+
+	// Remove rows that do not have a maximum in one of the desired ranks, then remove
+	// rows that do not have desired rank values within threshold.
+	basis, rows = filterByRank(basis, rows, rank1Indices, rank2Indices)
+	basis, rows = filterByThreshold(basis, rows, rank1Indices, rank2Indices, options.threshold)
 
 	// Clustering
 	basis, columns, rows = cluster.Process(basis, columns, rows, options.distanceMetric, options.clusteringMethod)

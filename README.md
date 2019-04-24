@@ -36,7 +36,7 @@ Creates a heat map visualizing region (domain/motif) fold enrichment (scaled to 
 
 * folder `nmf/enrichment`
 
-> Subset an NMF basis (prey) matrix to only include preys enriched on two specified compartments.
+> Subset an NMF basis (prey) matrix to only include preys enriched on in specified compartments.
 
 ## Organelle comparison
 

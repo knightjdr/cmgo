@@ -1,6 +1,6 @@
 # Module name: `nmf-subset`
 
-> Subset an NMF basis (prey) matrix to only include preys enriched on two specified compartments.
+> Subset an NMF basis (prey) matrix to only include preys enriched in specified compartments.
 
 | parameters | definition | default |
 |------------|------------|---------|

@@ -1,6 +1,7 @@
 package filter
 
 import (
+	"sort"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -14,5 +15,7 @@ func TestKey(t *testing.T) {
 		"d": 10,
 	}
 	wanted := []string{"a", "c", "d"}
+	result := Key(occurrence, 2)
+	sort.Strings(result)
 	assert.Equal(t, wanted, Key(occurrence, 2), "Should return a slice with map keys that have values passing filter")
 }
