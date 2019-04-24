@@ -13,6 +13,7 @@ type parameters struct {
 	clusteringMethod string
 	distanceMetric   string
 	minAbundance     float64
+	minNMFScore      float64
 	outFile          string
 	ranks1           []string
 	ranks2           []string
@@ -26,6 +27,7 @@ func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	clusteringMethod := flags.SetString("clusteringMethod", args, fileOptions, "complete")
 	distanceMetric := flags.SetString("distanceMetric", args, fileOptions, "euclidean")
 	minAbundance := flags.SetFloat("minAbundance", args, fileOptions, 0)
+	minNMFScore := flags.SetFloat("minNMFScore", args, fileOptions, 0)
 	outFile := flags.SetString("outFile", args, fileOptions, "basis-subset.svg")
 	ranks1 := strings.Split(flags.SetString("ranks1", args, fileOptions, ""), ",")
 	ranks2 := strings.Split(flags.SetString("ranks2", args, fileOptions, ""), ",")
@@ -38,6 +40,7 @@ func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 		clusteringMethod: clusteringMethod,
 		distanceMetric:   distanceMetric,
 		minAbundance:     minAbundance,
+		minNMFScore:      minNMFScore,
 		outFile:          outFile,
 		ranks1:           ranks1,
 		ranks2:           ranks2,

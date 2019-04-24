@@ -4,7 +4,7 @@ import (
 	"github.com/knightjdr/cmgo/stats"
 )
 
-func filterByRank(basis [][]float64, rows []string, rank1Indices, rank2Indices []int) ([][]float64, []string) {
+func filterByRank(basis [][]float64, rows []string, rank1Indices, rank2Indices []int, minNMFScore float64) ([][]float64, []string) {
 	filtered := make([][]float64, 0)
 	filteredRows := make([]string, 0)
 
@@ -24,7 +24,7 @@ func filterByRank(basis [][]float64, rows []string, rank1Indices, rank2Indices [
 		maxRank := stats.MaxFloatSlice(append(rank1Values, rank2Values...))
 
 		// Keep the row if it has a rank value matching the row maximum.
-		if maxRank == maxRow {
+		if maxRank == maxRow && maxRank >= minNMFScore {
 			filtered = append(filtered, basisRow)
 			filteredRows = append(filteredRows, rows[i])
 		}

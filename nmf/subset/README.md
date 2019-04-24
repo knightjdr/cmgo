@@ -9,6 +9,7 @@
 | clusteringMethod | the hierarchical clustering method | complete |
 | distanceMetric | the distance metric | euclidean |
 | minAbundance | the minimum abundance for limiting the color on the heat map | 0 |
+| minNMFScore | the minimum score required in any of the specified ranks to include a row | 0 |
 | outFile | output file name | basis-subset.svg |
 | ranks1 | ranks defining first NMF compartment | |
 | ranks2 | ranks defining second NMF compartment | |

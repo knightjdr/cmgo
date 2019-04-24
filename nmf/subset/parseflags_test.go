@@ -21,6 +21,7 @@ func TestParseFlags(t *testing.T) {
 		"-clusteringMethod", "average",
 		"-distanceMetric", "ward",
 		"-minAbundance", "5",
+		"-minNMFScore", "0.15",
 		"-outFile", "out.svg",
 		"-ranks1", "1,5",
 		"-ranks2", "7",
@@ -33,6 +34,7 @@ func TestParseFlags(t *testing.T) {
 		clusteringMethod: "average",
 		distanceMetric:   "ward",
 		minAbundance:     5,
+		minNMFScore:      0.15,
 		outFile:          "out.svg",
 		ranks1:           []string{"1", "5"},
 		ranks2:           []string{"7"},
@@ -54,6 +56,7 @@ func TestParseFlags(t *testing.T) {
 	assert.Equal(t, "complete", args.clusteringMethod, "Should return default clustering method")
 	assert.Equal(t, "euclidean", args.distanceMetric, "Should return default distance metric")
 	assert.Equal(t, float64(0), args.minAbundance, "Should return default minimum abundance")
+	assert.Equal(t, float64(0), args.minNMFScore, "Should return default minimum NMF score")
 	assert.Equal(t, "basis-subset.svg", args.outFile, "Should return default outfile name")
 	assert.Equal(t, 0.5, args.threshold, "Should return default threshold")
 
@@ -75,6 +78,7 @@ func TestParseFlags(t *testing.T) {
 	fileOptions["clusteringMethod"] = "average"
 	fileOptions["distanceMetric"] = "ward"
 	fileOptions["minAbundance"] = 5
+	fileOptions["minNMFScore"] = 0.15
 	fileOptions["outFile"] = "file-out.svg"
 	fileOptions["ranks1"] = "1,5"
 	fileOptions["ranks2"] = "7"
@@ -85,6 +89,7 @@ func TestParseFlags(t *testing.T) {
 		clusteringMethod: "average",
 		distanceMetric:   "ward",
 		minAbundance:     5,
+		minNMFScore:      0.15,
 		outFile:          "file-out.svg",
 		ranks1:           []string{"1", "5"},
 		ranks2:           []string{"7"},
