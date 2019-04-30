@@ -58,7 +58,7 @@ func compare(compartments organelle.Compartments, similarity map[string]map[stri
 		} else {
 			name = "between"
 		}
-		max := stats.Round(stats.MaxFloatSlice(ranges[i]), 0.001)
+		max := stats.Round(stats.MaxFloat(ranges[i]), 0.001)
 		mean := stats.Round(stats.MeanFloat(ranges[i]), 0.001)
 		median := stats.Round(stats.MedianFloat(ranges[i]), 0.001)
 		min := stats.Round(stats.MinFloatSlice(ranges[i]), 0.001)

@@ -6,35 +6,41 @@ import (
 	"io"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/knightjdr/cmgo/fs"
+	"github.com/knightjdr/cmgo/slice"
 )
 
 // SaintRow defines the headers in a SAINT file.
 type SaintRow struct {
 	Bait               string
 	PreyGene           string
+	Spec               []float64
 	AvgSpec            float64
-	Control            string
+	Control            []float64
 	AvgP               float64
 	FoldChange         float64
 	FDR                float64
 	PreySequenceLength int64
 }
 
-func mapLine(line []string) SaintRow {
+func mapSaintLine(line []string) SaintRow {
 	avgspec, _ := strconv.ParseFloat(line[5], 64)
 	avgp, _ := strconv.ParseFloat(line[8], 64)
+	control := slice.ConvertStringToFloat(strings.Split(line[7], "|"))
 	foldchange, _ := strconv.ParseFloat(line[14], 64)
 	fdr, _ := strconv.ParseFloat(line[15], 64)
+	spec := slice.ConvertStringToFloat(strings.Split(line[3], "|"))
 	row := SaintRow{
-		Bait:       line[0],
-		PreyGene:   line[2],
-		AvgSpec:    avgspec,
-		Control:    line[7],
 		AvgP:       avgp,
-		FoldChange: foldchange,
+		AvgSpec:    avgspec,
+		Bait:       line[0],
+		Control:    control,
 		FDR:        fdr,
+		FoldChange: foldchange,
+		PreyGene:   line[2],
+		Spec:       spec,
 	}
 
 	if len(line) >= 21 && line[20] != "" {
@@ -94,7 +100,7 @@ func Saint(filename string, fdr float64, minBaits int) []SaintRow {
 			log.Fatalln(err)
 		}
 
-		row := mapLine(line)
+		row := mapSaintLine(line)
 		if row.FDR <= fdr {
 			rows = append(rows, row)
 		}

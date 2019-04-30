@@ -1,0 +1,55 @@
+package crapome
+
+import (
+	"testing"
+
+	"github.com/knightjdr/cmgo/fs"
+	"github.com/knightjdr/cmgo/read"
+	"github.com/spf13/afero"
+	"github.com/stretchr/testify/assert"
+)
+
+func TestWriteMatrix(t *testing.T) {
+	oldFs := fs.Instance
+	defer func() { fs.Instance = oldFs }()
+	fs.Instance = afero.NewMemMapFs()
+
+	// Create test directory and files.
+	fs.Instance.MkdirAll("test", 0755)
+
+	baits := []read.BaitDatRow{
+		{ID: "128_468"},
+		{ID: "128_590"},
+		{ID: "128_737"},
+	}
+	data := map[string]map[string]int{
+		"B": map[string]int{
+			"128_468": 4,
+			"128_737": 8,
+		},
+		"A": map[string]int{
+			"128_468": 5,
+			"128_737": 10,
+		},
+		"C": map[string]int{
+			"128_590": 2,
+		},
+		"D": map[string]int{
+			"128_590": 3,
+		},
+	}
+	preyMap := map[string]*preyDefinition{
+		"A": &preyDefinition{GeneID: 1, Name: "preyA"},
+		"B": &preyDefinition{GeneID: 2, Name: "preyB"},
+		"C": &preyDefinition{GeneID: 3, Name: "preyC"},
+		"D": &preyDefinition{GeneID: 4, Name: "preyD"},
+	}
+	wanted := "GENE\tREFSEQ_ID\tENTREZ_ID\tAVE_SC\tNUM_EXPT\t128_468\t128_590\t128_737\n" +
+		"preyA\tA\t1\t7.50\t2\t5\t0\t10\n" +
+		"preyB\tB\t2\t6.00\t2\t4\t0\t8\n" +
+		"preyC\tC\t3\t2.00\t1\t0\t2\t0\n" +
+		"preyD\tD\t4\t3.00\t1\t0\t3\t0\n"
+	writeMatrix(data, baits, preyMap, "test/out.txt")
+	bytes, _ := afero.ReadFile(fs.Instance, "test/out.txt")
+	assert.Equal(t, wanted, string(bytes), "Should write matrix to file")
+}

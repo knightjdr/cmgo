@@ -17,7 +17,7 @@ AARS2	NP_000131.2	FECH	4|1	5	2.50	2	0|0|0|0|0|0	0.50	1.00	0.50	1.00	0.50	1.49	25
 ABCC1	NP_000009.1	ACADVL	3|6	9	4.50	2	0|0|0|0|0|0	1.00	1.00	1.00	1.00	1.00	5.35	45.00	0.00	NP_057665.2|NP_789845.1|	3|6	9	4.5	655	NP_000009.1
 `
 
-func TestMapLine(t *testing.T) {
+func TestMapSaintLine(t *testing.T) {
 	// TEST1: at least 21 elements
 	line := []string{
 		"AARS2",
@@ -47,13 +47,14 @@ func TestMapLine(t *testing.T) {
 		Bait:               "AARS2",
 		PreyGene:           "ACADVL",
 		AvgSpec:            4.5,
-		Control:            "0|0|0|0|0|0|0",
+		Control:            []float64{0, 0, 0, 0, 0, 0, 0},
 		AvgP:               1,
 		FoldChange:         45,
 		FDR:                0,
 		PreySequenceLength: 655,
+		Spec:               []float64{3, 6},
 	}
-	assert.Equal(t, wanted, mapLine(line), "Should map line from SAINT file to struct")
+	assert.Equal(t, wanted, mapSaintLine(line), "Should map line from SAINT file to struct")
 
 	// TEST2: less than 21 elements
 	line = []string{
@@ -78,21 +79,22 @@ func TestMapLine(t *testing.T) {
 		Bait:               "AARS2",
 		PreyGene:           "ACADVL",
 		AvgSpec:            4.5,
-		Control:            "0|0|0|0|0|0|0",
+		Control:            []float64{0, 0, 0, 0, 0, 0, 0},
 		AvgP:               1,
 		FoldChange:         45,
 		FDR:                0,
 		PreySequenceLength: 0,
+		Spec:               []float64{3, 6},
 	}
-	assert.Equal(t, wanted, mapLine(line), "Should map line from SAINT file to struct with nil value for prey length")
+	assert.Equal(t, wanted, mapSaintLine(line), "Should map line from SAINT file to struct with nil value for prey length")
 }
 
 func TestFilterBaits(t *testing.T) {
 	rows := []SaintRow{
-		{Bait: "AARS2", PreyGene: "ACADVL", AvgSpec: 4.5, Control: "0|0|0|0|0|0", AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655},
-		{Bait: "AARS2", PreyGene: "ACAT1", AvgSpec: 7, Control: "0|0|0|0|0|0", AvgP: 1, FoldChange: 70, FDR: 0, PreySequenceLength: 427},
-		{Bait: "AARS2", PreyGene: "DLD", AvgSpec: 16, Control: "0|0|0|1|0|0", AvgP: 1, FoldChange: 22.86, FDR: 0, PreySequenceLength: 509},
-		{Bait: "ABCC1", PreyGene: "ACADVL", AvgSpec: 4.5, Control: "0|0|0|0|0|0", AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655},
+		{Bait: "AARS2", PreyGene: "ACADVL", AvgSpec: 4.5, Control: []float64{0, 0, 0, 0, 0, 0}, AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655, Spec: []float64{3, 6}},
+		{Bait: "AARS2", PreyGene: "ACAT1", AvgSpec: 7, Control: []float64{0, 0, 0, 0, 0, 0}, AvgP: 1, FoldChange: 70, FDR: 0, PreySequenceLength: 427, Spec: []float64{6, 8}},
+		{Bait: "AARS2", PreyGene: "DLD", AvgSpec: 16, Control: []float64{0, 0, 0, 1, 0, 0}, AvgP: 1, FoldChange: 22.86, FDR: 0, PreySequenceLength: 509, Spec: []float64{18, 14}},
+		{Bait: "ABCC1", PreyGene: "ACADVL", AvgSpec: 4.5, Control: []float64{0, 0, 0, 0, 0, 0}, AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655, Spec: []float64{3, 6}},
 	}
 
 	// TEST1: do not filter when the minimum bait value is 1
@@ -101,8 +103,8 @@ func TestFilterBaits(t *testing.T) {
 
 	// TEST2: should filter by minBait number
 	wanted = []SaintRow{
-		{Bait: "AARS2", PreyGene: "ACADVL", AvgSpec: 4.5, Control: "0|0|0|0|0|0", AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655},
-		{Bait: "ABCC1", PreyGene: "ACADVL", AvgSpec: 4.5, Control: "0|0|0|0|0|0", AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655},
+		{Bait: "AARS2", PreyGene: "ACADVL", AvgSpec: 4.5, Control: []float64{0, 0, 0, 0, 0, 0}, AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655, Spec: []float64{3, 6}},
+		{Bait: "ABCC1", PreyGene: "ACADVL", AvgSpec: 4.5, Control: []float64{0, 0, 0, 0, 0, 0}, AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655, Spec: []float64{3, 6}},
 	}
 	assert.Equal(t, wanted, filterBaits(rows, 2), "Should filter to remove preys seen with less baits than bait filter")
 }
@@ -123,17 +125,17 @@ func TestSaint(t *testing.T) {
 
 	// TEST1: only filter by FDR
 	wanted := []SaintRow{
-		{Bait: "AARS2", PreyGene: "ACADVL", AvgSpec: 4.5, Control: "0|0|0|0|0|0", AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655},
-		{Bait: "AARS2", PreyGene: "ACAT1", AvgSpec: 7, Control: "0|0|0|0|0|0", AvgP: 1, FoldChange: 70, FDR: 0, PreySequenceLength: 427},
-		{Bait: "AARS2", PreyGene: "DLD", AvgSpec: 16, Control: "0|0|0|1|0|0", AvgP: 1, FoldChange: 22.86, FDR: 0, PreySequenceLength: 509},
-		{Bait: "ABCC1", PreyGene: "ACADVL", AvgSpec: 4.5, Control: "0|0|0|0|0|0", AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655},
+		{Bait: "AARS2", PreyGene: "ACADVL", AvgSpec: 4.5, Control: []float64{0, 0, 0, 0, 0, 0}, AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655, Spec: []float64{3, 6}},
+		{Bait: "AARS2", PreyGene: "ACAT1", AvgSpec: 7, Control: []float64{0, 0, 0, 0, 0, 0}, AvgP: 1, FoldChange: 70, FDR: 0, PreySequenceLength: 427, Spec: []float64{6, 8}},
+		{Bait: "AARS2", PreyGene: "DLD", AvgSpec: 16, Control: []float64{0, 0, 0, 1, 0, 0}, AvgP: 1, FoldChange: 22.86, FDR: 0, PreySequenceLength: 509, Spec: []float64{18, 14}},
+		{Bait: "ABCC1", PreyGene: "ACADVL", AvgSpec: 4.5, Control: []float64{0, 0, 0, 0, 0, 0}, AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655, Spec: []float64{3, 6}},
 	}
 	assert.Equal(t, wanted, Saint("test/saint.txt", 0.01, 1), "Should read and filter SAINT file by FDR")
 
 	// TEST2: filter by FDR and minBait number
 	wanted = []SaintRow{
-		{Bait: "AARS2", PreyGene: "ACADVL", AvgSpec: 4.5, Control: "0|0|0|0|0|0", AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655},
-		{Bait: "ABCC1", PreyGene: "ACADVL", AvgSpec: 4.5, Control: "0|0|0|0|0|0", AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655},
+		{Bait: "AARS2", PreyGene: "ACADVL", AvgSpec: 4.5, Control: []float64{0, 0, 0, 0, 0, 0}, AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655, Spec: []float64{3, 6}},
+		{Bait: "ABCC1", PreyGene: "ACADVL", AvgSpec: 4.5, Control: []float64{0, 0, 0, 0, 0, 0}, AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655, Spec: []float64{3, 6}},
 	}
 	assert.Equal(t, wanted, Saint("test/saint.txt", 0.01, 2), "Should read and filter SAINT file by FDR and minimum bait")
 }

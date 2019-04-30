@@ -8,5 +8,5 @@ import (
 
 func TestMaxFloatSlice(t *testing.T) {
 	slice := []float64{0.5, 0.3, 0.31, 4.1}
-	assert.Equal(t, 4.1, MaxFloatSlice(slice), "Should return the maximum value in a slice")
+	assert.Equal(t, 4.1, MaxFloat(slice), "Should return the maximum value in a slice")
 }

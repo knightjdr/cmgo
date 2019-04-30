@@ -8,6 +8,8 @@ import (
 	"github.com/knightjdr/cmgo/nmf/subset"
 	"github.com/knightjdr/cmgo/organelle/overlap"
 	"github.com/knightjdr/cmgo/organelle/shared"
+	"github.com/knightjdr/cmgo/summary/crapome"
+	"github.com/knightjdr/cmgo/summary/notsignificant"
 )
 
 func main() {
@@ -24,6 +26,10 @@ func main() {
 		overlap.Metrics(options)
 	} else if options["module"] == "organelle-sharedregion" {
 		shared.Region(options)
+	} else if options["module"] == "summary-crapome" {
+		crapome.Matrix(options)
+	} else if options["module"] == "summary-notsignificant" {
+		notsignificant.List(options)
 	} else {
 		log.Fatalln(errors.New("Unknown analysis module"))
 	}

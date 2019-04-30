@@ -31,8 +31,8 @@ func filterByThreshold(basis [][]float64, rows []string, rank1Indices, rank2Indi
 		}
 
 		// Check if ranks in other compartment are within threshold
-		max1 := stats.MaxFloatSlice(rank1Values)
-		max2 := stats.MaxFloatSlice(rank2Values)
+		max1 := stats.MaxFloat(rank1Values)
+		max2 := stats.MaxFloat(rank2Values)
 		checkLimit := false
 		if max1 > max2 {
 			checkLimit = withinThreshold(max1, rank2Values, threshold)
