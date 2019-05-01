@@ -11,25 +11,10 @@ import (
 	"github.com/spf13/afero"
 )
 
-func writeMatrix(data map[string]map[string]int, baits []read.BaitDatRow, preyMap map[string]*preyDefinition, outfile string) {
-	// Order preys alphabetically by name. First get gene name for each prey
-	// from map. Sort by gene name, then map that back to accession.
-	preyOrder := make([]string, len(preyMap))
-	reverseMap := make(map[string]string, len(preyMap))
-	i := 0
-	for prey, preyDefinition := range preyMap {
-		preyOrder[i] = preyDefinition.Name
-		reverseMap[preyDefinition.Name] = prey
-		i++
-	}
-	sort.Strings(preyOrder)
-	for i, name := range preyOrder {
-		preyOrder[i] = reverseMap[name]
-	}
-
+func writeMatrix(data map[string]map[string]int, baits []read.BaitDatRow, preyMap map[string]*preyDefinition, preyOrder []string, outfile string) {
 	// Order samples alphabetically.
 	sampleOrder := make([]string, len(baits))
-	i = 0
+	i := 0
 	for _, bait := range baits {
 		sampleOrder[i] = bait.ID
 		i++
