@@ -4,6 +4,7 @@ import (
 	"errors"
 	"log"
 
+	"github.com/knightjdr/cmgo/analysis/dbgenes"
 	"github.com/knightjdr/cmgo/enrichment/heatmap"
 	"github.com/knightjdr/cmgo/nmf/subset"
 	"github.com/knightjdr/cmgo/organelle/overlap"
@@ -18,7 +19,9 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	if options["module"] == "enrichment-heatmap" {
+	if options["module"] == "analysis-dbgenes" {
+		dbgenes.List(options)
+	} else if options["module"] == "enrichment-heatmap" {
 		heatmap.Region(options)
 	} else if options["module"] == "nmf-subset" {
 		subset.NMF(options)

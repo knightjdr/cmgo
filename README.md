@@ -22,7 +22,19 @@ cmgo -options="config.json" -module="module-name"
 
 Module specific parameters can be found in the README files in the corresponding folder.
 
+## Analysis
+
+Modules for generating files for upload and query file processing.
+
+### Module name: `analysis-dbgenes`
+
+* folder `analysis-dbgenes`
+
+Generates a txt file of genes in FASTA database
+
 ## Enrichment
+
+Modules for calculating term enrichment in compartments and associated images.
 
 ### Module name: `enrichment-heatmap`
 
@@ -32,6 +44,8 @@ Creates a heat map visualizing region (domain/motif) fold enrichment (scaled to 
 
 ## NMF
 
+Modules for NMF (and related) analysis.
+
 ### Module name: `nmf-subset`
 
 * folder `nmf/enrichment`
@@ -39,6 +53,8 @@ Creates a heat map visualizing region (domain/motif) fold enrichment (scaled to 
 > Subset an NMF basis (prey) matrix to only include preys enriched on in specified compartments.
 
 ## Organelle comparison
+
+Modules for comparing cell map compartments.
 
 ### Module name: `organelle-overlap`
 
@@ -73,6 +89,16 @@ Generates a list of preys that were not significant with any bait in a SAINT fil
 1. CRAPome matrix
   * module: `summary-crapome`
   * filename: `crapome-matrix-v1.txt`
+  * destination: client/resources/downloads
 2. preys detected in samples that are not significant
   * module: `summary-notsignificant`
   * filename: `not-significant-v1.txt`
+  * destination: client/resources/downloads
+3. sequence database
+  * download FASTA database from ProHits
+  * filename: `sequence-database-v1.txt`
+  * destination: client/resources/downloads
+4. genes in database
+  * module: `analysis-dbgenes`
+  * filename: `v1_dbgenes.txt`
+  * destination: api/app/data/genes
