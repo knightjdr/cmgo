@@ -20,7 +20,7 @@ func TestMapPreyDatLine(t *testing.T) {
 	line := []string{"NP_000029.2", "2843", "APC"}
 	wanted := PreyDatRow{
 		Accession: "NP_000029.2",
-		GeneID:    2843,
+		Length:    2843,
 		Name:      "APC",
 	}
 	assert.Equal(t, wanted, mapPreyDatLine(line), "Should map line from prey.dat file to struct")
@@ -42,11 +42,11 @@ func TestPreyDat(t *testing.T) {
 
 	// TEST1: only filter by FDR
 	wanted := []PreyDatRow{
-		{Accession: "BirA_R118G_H0QFJ5", GeneID: 321, Name: "BirA_R118G_H0QFJ5"},
-		{Accession: "NP_000029.2", GeneID: 2843, Name: "APC"},
-		{Accession: "NP_000108.1", GeneID: 254, Name: "EMD"},
-		{Accession: "NP_000280.1", GeneID: 780, Name: "PFKM"},
-		{Accession: "NP_000402.3", GeneID: 726, Name: "HLCS"},
+		{Accession: "BirA_R118G_H0QFJ5", Length: 321, Name: "BirA_R118G_H0QFJ5"},
+		{Accession: "NP_000029.2", Length: 2843, Name: "APC"},
+		{Accession: "NP_000108.1", Length: 254, Name: "EMD"},
+		{Accession: "NP_000280.1", Length: 780, Name: "PFKM"},
+		{Accession: "NP_000402.3", Length: 726, Name: "HLCS"},
 	}
 	assert.Equal(t, wanted, PreyDat("test/prey.dat"), "Should read bait.dat file")
 }

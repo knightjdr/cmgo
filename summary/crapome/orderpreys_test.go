@@ -23,13 +23,13 @@ func TestOrderPreys(t *testing.T) {
 			"128_590": 3,
 		},
 	}
-	preyMap := map[string]*preyDefinition{
-		"A": &preyDefinition{GeneID: 1, Name: "preyA"},
-		"B": &preyDefinition{GeneID: 2, Name: "preyB"},
-		"C": &preyDefinition{GeneID: 3, Name: "preyC"},
-		"D": &preyDefinition{GeneID: 4, Name: "preyD"},
-		"E": &preyDefinition{GeneID: 5, Name: "preyE"},
-		"F": &preyDefinition{GeneID: 6, Name: "preyF"},
+	preyMap := map[string]string{
+		"A": "preyA",
+		"B": "preyB",
+		"C": "preyC",
+		"D": "preyD",
+		"E": "preyE",
+		"F": "preyF",
 	}
 	wanted := []string{"A", "B", "C", "D"}
 	assert.Equal(t, wanted, orderPreys(data, preyMap), "Should order preys to output alphabetically")

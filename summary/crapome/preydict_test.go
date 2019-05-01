@@ -9,18 +9,18 @@ import (
 
 func TestPreyDict(t *testing.T) {
 	preys := []read.PreyDatRow{
-		{Accession: "BirA_R118G_H0QFJ5", GeneID: 321, Name: "BirA_R118G_H0QFJ5"},
-		{Accession: "NP_000029.2", GeneID: 2843, Name: "APC"},
-		{Accession: "NP_000108.1", GeneID: 254, Name: "EMD"},
-		{Accession: "NP_000280.1", GeneID: 780, Name: "PFKM"},
-		{Accession: "NP_000402.3", GeneID: 726, Name: "HLCS"},
+		{Accession: "BirA_R118G_H0QFJ5", Length: 321, Name: "BirA_R118G_H0QFJ5"},
+		{Accession: "NP_000029.2", Length: 2843, Name: "APC"},
+		{Accession: "NP_000108.1", Length: 254, Name: "EMD"},
+		{Accession: "NP_000280.1", Length: 780, Name: "PFKM"},
+		{Accession: "NP_000402.3", Length: 726, Name: "HLCS"},
 	}
-	wanted := map[string]*preyDefinition{
-		"BirA_R118G_H0QFJ5": &preyDefinition{GeneID: 321, Name: "BirA_R118G_H0QFJ5"},
-		"NP_000029.2":       &preyDefinition{GeneID: 2843, Name: "APC"},
-		"NP_000108.1":       &preyDefinition{GeneID: 254, Name: "EMD"},
-		"NP_000280.1":       &preyDefinition{GeneID: 780, Name: "PFKM"},
-		"NP_000402.3":       &preyDefinition{GeneID: 726, Name: "HLCS"},
+	wanted := map[string]string{
+		"BirA_R118G_H0QFJ5": "BirA_R118G_H0QFJ5",
+		"NP_000029.2":       "APC",
+		"NP_000108.1":       "EMD",
+		"NP_000280.1":       "PFKM",
+		"NP_000402.3":       "HLCS",
 	}
 	assert.Equal(t, wanted, preyDict(preys), "Should convert an array of prey data to a map")
 }

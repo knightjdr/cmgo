@@ -11,7 +11,7 @@ import (
 	"github.com/spf13/afero"
 )
 
-func writeMatrix(data map[string]map[string]int, baits []read.BaitDatRow, preyMap map[string]*preyDefinition, preyOrder []string, outfile string) {
+func writeMatrix(data map[string]map[string]int, baits []read.BaitDatRow, preyMap map[string]string, preyOrder []string, outfile string) {
 	// Order samples alphabetically.
 	sampleOrder := make([]string, len(baits))
 	i := 0
@@ -23,7 +23,7 @@ func writeMatrix(data map[string]map[string]int, baits []read.BaitDatRow, preyMa
 
 	// Create file header with sample IDs.
 	var buffer bytes.Buffer
-	buffer.WriteString("GENE\tREFSEQ_ID\tENTREZ_ID\tAVE_SC\tNUM_EXPT")
+	buffer.WriteString("GENE\tREFSEQ_ID\tAVE_SC\tNUM_EXPT")
 	for _, id := range sampleOrder {
 		buffer.WriteString(fmt.Sprintf("\t%s", id))
 	}
@@ -40,7 +40,7 @@ func writeMatrix(data map[string]map[string]int, baits []read.BaitDatRow, preyMa
 		}
 		aveSC := stats.MeanInt(spectralCounts)
 
-		buffer.WriteString(fmt.Sprintf("%s\t%s\t%d\t%0.2f\t%d", preyMap[accession].Name, accession, preyMap[accession].GeneID, aveSC, numExpt))
+		buffer.WriteString(fmt.Sprintf("%s\t%s\t%0.2f\t%d", preyMap[accession], accession, aveSC, numExpt))
 		for _, id := range sampleOrder {
 			var spec int
 			if _, ok := data[accession][id]; ok {

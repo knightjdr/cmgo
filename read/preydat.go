@@ -12,17 +12,17 @@ import (
 // PreyDatRow defines the headers in a bait.dat file.
 type PreyDatRow struct {
 	Accession string
-	GeneID    int
+	Length    int
 	Name      string
 }
 
 func mapPreyDatLine(line []string) PreyDatRow {
 	accession := line[0]
-	geneID, _ := strconv.Atoi(line[1])
+	length, _ := strconv.Atoi(line[1])
 	name := line[2]
 	row := PreyDatRow{
 		Accession: accession,
-		GeneID:    geneID,
+		Length:    length,
 		Name:      name,
 	}
 	return row

@@ -7,7 +7,7 @@
 | baitFiles | bait.dat: files with bait sample IDs, bait name and control status (C: control, T: non-control)  | |
 | interactionFiles | inter.dat: files with bait ID and name, prey accession and spectral count  | |
 | outFile | output matrix | crapome-matrix.txt |
-| preyFiles | prey.dat: files with prey accession, gene ID and gene name | |
+| preyFiles | prey.dat: files with prey accession, sequence length and gene name | |
 
 Multiple SAINT tasks can be merged by listing multiple bait.dat, inter.dat and prey.dat files separated by a semicolon. Each of these should be listed in a consistent order:
 ```
@@ -40,7 +40,7 @@ header: projectID_sampleID | bait name | prey accession | spectral count | uniqu
 ```
 
 ### preyFile (prey.dat)
-header: accession | Entrez gene ID | prey name |
+header: accession | prey sequence length | prey name |
 ```
 BirA_R118G_H0QFJ5	321	BirA_R118G_H0QFJ5
 NP_000029.2	2843	APC
