@@ -1,10 +1,10 @@
 package crapome
 
 import (
-	"github.com/knightjdr/cmgo/read"
+	"github.com/knightjdr/cmgo/read/saint"
 )
 
-func preyDict(preys []read.PreyDatRow) map[string]string {
+func preyDict(preys []saint.PreyDatRow) map[string]string {
 	preyMap := make(map[string]string, len(preys))
 
 	for _, prey := range preys {

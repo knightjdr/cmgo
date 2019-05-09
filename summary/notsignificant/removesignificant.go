@@ -1,10 +1,10 @@
 package notsignificant
 
 import (
-	"github.com/knightjdr/cmgo/read"
+	"github.com/knightjdr/cmgo/read/saint"
 )
 
-func removeSignificant(data []read.SaintRow, fdr float64) []read.SaintRow {
+func removeSignificant(data []saint.Row, fdr float64) []saint.Row {
 	significant := make(map[string]bool, 0)
 	for _, row := range data {
 		if row.FDR <= fdr {
@@ -12,7 +12,7 @@ func removeSignificant(data []read.SaintRow, fdr float64) []read.SaintRow {
 		}
 	}
 
-	filtered := make([]read.SaintRow, 0, len(data))
+	filtered := make([]saint.Row, 0, len(data))
 	for _, row := range data {
 		if _, ok := significant[row.PreyGene]; !ok {
 			filtered = append(filtered, row)

@@ -3,12 +3,12 @@ package notsignificant
 import (
 	"testing"
 
-	"github.com/knightjdr/cmgo/read"
+	"github.com/knightjdr/cmgo/read/saint"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestRemoveSignificant(t *testing.T) {
-	data := []read.SaintRow{
+	data := []saint.Row{
 		{Bait: "a", PreyGene: "prey-1", FDR: 0.01},
 		{Bait: "a", PreyGene: "prey-2", FDR: 0},
 		{Bait: "a", PreyGene: "prey-3", FDR: 0.05},
@@ -18,7 +18,7 @@ func TestRemoveSignificant(t *testing.T) {
 		{Bait: "c", PreyGene: "prey-7", FDR: 0.1},
 		{Bait: "c", PreyGene: "prey-3", FDR: 0},
 	}
-	wanted := []read.SaintRow{
+	wanted := []saint.Row{
 		{Bait: "c", PreyGene: "prey-6", FDR: 0.09},
 		{Bait: "c", PreyGene: "prey-7", FDR: 0.1},
 	}

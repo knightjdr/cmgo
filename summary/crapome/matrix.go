@@ -4,7 +4,7 @@ package crapome
 import (
 	"log"
 
-	"github.com/knightjdr/cmgo/read"
+	"github.com/knightjdr/cmgo/read/saint"
 )
 
 // Matrix reads SAINT input files and generates a CRAPome matrix.
@@ -15,17 +15,17 @@ func Matrix(fileOptions map[string]interface{}) {
 	}
 
 	// Read and merge .dat files.
-	baits := make([]read.BaitDatRow, 0)
+	baits := make([]saint.BaitDatRow, 0)
 	for _, filename := range options.baitFiles {
-		baits = append(baits, read.BaitDat(filename)...)
+		baits = append(baits, saint.BaitDat(filename)...)
 	}
-	interactions := make([]read.InterDatRow, 0)
+	interactions := make([]saint.InterDatRow, 0)
 	for _, filename := range options.interactionFiles {
-		interactions = append(interactions, read.InterDat(filename)...)
+		interactions = append(interactions, saint.InterDat(filename)...)
 	}
-	preys := make([]read.PreyDatRow, 0)
+	preys := make([]saint.PreyDatRow, 0)
 	for _, filename := range options.preyFiles {
-		preys = append(preys, read.PreyDat(filename)...)
+		preys = append(preys, saint.PreyDat(filename)...)
 	}
 
 	// Remove non-controls.

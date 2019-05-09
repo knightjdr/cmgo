@@ -1,4 +1,4 @@
-package read
+package saint
 
 import (
 	"testing"
@@ -43,7 +43,7 @@ func TestMapSaintLine(t *testing.T) {
 		"655",
 		"NP_000009.1",
 	}
-	wanted := SaintRow{
+	wanted := Row{
 		Bait:               "AARS2",
 		PreyGene:           "ACADVL",
 		AvgSpec:            4.5,
@@ -75,7 +75,7 @@ func TestMapSaintLine(t *testing.T) {
 		"45.00",
 		"0.00",
 	}
-	wanted = SaintRow{
+	wanted = Row{
 		Bait:               "AARS2",
 		PreyGene:           "ACADVL",
 		AvgSpec:            4.5,
@@ -90,7 +90,7 @@ func TestMapSaintLine(t *testing.T) {
 }
 
 func TestFilterBaits(t *testing.T) {
-	rows := []SaintRow{
+	rows := []Row{
 		{Bait: "AARS2", PreyGene: "ACADVL", AvgSpec: 4.5, Control: []float64{0, 0, 0, 0, 0, 0}, AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655, Spec: []float64{3, 6}},
 		{Bait: "AARS2", PreyGene: "ACAT1", AvgSpec: 7, Control: []float64{0, 0, 0, 0, 0, 0}, AvgP: 1, FoldChange: 70, FDR: 0, PreySequenceLength: 427, Spec: []float64{6, 8}},
 		{Bait: "AARS2", PreyGene: "DLD", AvgSpec: 16, Control: []float64{0, 0, 0, 1, 0, 0}, AvgP: 1, FoldChange: 22.86, FDR: 0, PreySequenceLength: 509, Spec: []float64{18, 14}},
@@ -102,14 +102,14 @@ func TestFilterBaits(t *testing.T) {
 	assert.Equal(t, wanted, filterBaits(rows, 1), "Should return input rows when there is no bait filter")
 
 	// TEST2: should filter by minBait number
-	wanted = []SaintRow{
+	wanted = []Row{
 		{Bait: "AARS2", PreyGene: "ACADVL", AvgSpec: 4.5, Control: []float64{0, 0, 0, 0, 0, 0}, AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655, Spec: []float64{3, 6}},
 		{Bait: "ABCC1", PreyGene: "ACADVL", AvgSpec: 4.5, Control: []float64{0, 0, 0, 0, 0, 0}, AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655, Spec: []float64{3, 6}},
 	}
 	assert.Equal(t, wanted, filterBaits(rows, 2), "Should filter to remove preys seen with less baits than bait filter")
 }
 
-func TestSaint(t *testing.T) {
+func TestRead(t *testing.T) {
 	oldFs := fs.Instance
 	defer func() { fs.Instance = oldFs }()
 	fs.Instance = afero.NewMemMapFs()
@@ -124,18 +124,18 @@ func TestSaint(t *testing.T) {
 	)
 
 	// TEST1: only filter by FDR
-	wanted := []SaintRow{
+	wanted := []Row{
 		{Bait: "AARS2", PreyGene: "ACADVL", AvgSpec: 4.5, Control: []float64{0, 0, 0, 0, 0, 0}, AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655, Spec: []float64{3, 6}},
 		{Bait: "AARS2", PreyGene: "ACAT1", AvgSpec: 7, Control: []float64{0, 0, 0, 0, 0, 0}, AvgP: 1, FoldChange: 70, FDR: 0, PreySequenceLength: 427, Spec: []float64{6, 8}},
 		{Bait: "AARS2", PreyGene: "DLD", AvgSpec: 16, Control: []float64{0, 0, 0, 1, 0, 0}, AvgP: 1, FoldChange: 22.86, FDR: 0, PreySequenceLength: 509, Spec: []float64{18, 14}},
 		{Bait: "ABCC1", PreyGene: "ACADVL", AvgSpec: 4.5, Control: []float64{0, 0, 0, 0, 0, 0}, AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655, Spec: []float64{3, 6}},
 	}
-	assert.Equal(t, wanted, Saint("test/saint.txt", 0.01, 1), "Should read and filter SAINT file by FDR")
+	assert.Equal(t, wanted, Read("test/saint.txt", 0.01, 1), "Should read and filter SAINT file by FDR")
 
 	// TEST2: filter by FDR and minBait number
-	wanted = []SaintRow{
+	wanted = []Row{
 		{Bait: "AARS2", PreyGene: "ACADVL", AvgSpec: 4.5, Control: []float64{0, 0, 0, 0, 0, 0}, AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655, Spec: []float64{3, 6}},
 		{Bait: "ABCC1", PreyGene: "ACADVL", AvgSpec: 4.5, Control: []float64{0, 0, 0, 0, 0, 0}, AvgP: 1, FoldChange: 45, FDR: 0, PreySequenceLength: 655, Spec: []float64{3, 6}},
 	}
-	assert.Equal(t, wanted, Saint("test/saint.txt", 0.01, 2), "Should read and filter SAINT file by FDR and minimum bait")
+	assert.Equal(t, wanted, Read("test/saint.txt", 0.01, 2), "Should read and filter SAINT file by FDR and minimum bait")
 }

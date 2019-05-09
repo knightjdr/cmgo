@@ -17,5 +17,5 @@ func TestKey(t *testing.T) {
 	wanted := []string{"a", "c", "d"}
 	result := Key(occurrence, 2)
 	sort.Strings(result)
-	assert.Equal(t, wanted, Key(occurrence, 2), "Should return a slice with map keys that have values passing filter")
+	assert.Equal(t, wanted, result, "Should return a slice with map keys that have values passing filter")
 }

@@ -6,12 +6,12 @@ import (
 	"sort"
 
 	"github.com/knightjdr/cmgo/fs"
-	"github.com/knightjdr/cmgo/read"
+	"github.com/knightjdr/cmgo/read/saint"
 	"github.com/knightjdr/cmgo/stats"
 	"github.com/spf13/afero"
 )
 
-func writeMatrix(data map[string]map[string]int, baits []read.BaitDatRow, preyMap map[string]string, preyOrder []string, outfile string) {
+func writeMatrix(data map[string]map[string]int, baits []saint.BaitDatRow, preyMap map[string]string, preyOrder []string, outfile string) {
 	// Order samples alphabetically.
 	sampleOrder := make([]string, len(baits))
 	i := 0

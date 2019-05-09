@@ -1,5 +1,5 @@
-// Package read reads and parses common files
-package read
+// Package saint reads and parses SAINT-related files.
+package saint
 
 import (
 	"encoding/csv"
@@ -12,8 +12,8 @@ import (
 	"github.com/knightjdr/cmgo/slice"
 )
 
-// SaintRow defines the headers in a SAINT file.
-type SaintRow struct {
+// Row defines the headers in a SAINT file.
+type Row struct {
 	Bait               string
 	PreyGene           string
 	Spec               []float64
@@ -25,14 +25,14 @@ type SaintRow struct {
 	PreySequenceLength int64
 }
 
-func mapSaintLine(line []string) SaintRow {
+func mapSaintLine(line []string) Row {
 	avgspec, _ := strconv.ParseFloat(line[5], 64)
 	avgp, _ := strconv.ParseFloat(line[8], 64)
 	control := slice.ConvertStringToFloat(strings.Split(line[7], "|"))
 	foldchange, _ := strconv.ParseFloat(line[14], 64)
 	fdr, _ := strconv.ParseFloat(line[15], 64)
 	spec := slice.ConvertStringToFloat(strings.Split(line[3], "|"))
-	row := SaintRow{
+	row := Row{
 		AvgP:       avgp,
 		AvgSpec:    avgspec,
 		Bait:       line[0],
@@ -50,7 +50,7 @@ func mapSaintLine(line []string) SaintRow {
 	return row
 }
 
-func filterBaits(rows []SaintRow, minBaits int) []SaintRow {
+func filterBaits(rows []Row, minBaits int) []Row {
 	// Filter by bait number.
 	if minBaits <= 1 {
 		return rows
@@ -62,7 +62,7 @@ func filterBaits(rows []SaintRow, minBaits int) []SaintRow {
 		preys[row.PreyGene]++
 	}
 
-	filteredRows := make([]SaintRow, 0)
+	filteredRows := make([]Row, 0)
 	for _, row := range rows {
 		if preys[row.PreyGene] >= minBaits {
 			filteredRows = append(filteredRows, row)
@@ -71,8 +71,8 @@ func filterBaits(rows []SaintRow, minBaits int) []SaintRow {
 	return filteredRows
 }
 
-// Saint reads a SAINT file and filters by FDR.
-func Saint(filename string, fdr float64, minBaits int) []SaintRow {
+// Read reads a SAINT file and filters by FDR.
+func Read(filename string, fdr float64, minBaits int) []Row {
 	file, err := fs.Instance.Open(filename)
 	if err != nil {
 		log.Fatalln(err)
@@ -90,7 +90,7 @@ func Saint(filename string, fdr float64, minBaits int) []SaintRow {
 	}
 
 	// Read file and filter by FDR.
-	rows := make([]SaintRow, 0)
+	rows := make([]Row, 0)
 	for {
 		line, err := reader.Read()
 		if err != nil {

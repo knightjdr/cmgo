@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/knightjdr/cmgo/organelle"
-	"github.com/knightjdr/cmgo/read"
+	"github.com/knightjdr/cmgo/read/saint"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -14,7 +14,7 @@ func TestOverlapPreys(t *testing.T) {
 		{Name: "compartmentA", Proteins: []string{"a", "b", "c"}},
 		{Name: "compartmentB", Proteins: []string{"d", "e", "f"}},
 	}
-	saint := []read.SaintRow{
+	saint := []saint.Row{
 		{Bait: "a", PreyGene: "1"},
 		{Bait: "a", PreyGene: "2"},
 		{Bait: "a", PreyGene: "3"},

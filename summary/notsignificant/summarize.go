@@ -1,7 +1,7 @@
 package notsignificant
 
 import (
-	"github.com/knightjdr/cmgo/read"
+	"github.com/knightjdr/cmgo/read/saint"
 	"github.com/knightjdr/cmgo/stats"
 )
 
@@ -14,7 +14,7 @@ type preySummary struct {
 
 type summary map[string]*preySummary
 
-func summarize(data []read.SaintRow) map[string]*preySummary {
+func summarize(data []saint.Row) map[string]*preySummary {
 	preys := make(map[string]*preySummary, 0)
 
 	for _, preyData := range data {

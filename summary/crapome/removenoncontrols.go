@@ -1,12 +1,12 @@
 package crapome
 
 import (
-	"github.com/knightjdr/cmgo/read"
+	"github.com/knightjdr/cmgo/read/saint"
 )
 
-func removeNonControls(baits []read.BaitDatRow, interactions []read.InterDatRow) ([]read.BaitDatRow, []read.InterDatRow) {
-	filteredBaits := make([]read.BaitDatRow, 0, len(baits))
-	filteredInteractions := make([]read.InterDatRow, 0, len(interactions))
+func removeNonControls(baits []saint.BaitDatRow, interactions []saint.InterDatRow) ([]saint.BaitDatRow, []saint.InterDatRow) {
+	filteredBaits := make([]saint.BaitDatRow, 0, len(baits))
+	filteredInteractions := make([]saint.InterDatRow, 0, len(interactions))
 
 	controls := make(map[string]bool, 0)
 	for _, baitRow := range baits {

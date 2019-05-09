@@ -42,6 +42,14 @@ Modules for calculating term enrichment in compartments and associated images.
 
 Creates a heat map visualizing region (domain/motif) fold enrichment (scaled to Log2) across NMF or SAFE compartments.
 
+## Localization assessment
+
+### Module name: `nmf-safe`
+
+* folder `assessment/localization/nmfsafe`
+
+> Check concordance between NMF and SAFE localizations
+
 ## NMF
 
 Modules for NMF (and related) analysis.

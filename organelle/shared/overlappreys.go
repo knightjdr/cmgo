@@ -3,12 +3,12 @@ package shared
 import (
 	"github.com/knightjdr/cmgo/filter"
 	"github.com/knightjdr/cmgo/organelle"
-	"github.com/knightjdr/cmgo/read"
+	"github.com/knightjdr/cmgo/read/saint"
 	"github.com/knightjdr/cmgo/slice"
 	"github.com/knightjdr/cmgo/stats"
 )
 
-func overlapPreys(compartments organelle.Compartments, saint []read.SaintRow, minOccurence int) []string {
+func overlapPreys(compartments organelle.Compartments, saint []saint.Row, minOccurence int) []string {
 	compartmentDictA := slice.Dict(compartments[0].Proteins)
 	compartmentDictB := slice.Dict(compartments[1].Proteins)
 

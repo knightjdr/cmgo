@@ -1,37 +1,38 @@
-package read
+package saint
 
 import (
 	"encoding/csv"
 	"io"
 	"log"
+	"strconv"
 
 	"github.com/knightjdr/cmgo/fs"
 )
 
-// BaitDatRow defines the headers in a bait.dat file.
-type BaitDatRow struct {
-	ID      string
-	Name    string
-	Control bool
+// InterDatRow defines the headers in a bait.dat file.
+type InterDatRow struct {
+	ID   string
+	Bait string
+	Prey string
+	Spec int
 }
 
-func mapBaitDatLine(line []string) BaitDatRow {
+func mapInterDatLine(line []string) InterDatRow {
 	id := line[0]
-	name := line[1]
-	var control bool
-	if line[2] == "C" {
-		control = true
-	}
-	row := BaitDatRow{
-		Control: control,
-		ID:      id,
-		Name:    name,
+	bait := line[1]
+	prey := line[2]
+	spec, _ := strconv.Atoi(line[3])
+	row := InterDatRow{
+		ID:   id,
+		Bait: bait,
+		Prey: prey,
+		Spec: spec,
 	}
 	return row
 }
 
-// BaitDat reads a bait.dat file.
-func BaitDat(filename string) []BaitDatRow {
+// InterDat reads a prey.dat file.
+func InterDat(filename string) []InterDatRow {
 	file, err := fs.Instance.Open(filename)
 	if err != nil {
 		log.Fatalln(err)
@@ -43,7 +44,7 @@ func BaitDat(filename string) []BaitDatRow {
 	reader.LazyQuotes = true
 
 	// Read file and filter by FDR.
-	rows := make([]BaitDatRow, 0)
+	rows := make([]InterDatRow, 0)
 	for {
 		line, err := reader.Read()
 		if err != nil {
@@ -53,7 +54,7 @@ func BaitDat(filename string) []BaitDatRow {
 			log.Fatalln(err)
 		}
 
-		row := mapBaitDatLine(line)
+		row := mapInterDatLine(line)
 		rows = append(rows, row)
 	}
 

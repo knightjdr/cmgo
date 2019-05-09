@@ -3,17 +3,17 @@ package crapome
 import (
 	"testing"
 
-	"github.com/knightjdr/cmgo/read"
+	"github.com/knightjdr/cmgo/read/saint"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestRemoveNonControls(t *testing.T) {
-	baits := []read.BaitDatRow{
+	baits := []saint.BaitDatRow{
 		{Control: false, ID: "128_468", Name: "ACTB"},
 		{Control: false, ID: "128_590", Name: "ATP2A1"},
 		{Control: true, ID: "128_737", Name: "737_BirAFLAG"},
 	}
-	interactions := []read.InterDatRow{
+	interactions := []saint.InterDatRow{
 		{Bait: "ACTB", ID: "128_468", Prey: "A", Spec: 1410},
 		{Bait: "ACTB", ID: "128_468", Prey: "B", Spec: 4},
 		{Bait: "ATP2A1", ID: "128_590", Prey: "C", Spec: 2},
@@ -21,10 +21,10 @@ func TestRemoveNonControls(t *testing.T) {
 		{Bait: "737_BirAFLAG", ID: "128_737", Prey: "E", Spec: 11},
 		{Bait: "737_BirAFLAG", ID: "128_737", Prey: "F", Spec: 11},
 	}
-	wantedBaits := []read.BaitDatRow{
+	wantedBaits := []saint.BaitDatRow{
 		{Control: true, ID: "128_737", Name: "737_BirAFLAG"},
 	}
-	wantedInteractions := []read.InterDatRow{
+	wantedInteractions := []saint.InterDatRow{
 		{Bait: "737_BirAFLAG", ID: "128_737", Prey: "E", Spec: 11},
 		{Bait: "737_BirAFLAG", ID: "128_737", Prey: "F", Spec: 11},
 	}

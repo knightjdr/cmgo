@@ -3,12 +3,12 @@ package crapome
 import (
 	"testing"
 
-	"github.com/knightjdr/cmgo/read"
+	"github.com/knightjdr/cmgo/read/saint"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestPreyDict(t *testing.T) {
-	preys := []read.PreyDatRow{
+	preys := []saint.PreyDatRow{
 		{Accession: "BirA_R118G_H0QFJ5", Length: 321, Name: "BirA_R118G_H0QFJ5"},
 		{Accession: "NP_000029.2", Length: 2843, Name: "APC"},
 		{Accession: "NP_000108.1", Length: 254, Name: "EMD"},

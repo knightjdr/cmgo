@@ -2,8 +2,6 @@ github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/knightjdr/hclust v0.0.0-20190225152507-b525b513dc7c h1:zKJNZmcdXyQkibBpSLZmoUQUSQSXjftvUVD9+D9+360=
 github.com/knightjdr/hclust v0.0.0-20190225152507-b525b513dc7c/go.mod h1:nmEqwPDBoBhcPtu+hL79FP1wkdXoGK7O4/uFJ1A5vO4=
-github.com/knightjdr/prohits-viz-analysis v0.0.0-20190129201401-a7dc460f0516 h1:GR+oJwdtdzO5dl1MkkVVV65EbZuq/0uOdH0X48G6XcU=
-github.com/knightjdr/prohits-viz-analysis v0.0.0-20190129201401-a7dc460f0516/go.mod h1:LZd9YRfGQ8+R7sqGS2GEQvD4NcrGPP6XcytsV1ljUgU=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/spf13/afero v1.2.1 h1:qgMbHoJbPbw579P+1zVY+6n4nIFuIchaIjzZ/I/Yq8M=

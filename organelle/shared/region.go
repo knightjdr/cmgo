@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/knightjdr/cmgo/organelle"
-	"github.com/knightjdr/cmgo/read"
+	"github.com/knightjdr/cmgo/read/saint"
 )
 
 // Region summarizes regions in preys shared between two lists of proteins
@@ -17,7 +17,7 @@ func Region(fileOptions map[string]interface{}) {
 
 	compartments := organelle.ReadCompartments(options.compartmentFile)
 	regions := readRegions(options.regionFile)
-	saint := read.Saint(options.saintFile, options.fdr, 1)
+	saint := saint.Read(options.saintFile, options.fdr, 1)
 
 	shared := overlapPreys(compartments, saint, options.minPreyOccurrence)
 

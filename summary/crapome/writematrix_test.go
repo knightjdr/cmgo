@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/knightjdr/cmgo/fs"
-	"github.com/knightjdr/cmgo/read"
+	"github.com/knightjdr/cmgo/read/saint"
 	"github.com/spf13/afero"
 	"github.com/stretchr/testify/assert"
 )
@@ -17,7 +17,7 @@ func TestWriteMatrix(t *testing.T) {
 	// Create test directory and files.
 	fs.Instance.MkdirAll("test", 0755)
 
-	baits := []read.BaitDatRow{
+	baits := []saint.BaitDatRow{
 		{ID: "128_468"},
 		{ID: "128_590"},
 		{ID: "128_737"},

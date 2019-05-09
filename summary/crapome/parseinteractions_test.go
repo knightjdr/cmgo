@@ -3,12 +3,12 @@ package crapome
 import (
 	"testing"
 
-	"github.com/knightjdr/cmgo/read"
+	"github.com/knightjdr/cmgo/read/saint"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestParseInteractions(t *testing.T) {
-	interactions := []read.InterDatRow{
+	interactions := []saint.InterDatRow{
 		{Bait: "ACTB", ID: "128_468", Prey: "A", Spec: 1410},
 		{Bait: "ACTB", ID: "128_468", Prey: "B", Spec: 4},
 		{Bait: "ATP2A1", ID: "128_590", Prey: "C", Spec: 2},
