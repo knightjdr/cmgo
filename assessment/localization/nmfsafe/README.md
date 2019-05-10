@@ -1,4 +1,4 @@
-# Module name: `nmf-safe`
+# Module name: `nmf-v-safe`
 
 > Check concordance between NMF and SAFE localizations.
 
@@ -6,12 +6,13 @@
 |------------|------------|---------|
 | annotationsFile | GO annotations in .gaf format | |
 | goHierarchy | GO hierarchy in .obo format | |
+| namespace | GO namespace to use, one of BP, CC, MF | CC |
 | nmfLocalization | Text file with assigned NMF rank and score for each gene | |
 | nmfSummary | NMF rank summary file | |
 | outFile | output file name | concordance.txt |
+| outSummaryFile | file with summary statistics | summary.txt
 | safeLocalization | Node properties file output from SAFE | |
 | safeSummary | SAFE domain summary file | |
-| summaryFile | file with summary statistics | summary.txt
 
 ## Example file formats
 

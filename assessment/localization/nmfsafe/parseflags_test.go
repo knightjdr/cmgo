@@ -1,4 +1,4 @@
-package heatmap
+package nmfsafe
 
 import (
 	"errors"
@@ -16,25 +16,27 @@ func TestParseFlags(t *testing.T) {
 	// TEST1: return options from command line arguments.
 	os.Args = []string{
 		"cmd",
-		"-abundanceCap", "20",
-		"-clusteringMethod", "average",
-		"-compartmentSummary", "summary.txt",
-		"-distanceMetric", "ward",
-		"-enrichmentFile", "regions.txt",
-		"-minAbundance", "5",
-		"-outFile", "out.svg",
-		"-pValue", "0.01",
+		"-goAnnotations", "annotations.gaf",
+		"-goHierarchy", "hierarchy.obo",
+		"-namespace", "BP",
+		"-nmfLocalization", "nmf-localizations.txt",
+		"-nmfSummary", "rank-summary.txt",
+		"-outFile", "out.txt",
+		"-outSummaryFile", "out-summary.txt",
+		"-safeLocalization", "safe-localizations.txt",
+		"-safeSummary", "domain-summary.txt",
 	}
 	fileOptions := map[string]interface{}{}
 	wantArgs := parameters{
-		abundanceCap:       20,
-		clusteringMethod:   "average",
-		compartmentSummary: "summary.txt",
-		distanceMetric:     "ward",
-		enrichmentFile:     "regions.txt",
-		minAbundance:       5,
-		outFile:            "out.svg",
-		pValue:             0.01,
+		goAnnotations:    "annotations.gaf",
+		goHierarchy:      "hierarchy.obo",
+		namespace:        "BP",
+		nmfLocalization:  "nmf-localizations.txt",
+		nmfSummary:       "rank-summary.txt",
+		outFile:          "out.txt",
+		outSummaryFile:   "out-summary.txt",
+		safeLocalization: "safe-localizations.txt",
+		safeSummary:      "domain-summary.txt",
 	}
 	args, err := parseFlags(fileOptions)
 	assert.Nil(t, err, "Should not return an error when all required command line arguments are present")
@@ -43,22 +45,23 @@ func TestParseFlags(t *testing.T) {
 	// TEST2: return defaults when arguments missing.
 	os.Args = []string{
 		"cmd",
-		"-compartmentSummary", "summary.txt",
-		"-enrichmentFile", "regions.txt",
+		"-goAnnotations", "annotations.gaf",
+		"-goHierarchy", "hierarchy.obo",
+		"-nmfLocalization", "nmf-localizations.txt",
+		"-nmfSummary", "rank-summary.txt",
+		"-safeLocalization", "safe-localizations.txt",
+		"-safeSummary", "domain-summary.txt",
 	}
 	args, err = parseFlags(fileOptions)
-	assert.Equal(t, float64(10), args.abundanceCap, "Should return default abundance cap")
-	assert.Equal(t, "complete", args.clusteringMethod, "Should return default clustering method")
-	assert.Equal(t, "euclidean", args.distanceMetric, "Should return default distance metric")
-	assert.Equal(t, float64(0), args.minAbundance, "Should return default minimum abundance")
-	assert.Equal(t, "region-heatmap.svg", args.outFile, "Should return default outfile name")
-	assert.Equal(t, 0.01, args.pValue, "Should return default pValue")
+	assert.Equal(t, "CC", args.namespace, "Should return default namespace")
+	assert.Equal(t, "concordance.txt", args.outFile, "Should return default output file name")
+	assert.Equal(t, "summary.txt", args.outSummaryFile, "Should return default summary output file name")
 
 	// TEST3: returns error when parameters are missing.
 	os.Args = []string{
 		"cmd",
 	}
-	wantErr := errors.New("missing compartment summary file; missing enriched region file")
+	wantErr := errors.New("missing GO annotations (.gaf) file; missing GO hierarchy (.obo) file; missing NMF localization file; missing NMF rank summary file; missing SAFE localization file; missing SAFE rank summary file")
 	args, err = parseFlags(fileOptions)
 	assert.NotNil(t, err, "Should return error when missing arguments")
 	assert.Equal(t, wantErr, err, "Should return correct error message")
@@ -67,23 +70,25 @@ func TestParseFlags(t *testing.T) {
 	os.Args = []string{
 		"cmd",
 	}
-	fileOptions["abundanceCap"] = 20
-	fileOptions["clusteringMethod"] = "average"
-	fileOptions["compartmentSummary"] = "file-summary.txt"
-	fileOptions["distanceMetric"] = "ward"
-	fileOptions["enrichmentFile"] = "file-regions.txt"
-	fileOptions["minAbundance"] = 5
-	fileOptions["outFile"] = "file-out.svg"
-	fileOptions["pValue"] = 0.01
+	fileOptions["goAnnotations"] = "file-annotations.gaf"
+	fileOptions["goHierarchy"] = "file-hierarchy.obo"
+	fileOptions["namespace"] = "BP"
+	fileOptions["nmfLocalization"] = "file-nmf-localizations.txt"
+	fileOptions["nmfSummary"] = "file-rank-summary.txt"
+	fileOptions["outFile"] = "file-out.txt"
+	fileOptions["outSummaryFile"] = "file-out-summary.txt"
+	fileOptions["safeLocalization"] = "file-safe-localizations.txt"
+	fileOptions["safeSummary"] = "file-domain-summary.txt"
 	wantArgs = parameters{
-		abundanceCap:       20,
-		clusteringMethod:   "average",
-		compartmentSummary: "file-summary.txt",
-		distanceMetric:     "ward",
-		enrichmentFile:     "file-regions.txt",
-		minAbundance:       5,
-		outFile:            "file-out.svg",
-		pValue:             0.01,
+		goAnnotations:    "file-annotations.gaf",
+		goHierarchy:      "file-hierarchy.obo",
+		namespace:        "BP",
+		nmfLocalization:  "file-nmf-localizations.txt",
+		nmfSummary:       "file-rank-summary.txt",
+		outFile:          "file-out.txt",
+		outSummaryFile:   "file-out-summary.txt",
+		safeLocalization: "file-safe-localizations.txt",
+		safeSummary:      "file-domain-summary.txt",
 	}
 	args, err = parseFlags(fileOptions)
 	assert.Nil(t, err, "Should not return an error when all required parameters are present")

@@ -38,4 +38,5 @@ func summarizeRegions(proteins []string, regions map[string]map[string]bool, out
 		buffer.WriteString(fmt.Sprintf("%s\t%d\t%s\t%s\n", region.Key, region.Value, strings.Join(currProteins, ", "), strings.Join(diff, ", ")))
 	}
 	afero.WriteFile(fs.Instance, outfile, buffer.Bytes(), 0644)
+
 }

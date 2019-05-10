@@ -1,4 +1,4 @@
-package heatmap
+package nmfsafe
 
 import (
 	"errors"
@@ -8,46 +8,61 @@ import (
 )
 
 type parameters struct {
-	abundanceCap       float64
-	clusteringMethod   string
-	compartmentSummary string
-	distanceMetric     string
-	enrichmentFile     string
-	minAbundance       float64
-	outFile            string
-	pValue             float64
+	goAnnotations    string
+	goHierarchy      string
+	namespace        string
+	nmfLocalization  string
+	nmfSummary       string
+	outFile          string
+	outSummaryFile   string
+	safeLocalization string
+	safeSummary      string
 }
 
 func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	args := flags.Parse()
-	abundanceCap := flags.SetFloat("abundanceCap", args, fileOptions, 10)
-	clusteringMethod := flags.SetString("clusteringMethod", args, fileOptions, "complete")
-	compartmentSummary := flags.SetString("compartmentSummary", args, fileOptions, "")
-	distanceMetric := flags.SetString("distanceMetric", args, fileOptions, "euclidean")
-	enrichmentFile := flags.SetString("enrichmentFile", args, fileOptions, "")
-	minAbundance := flags.SetFloat("minAbundance", args, fileOptions, 0)
-	outFile := flags.SetString("outFile", args, fileOptions, "region-heatmap.svg")
-	pValue := flags.SetFloat("pValue", args, fileOptions, 0.01)
+	goAnnotations := flags.SetString("goAnnotations", args, fileOptions, "")
+	goHierarchy := flags.SetString("goHierarchy", args, fileOptions, "")
+	namespace := flags.SetString("namespace", args, fileOptions, "CC")
+	nmfLocalization := flags.SetString("nmfLocalization", args, fileOptions, "")
+	nmfSummary := flags.SetString("nmfSummary", args, fileOptions, "")
+	outFile := flags.SetString("outFile", args, fileOptions, "concordance.txt")
+	outSummaryFile := flags.SetString("outSummaryFile", args, fileOptions, "summary.txt")
+	safeLocalization := flags.SetString("safeLocalization", args, fileOptions, "")
+	safeSummary := flags.SetString("safeSummary", args, fileOptions, "")
 
 	// Copy arguments from options file.
 	options := parameters{
-		abundanceCap:       abundanceCap,
-		clusteringMethod:   clusteringMethod,
-		compartmentSummary: compartmentSummary,
-		distanceMetric:     distanceMetric,
-		enrichmentFile:     enrichmentFile,
-		minAbundance:       minAbundance,
-		outFile:            outFile,
-		pValue:             pValue,
+		goAnnotations:    goAnnotations,
+		goHierarchy:      goHierarchy,
+		namespace:        namespace,
+		nmfLocalization:  nmfLocalization,
+		nmfSummary:       nmfSummary,
+		outFile:          outFile,
+		outSummaryFile:   outSummaryFile,
+		safeLocalization: safeLocalization,
+		safeSummary:      safeSummary,
 	}
 
 	// Check for missing arguments.
 	messages := make([]string, 0)
-	if options.compartmentSummary == "" {
-		messages = append(messages, "missing compartment summary file")
+	if options.goAnnotations == "" {
+		messages = append(messages, "missing GO annotations (.gaf) file")
 	}
-	if options.enrichmentFile == "" {
-		messages = append(messages, "missing enriched region file")
+	if options.goHierarchy == "" {
+		messages = append(messages, "missing GO hierarchy (.obo) file")
+	}
+	if options.nmfLocalization == "" {
+		messages = append(messages, "missing NMF localization file")
+	}
+	if options.nmfSummary == "" {
+		messages = append(messages, "missing NMF rank summary file")
+	}
+	if options.safeLocalization == "" {
+		messages = append(messages, "missing SAFE localization file")
+	}
+	if options.safeSummary == "" {
+		messages = append(messages, "missing SAFE rank summary file")
 	}
 
 	// Format error message

@@ -44,7 +44,7 @@ Creates a heat map visualizing region (domain/motif) fold enrichment (scaled to 
 
 ## Localization assessment
 
-### Module name: `nmf-safe`
+### Module name: `nmf-v-safe`
 
 * folder `assessment/localization/nmfsafe`
 

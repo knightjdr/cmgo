@@ -1,4 +1,4 @@
-// Package nmf read NMF output files
+// Package nmf reads NMF output files and assess localizations
 package nmf
 
 import (

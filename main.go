@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/knightjdr/cmgo/analysis/dbgenes"
+	"github.com/knightjdr/cmgo/assessment/localization/nmfsafe"
 	"github.com/knightjdr/cmgo/enrichment/heatmap"
 	"github.com/knightjdr/cmgo/nmf/subset"
 	"github.com/knightjdr/cmgo/organelle/overlap"
@@ -25,6 +26,8 @@ func main() {
 		heatmap.Region(options)
 	} else if options["module"] == "nmf-subset" {
 		subset.NMF(options)
+	} else if options["module"] == "nmf-v-safe" {
+		nmfsafe.Concordance(options)
 	} else if options["module"] == "organelle-overlap" {
 		overlap.Metrics(options)
 	} else if options["module"] == "organelle-sharedregion" {

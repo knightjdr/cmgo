@@ -2,7 +2,6 @@ package organelle
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 
 	"github.com/knightjdr/cmgo/fs"
@@ -20,7 +19,6 @@ type Compartments []struct {
 func ReadCompartments(filename string) Compartments {
 	byteValue, err := afero.ReadFile(fs.Instance, filename)
 	if err != nil {
-		fmt.Println(filename)
 		log.Fatalln(err)
 	}
 	var compartments Compartments
