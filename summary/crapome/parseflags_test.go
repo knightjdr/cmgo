@@ -17,6 +17,7 @@ func TestParseFlags(t *testing.T) {
 	os.Args = []string{
 		"cmd",
 		"-baitFiles", "bait-task1.dat;bait-task2.dat",
+		"-crapomeID", "cc.txt",
 		"-interactionFiles", "inter-task1.dat;inter-task2.dat",
 		"-outFile", "out.txt",
 		"-preyFiles", "prey-task1.dat;prey-task2.dat",
@@ -24,6 +25,7 @@ func TestParseFlags(t *testing.T) {
 	fileOptions := map[string]interface{}{}
 	wantArgs := parameters{
 		baitFiles:        []string{"bait-task1.dat", "bait-task2.dat"},
+		crapomeIDfile:    "cc.txt",
 		interactionFiles: []string{"inter-task1.dat", "inter-task2.dat"},
 		outFile:          "out.txt",
 		preyFiles:        []string{"prey-task1.dat", "prey-task2.dat"},
@@ -36,6 +38,7 @@ func TestParseFlags(t *testing.T) {
 	os.Args = []string{
 		"cmd",
 		"-baitFiles", "bait-task1.dat;bait-task2.dat",
+		"-crapomeID", "cc.txt",
 		"-interactionFiles", "inter-task1.dat;inter-task2.dat",
 		"-preyFiles", "prey-task1.dat;prey-task2.dat",
 	}
@@ -56,11 +59,13 @@ func TestParseFlags(t *testing.T) {
 		"cmd",
 	}
 	fileOptions["baitFiles"] = "file-bait-task1.dat;file-bait-task2.dat"
+	fileOptions["crapomeID"] = "file-cc.txt"
 	fileOptions["interactionFiles"] = "file-inter-task1.dat;file-inter-task2.dat"
 	fileOptions["outFile"] = "file-out.txt"
 	fileOptions["preyFiles"] = "file-prey-task1.dat;file-prey-task2.dat"
 	wantArgs = parameters{
 		baitFiles:        []string{"file-bait-task1.dat", "file-bait-task2.dat"},
+		crapomeIDfile:    "file-cc.txt",
 		interactionFiles: []string{"file-inter-task1.dat", "file-inter-task2.dat"},
 		outFile:          "file-out.txt",
 		preyFiles:        []string{"file-prey-task1.dat", "file-prey-task2.dat"},

@@ -38,6 +38,11 @@ func TestWriteMatrix(t *testing.T) {
 			"128_590": 3,
 		},
 	}
+	idToCCmap := map[int]string{
+		468: "CC1",
+		590: "CC2",
+		737: "CC3",
+	}
 	preyMap := map[string]string{
 		"A": "preyA",
 		"B": "preyB",
@@ -45,12 +50,12 @@ func TestWriteMatrix(t *testing.T) {
 		"D": "preyD",
 	}
 	preyOrder := []string{"A", "B", "C", "D"}
-	wanted := "GENE\tREFSEQ_ID\tAVE_SC\tNUM_EXPT\t128_468\t128_590\t128_737\n" +
+	wanted := "GENE\tREFSEQ_ID\tAVE_SC\tNUM_EXPT\tCC1\tCC2\tCC3\n" +
 		"preyA\tA\t7.50\t2\t5\t0\t10\n" +
 		"preyB\tB\t6.00\t2\t4\t0\t8\n" +
 		"preyC\tC\t2.00\t1\t0\t2\t0\n" +
 		"preyD\tD\t3.00\t1\t0\t3\t0\n"
-	writeMatrix(data, baits, preyMap, preyOrder, "test/out.txt")
+	writeMatrix(data, baits, preyMap, preyOrder, idToCCmap, "test/out.txt")
 	bytes, _ := afero.ReadFile(fs.Instance, "test/out.txt")
 	assert.Equal(t, wanted, string(bytes), "Should write matrix to file")
 }

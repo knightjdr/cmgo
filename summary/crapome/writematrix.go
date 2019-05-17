@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"fmt"
 	"sort"
+	"strconv"
+	"strings"
 
 	"github.com/knightjdr/cmgo/fs"
 	"github.com/knightjdr/cmgo/read/saint"
@@ -11,12 +13,17 @@ import (
 	"github.com/spf13/afero"
 )
 
-func writeMatrix(data map[string]map[string]int, baits []saint.BaitDatRow, preyMap map[string]string, preyOrder []string, outfile string) {
-	// Order samples alphabetically.
+func writeMatrix(data map[string]map[string]int, baits []saint.BaitDatRow, preyMap map[string]string, preyOrder []string, idToCCmap map[int]string, outfile string) {
+	// Order samples alphabetically by CC number. Create a map for
+	// for retrieving bait ID from CC number since data is stored
+	// by bait ID.
+	ccToIDmap := make(map[string]string, 0)
 	sampleOrder := make([]string, len(baits))
 	i := 0
 	for _, bait := range baits {
-		sampleOrder[i] = bait.ID
+		id, _ := strconv.Atoi(strings.Split(bait.ID, "_")[1])
+		ccToIDmap[idToCCmap[id]] = bait.ID
+		sampleOrder[i] = idToCCmap[id]
 		i++
 	}
 	sort.Strings(sampleOrder)
@@ -41,7 +48,8 @@ func writeMatrix(data map[string]map[string]int, baits []saint.BaitDatRow, preyM
 		aveSC := stats.MeanInt(spectralCounts)
 
 		buffer.WriteString(fmt.Sprintf("%s\t%s\t%0.2f\t%d", preyMap[accession], accession, aveSC, numExpt))
-		for _, id := range sampleOrder {
+		for _, cc := range sampleOrder {
+			id := ccToIDmap[cc]
 			var spec int
 			if _, ok := data[accession][id]; ok {
 				spec = data[accession][id]

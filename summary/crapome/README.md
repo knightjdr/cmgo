@@ -5,6 +5,7 @@
 | parameters | definition | default |
 |------------|------------|---------|
 | baitFiles | bait.dat: files with bait sample IDs, bait name and control status (C: control, T: non-control)  | |
+| crapomeID | text file with two columns containing sample name with ID as ID_name and CRAPome CC number | |
 | interactionFiles | inter.dat: files with bait ID and name, prey accession and spectral count  | |
 | outFile | output matrix | crapome-matrix.txt |
 | preyFiles | prey.dat: files with prey accession, sequence length and gene name | |
@@ -26,6 +27,15 @@ header: projectID_sampleID | bait name | control status
 128_546	ATP2A1	T
 128_737	737_BirAFLAG	C
 128_825	825_BirAFLAG	C
+```
+### crapomeID
+```
+filename	cc
+9522_BirAFLAG_April2017_Go_RIPA_07012018.raw	CC1100
+9221_BirAFLAG_HighDen_Go_KA_RIPA_10112017_BR1.raw	CC1101
+7909_BirAFLAG_April2017_Go_RIPA_06042017_TR1.raw	CC1102
+7024_BirAFLAG_May2016_test_Go_RIPA_31102016_TR1	CC1103
+7015_BirAFLAG_May2016_Go_RIPA_31102016_TR1.raw	CC1104
 ```
 
 ### interactionFile (inter.dat)

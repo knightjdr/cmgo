@@ -14,6 +14,9 @@ func Matrix(fileOptions map[string]interface{}) {
 		log.Fatalln(err)
 	}
 
+	// Read crapome IDs
+	idToCCmap := readCC(options.crapomeIDfile)
+
 	// Read and merge .dat files.
 	baits := make([]saint.BaitDatRow, 0)
 	for _, filename := range options.baitFiles {
@@ -38,5 +41,5 @@ func Matrix(fileOptions map[string]interface{}) {
 	parsed := parseInteractions(interactions)
 	preyOrder := orderPreys(parsed, preyMap)
 
-	writeMatrix(parsed, baits, preyMap, preyOrder, options.outFile)
+	writeMatrix(parsed, baits, preyMap, preyOrder, idToCCmap, options.outFile)
 }

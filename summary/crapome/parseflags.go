@@ -9,6 +9,7 @@ import (
 
 type parameters struct {
 	baitFiles        []string
+	crapomeIDfile    string
 	interactionFiles []string
 	outFile          string
 	preyFiles        []string
@@ -17,6 +18,7 @@ type parameters struct {
 func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	args := flags.Parse()
 	baitFile := flags.SetString("baitFiles", args, fileOptions, "")
+	crapomeIDfile := flags.SetString("crapomeID", args, fileOptions, "")
 	interactionFile := flags.SetString("interactionFiles", args, fileOptions, "")
 	outFile := flags.SetString("outFile", args, fileOptions, "crapome-matrix.txt")
 	preyFile := flags.SetString("preyFiles", args, fileOptions, "")
@@ -24,6 +26,7 @@ func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	// Copy arguments from options file.
 	options := parameters{
 		baitFiles:        strings.Split(baitFile, ";"),
+		crapomeIDfile:    crapomeIDfile,
 		interactionFiles: strings.Split(interactionFile, ";"),
 		outFile:          outFile,
 		preyFiles:        strings.Split(preyFile, ";"),
