@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/knightjdr/cmgo/analysis/dbgenes"
+	"github.com/knightjdr/cmgo/assessment/bait/gradient"
 	"github.com/knightjdr/cmgo/assessment/localization/nmfsafe"
 	"github.com/knightjdr/cmgo/enrichment/heatmap"
 	"github.com/knightjdr/cmgo/nmf/subset"
@@ -22,6 +23,8 @@ func main() {
 
 	if options["module"] == "analysis-dbgenes" {
 		dbgenes.List(options)
+	} else if options["module"] == "bait-gradient" {
+		gradient.Draw(options)
 	} else if options["module"] == "enrichment-heatmap" {
 		heatmap.Region(options)
 	} else if options["module"] == "nmf-subset" {

@@ -44,6 +44,14 @@ Creates a heat map visualizing region (domain/motif) fold enrichment (scaled to 
 
 ## Localization assessment
 
+### Module name: `bait-gradient`
+
+* folder `assessment/bait/gradient`
+
+> Takes an ordered bait list and expected localizations for the baits and outputs a gradient showing
+> adjacent bait similarity: black if the two adjacent baits share an expected localization, grey
+> if only one does and white otherwise.
+
 ### Module name: `nmf-v-safe`
 
 * folder `assessment/localization/nmfsafe`
