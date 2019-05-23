@@ -46,10 +46,10 @@ func Concordance(fileOptions map[string]interface{}) {
 
 	for gene, nmfPrediction := range nmfLocalizations {
 		genes[gene] = &localizationInfo{
-			NMFids:   nmfSummary[nmfPrediction.Rank].GOid,
-			NMFknown: localization.IsKnown(gene, nmfSummary[nmfPrediction.Rank].GOid, (*goAnnotations.Genes)[options.namespace], (*goHierarchy)[options.namespace]),
-			NMFterms: nmfSummary[nmfPrediction.Rank].GOterms,
-			Rank:     nmfPrediction.Rank,
+			NMFids:   nmfSummary[nmfPrediction.Compartment].GOid,
+			NMFknown: localization.IsKnown(gene, nmfSummary[nmfPrediction.Compartment].GOid, (*goAnnotations.Genes)[options.namespace], (*goHierarchy)[options.namespace]),
+			NMFterms: nmfSummary[nmfPrediction.Compartment].GOterms,
+			Rank:     nmfPrediction.Compartment,
 		}
 	}
 
@@ -58,10 +58,10 @@ func Concordance(fileOptions map[string]interface{}) {
 	safeSummary := readLocalization.SummaryFile(options.safeSummary)
 
 	for gene, safePrediction := range safeLocalizations {
-		genes[gene].Domain = safePrediction.Domain
-		genes[gene].SAFEids = safeSummary[safePrediction.Domain].GOid
-		genes[gene].SAFEknown = localization.IsKnown(gene, safeSummary[safePrediction.Domain].GOid, (*goAnnotations.Genes)[options.namespace], (*goHierarchy)[options.namespace])
-		genes[gene].SAFEterms = safeSummary[safePrediction.Domain].GOterms
+		genes[gene].Domain = safePrediction.Compartment
+		genes[gene].SAFEids = safeSummary[safePrediction.Compartment].GOid
+		genes[gene].SAFEknown = localization.IsKnown(gene, safeSummary[safePrediction.Compartment].GOid, (*goAnnotations.Genes)[options.namespace], (*goHierarchy)[options.namespace])
+		genes[gene].SAFEterms = safeSummary[safePrediction.Compartment].GOterms
 	}
 
 	compare(genes, (*goHierarchy)[options.namespace])

@@ -26,7 +26,7 @@ func writeSVG(coordinates map[string]coordinate, colors []string, localization n
 	buffer.WriteString("<g id=\"network__zoom\" transform=\"translate(0, 0) scale(1)\">")
 	for _, node := range nodeOrder {
 		position := coordinates[node]
-		color := colors[localization[node].Rank]
+		color := colors[localization[node].Compartment]
 		x := math.Round(position.X)
 		y := math.Round(position.Y)
 		buffer.WriteString(fmt.Sprintf("<circle cx=\"%.0f\" cy=\"%.0f\" r=\"4px\" fill=\"%s\" data-symbol=\"%s\" />", x, y, color, node))

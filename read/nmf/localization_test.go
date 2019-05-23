@@ -33,24 +33,24 @@ func TestLocalization(t *testing.T) {
 	// TEST
 	wanted := NMFlocalization{
 		"AAAS": GeneLocalization{
-			Rank:  13,
-			Score: 0.3326865,
+			Compartment: 13,
+			Score:       0.3326865,
 		},
 		"AAK1": GeneLocalization{
-			Rank:  5,
-			Score: 0.1396383,
+			Compartment: 5,
+			Score:       0.1396383,
 		},
 		"AAR2": GeneLocalization{
-			Rank:  19,
-			Score: 0.034698,
+			Compartment: 19,
+			Score:       0.034698,
 		},
 		"AARS2": GeneLocalization{
-			Rank:  6,
-			Score: 0.2251458,
+			Compartment: 6,
+			Score:       0.2251458,
 		},
 		"AASDH": GeneLocalization{
-			Rank:  2,
-			Score: 0.09391108,
+			Compartment: 2,
+			Score:       0.09391108,
 		},
 	}
 	assert.Equal(t, wanted, Localization("test/localization.txt"), "Should read an NMF localization file")

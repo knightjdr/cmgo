@@ -35,16 +35,16 @@ func TestLocalization(t *testing.T) {
 	// TEST
 	wanted := SAFElocalization{
 		"VAMP3": GeneLocalization{
-			Domain: 20,
-			Score:  0.600,
+			Compartment: 20,
+			Score:       0.600,
 		},
 		"SNAP29": GeneLocalization{
-			Domain: 1,
-			Score:  0.263,
+			Compartment: 1,
+			Score:       0.263,
 		},
 		"CDCA3": GeneLocalization{
-			Domain: 20,
-			Score:  1.000,
+			Compartment: 20,
+			Score:       1.000,
 		},
 	}
 	assert.Equal(t, wanted, Localization("test/localization.txt"), "Should read a SAFE localization file")

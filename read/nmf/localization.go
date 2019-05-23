@@ -15,8 +15,8 @@ type NMFlocalization map[string]GeneLocalization
 
 // GeneLocalization contains the NMF rank and score for a gene.
 type GeneLocalization struct {
-	Rank  int
-	Score float64
+	Compartment int
+	Score       float64
 }
 
 func mapLocalizationLine(line []string) (string, GeneLocalization) {
@@ -25,8 +25,8 @@ func mapLocalizationLine(line []string) (string, GeneLocalization) {
 	score, _ := strconv.ParseFloat(line[2], 64)
 
 	localization := GeneLocalization{
-		Rank:  rank,
-		Score: score,
+		Compartment: rank,
+		Score:       score,
 	}
 
 	return gene, localization

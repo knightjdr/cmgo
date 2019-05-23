@@ -16,8 +16,8 @@ type SAFElocalization map[string]GeneLocalization
 
 // GeneLocalization contains the SAFE domain and score for a gene.
 type GeneLocalization struct {
-	Domain int
-	Score  float64
+	Compartment int
+	Score       float64
 }
 
 func mapLocalizationLine(line []string) (string, GeneLocalization) {
@@ -26,8 +26,8 @@ func mapLocalizationLine(line []string) (string, GeneLocalization) {
 	score, _ := strconv.ParseFloat(line[3], 64)
 
 	localization := GeneLocalization{
-		Domain: domain,
-		Score:  score,
+		Compartment: domain,
+		Score:       score,
 	}
 
 	return gene, localization

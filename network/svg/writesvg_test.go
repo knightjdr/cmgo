@@ -24,9 +24,9 @@ func TestWriteSVG(t *testing.T) {
 		"c": coordinate{X: 56, Y: 7},
 	}
 	localization := nmf.NMFlocalization{
-		"a": nmf.GeneLocalization{Rank: 3},
-		"b": nmf.GeneLocalization{Rank: 1},
-		"c": nmf.GeneLocalization{Rank: 2},
+		"a": nmf.GeneLocalization{Compartment: 3},
+		"b": nmf.GeneLocalization{Compartment: 1},
+		"c": nmf.GeneLocalization{Compartment: 2},
 	}
 
 	wanted := "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1000.00\" height=\"500.00\" viewbox=\"0 0 1000.00 500.00\">" +
