@@ -21,7 +21,7 @@ func Draw(fileOptions map[string]interface{}) {
 
 	// Scale coordinates to defined plot width.
 	plotWidth := float64(1000)
-	coordinates, plotHeight := scaleCoordinates(coordinates, plotWidth)
+	coordinates, plotHeight := scaleCoordinates(coordinates, plotWidth, 4, 1)
 
 	writeSVG(coordinates, colors, localization, plotWidth, plotHeight, options.outFile)
 }

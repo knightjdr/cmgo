@@ -2,7 +2,7 @@ package svg
 
 import "math"
 
-func scaleCoordinates(coordinates map[string]coordinate, scaleWidth float64) (map[string]coordinate, float64) {
+func scaleCoordinates(coordinates map[string]coordinate, scaleWidth float64, radius, borderWidth int) (map[string]coordinate, float64) {
 	maxX := -math.MaxFloat64
 	maxY := -math.MaxFloat64
 	minX := math.MaxFloat64
@@ -21,6 +21,12 @@ func scaleCoordinates(coordinates map[string]coordinate, scaleWidth float64) (ma
 			maxY = position.Y
 		}
 	}
+
+	// Add the node radius.
+	maxX += float64(radius + borderWidth)
+	maxY += float64(radius + borderWidth)
+	minX -= float64(radius + borderWidth)
+	minY -= float64(radius + borderWidth)
 
 	inputWidth := maxX - minX
 
