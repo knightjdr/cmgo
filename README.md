@@ -58,6 +58,14 @@ Creates a heat map visualizing region (domain/motif) fold enrichment (scaled to 
 
 > Check concordance between NMF and SAFE localizations
 
+## Network
+
+Modules for creating networks
+
+### Module name: `network-svg`
+
+> Create an svg network for NMF or SAFE
+
 ## NMF
 
 Modules for NMF (and related) analysis.

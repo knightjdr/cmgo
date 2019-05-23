@@ -8,7 +8,7 @@ import (
 	"github.com/knightjdr/cmgo/fs"
 )
 
-// ParseSlice a txt list to a slice of strings
+// ParseSlice parses a txt list to a slice of strings
 func ParseSlice(filename string) []string {
 	file, err := fs.Instance.Open(filename)
 	if err != nil {

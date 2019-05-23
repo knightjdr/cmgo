@@ -8,6 +8,7 @@ import (
 	"github.com/knightjdr/cmgo/assessment/bait/gradient"
 	"github.com/knightjdr/cmgo/assessment/localization/nmfsafe"
 	"github.com/knightjdr/cmgo/enrichment/heatmap"
+	"github.com/knightjdr/cmgo/network/svg"
 	"github.com/knightjdr/cmgo/nmf/subset"
 	"github.com/knightjdr/cmgo/organelle/overlap"
 	"github.com/knightjdr/cmgo/organelle/shared"
@@ -21,25 +22,28 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	if options["module"] == "analysis-dbgenes" {
+	switch module := options["module"]; module {
+	case "analysis-dbgenes":
 		dbgenes.List(options)
-	} else if options["module"] == "bait-gradient" {
+	case "bait-gradient":
 		gradient.Draw(options)
-	} else if options["module"] == "enrichment-heatmap" {
+	case "enrichment-heatmap":
 		heatmap.Region(options)
-	} else if options["module"] == "nmf-subset" {
+	case "network-svg":
+		svg.Draw(options)
+	case "nmf-subset":
 		subset.NMF(options)
-	} else if options["module"] == "nmf-v-safe" {
+	case "nmf-v-safe":
 		nmfsafe.Concordance(options)
-	} else if options["module"] == "organelle-overlap" {
+	case "organelle-overlap":
 		overlap.Metrics(options)
-	} else if options["module"] == "organelle-sharedregion" {
+	case "organelle-sharedregion":
 		shared.Region(options)
-	} else if options["module"] == "summary-crapome" {
+	case "summary-crapome":
 		crapome.Matrix(options)
-	} else if options["module"] == "summary-notsignificant" {
+	case "summary-notsignificant":
 		notsignificant.List(options)
-	} else {
+	default:
 		log.Fatalln(errors.New("Unknown analysis module"))
 	}
 }
