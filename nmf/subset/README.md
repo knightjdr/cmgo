@@ -13,6 +13,7 @@
 | outFile | output file name | basis-subset.svg |
 | ranks1 | ranks defining first NMF compartment | |
 | ranks2 | ranks defining second NMF compartment | |
+| specificity | the fold-change the ranks of interest must have relative to remaining ranks to be included | 2 |
 | threshold | fractional threshold (relative to max) to consider a prey enriched in a compartment | 0.5 |
 
 ## Example file formats

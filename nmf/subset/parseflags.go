@@ -17,6 +17,7 @@ type parameters struct {
 	outFile          string
 	ranks1           []string
 	ranks2           []string
+	specificity float64
 	threshold        float64
 }
 
@@ -31,6 +32,7 @@ func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	outFile := flags.SetString("outFile", args, fileOptions, "basis-subset.svg")
 	ranks1 := strings.Split(flags.SetString("ranks1", args, fileOptions, ""), ",")
 	ranks2 := strings.Split(flags.SetString("ranks2", args, fileOptions, ""), ",")
+	specificity := flags.SetFloat("specificity", args, fileOptions, 2)
 	threshold := flags.SetFloat("threshold", args, fileOptions, 0.5)
 
 	// Copy arguments from options file.
@@ -44,6 +46,7 @@ func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 		outFile:          outFile,
 		ranks1:           ranks1,
 		ranks2:           ranks2,
+		specificity: specificity,
 		threshold:        threshold,
 	}
 

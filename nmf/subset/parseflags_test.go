@@ -25,6 +25,7 @@ func TestParseFlags(t *testing.T) {
 		"-outFile", "out.svg",
 		"-ranks1", "1,5",
 		"-ranks2", "7",
+		"-specificity", "3",
 		"-threshold", "0.2",
 	}
 	fileOptions := map[string]interface{}{}
@@ -38,6 +39,7 @@ func TestParseFlags(t *testing.T) {
 		outFile:          "out.svg",
 		ranks1:           []string{"1", "5"},
 		ranks2:           []string{"7"},
+		specificity:      3,
 		threshold:        0.2,
 	}
 	args, err := parseFlags(fileOptions)
@@ -58,6 +60,7 @@ func TestParseFlags(t *testing.T) {
 	assert.Equal(t, float64(0), args.minAbundance, "Should return default minimum abundance")
 	assert.Equal(t, float64(0), args.minNMFScore, "Should return default minimum NMF score")
 	assert.Equal(t, "basis-subset.svg", args.outFile, "Should return default outfile name")
+	assert.Equal(t, float64(2), args.specificity, "Should return default specificity score")
 	assert.Equal(t, 0.5, args.threshold, "Should return default threshold")
 
 	// TEST3: returns error when parameters are missing.
@@ -82,6 +85,7 @@ func TestParseFlags(t *testing.T) {
 	fileOptions["outFile"] = "file-out.svg"
 	fileOptions["ranks1"] = "1,5"
 	fileOptions["ranks2"] = "7"
+	fileOptions["specificity"] = 3
 	fileOptions["threshold"] = 0.2
 	wantArgs = parameters{
 		abundanceCap:     20,
@@ -93,6 +97,7 @@ func TestParseFlags(t *testing.T) {
 		outFile:          "file-out.svg",
 		ranks1:           []string{"1", "5"},
 		ranks2:           []string{"7"},
+		specificity:      3,
 		threshold:        0.2,
 	}
 	args, err = parseFlags(fileOptions)

@@ -8,20 +8,19 @@ func filterByRank(basis [][]float64, rows []string, rank1Indices, rank2Indices [
 	filtered := make([][]float64, 0)
 	filteredRows := make([]string, 0)
 
+	// Merge ranks indices.
+	rankIndices := append(rank1Indices, rank2Indices...)
+
 	for i, basisRow := range basis {
 		// Maximum in row.
 		maxRow := stats.MaxFloat(basisRow)
 
 		// Get desired rank values and get the maximum of all.
-		rank1Values := make([]float64, len(rank1Indices))
-		rank2Values := make([]float64, len(rank2Indices))
-		for j, column := range rank1Indices {
-			rank1Values[j] = basisRow[column]
+		rankValues := make([]float64, len(rankIndices))
+		for j, column := range rankIndices {
+			rankValues[j] = basisRow[column]
 		}
-		for j, column := range rank2Indices {
-			rank2Values[j] = basisRow[column]
-		}
-		maxRank := stats.MaxFloat(append(rank1Values, rank2Values...))
+		maxRank := stats.MaxFloat(rankValues)
 
 		// Keep the row if it has a rank value matching the row maximum.
 		if maxRank == maxRow && maxRank >= minNMFScore {

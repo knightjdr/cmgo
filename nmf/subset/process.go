@@ -24,16 +24,19 @@ func NMF(fileOptions map[string]interface{}) {
 
 	basis, columns, rows := readBasis(options.basisMatrix)
 
-	// Define columns that are specifed by rank names and filter matrix
+	// Define columns that are specifed by rank names
 	rank1Indices, rank2Indices, err := defineColumns(columns, options.ranks1, options.ranks2)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	// Remove rows that do not have a maximum in one of the desired ranks, then remove
-	// rows that do not have desired rank values within threshold.
+	// Remove rows that do not have a maximum in one of the desired ranks,
+	// then rows that do not have desired rank values within threshold, and finally remove
+	// remove rows where the fold-change differential between the desired ranks
+	// and the rest is less than the specified cutoff.
 	basis, rows = filterByRank(basis, rows, rank1Indices, rank2Indices, options.minNMFScore)
 	basis, rows = filterByThreshold(basis, rows, rank1Indices, rank2Indices, options.threshold)
+	basis, rows = filterBySpecificity(basis, rows, rank1Indices, rank2Indices, options.specificity)
 
 	// Clustering.
 	basis, columns, rows = cluster.Process(basis, columns, rows, options.distanceMetric, options.clusteringMethod)
