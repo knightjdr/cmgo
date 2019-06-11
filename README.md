@@ -28,7 +28,7 @@ Modules for generating files for upload and query file processing.
 
 ### Module name: `analysis-dbgenes`
 
-* folder `analysis-dbgenes`
+* folder `analysis/dbgenes`
 
 Generates a txt file of genes in FASTA database
 
@@ -98,13 +98,13 @@ SAINT file summaries and information
 
 ### Module name: `summary-crapome`
 
-* folder `summary-crapome`
+* folder `summary/crapome`
 
 Generates a CRAPome matrix from SAINT input files
 
 ### Module name: `summary-notsignificant`
 
-* folder `summary-notsignificant`
+* folder `summary/notsignificant`
 
 Generates a list of preys that were not significant with any bait in a SAINT file.
 
