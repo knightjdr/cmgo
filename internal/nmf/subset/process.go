@@ -10,6 +10,7 @@ import (
 	"github.com/knightjdr/cmgo/internal/pkg/cluster"
 	"github.com/knightjdr/cmgo/internal/pkg/image/svg/heatmap"
 	"github.com/knightjdr/cmgo/internal/pkg/image/svg/legend"
+	"github.com/knightjdr/cmgo/internal/pkg/read/nmf"
 	"github.com/knightjdr/cmgo/pkg/fs"
 	"github.com/knightjdr/cmgo/pkg/strfunc"
 	"github.com/spf13/afero"
@@ -22,7 +23,7 @@ func NMF(fileOptions map[string]interface{}) {
 		log.Fatalln(err)
 	}
 
-	basis, columns, rows := readBasis(options.basisMatrix)
+	basis, columns, rows := nmf.Basis(options.basisMatrix)
 
 	// Define columns that are specifed by rank names
 	rank1Indices, rank2Indices, err := defineColumns(columns, options.ranks1, options.ranks2)

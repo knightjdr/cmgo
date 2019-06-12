@@ -1,4 +1,4 @@
-package subset
+package nmf
 
 import (
 	"encoding/csv"
@@ -9,7 +9,8 @@ import (
 	"github.com/knightjdr/cmgo/pkg/fs"
 )
 
-func readBasis(filename string) ([][]float64, []string, []string) {
+// Basis reads an NMF basis matrix.
+func Basis(filename string) ([][]float64, []string, []string) {
 	file, err := fs.Instance.Open(filename)
 	if err != nil {
 		log.Fatalln(err)

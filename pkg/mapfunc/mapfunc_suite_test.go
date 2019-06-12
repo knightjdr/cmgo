@@ -1,0 +1,13 @@
+package mapfunc_test
+
+import (
+	"testing"
+
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
+)
+
+func TestMapfunc(t *testing.T) {
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "Mapfunc Suite")
+}

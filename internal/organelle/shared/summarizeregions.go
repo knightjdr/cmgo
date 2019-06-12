@@ -23,7 +23,7 @@ func summarizeRegions(proteins []string, regions map[string]map[string]bool, out
 			}
 		}
 	}
-	order := customsort.ByMapValueInt(regionCount, "descending")
+	order := customsort.ByMapValueStringInt(regionCount, "descending")
 
 	var buffer bytes.Buffer
 	buffer.WriteString("region\tno. preys\tpreys\tpreys not containing region\n")
