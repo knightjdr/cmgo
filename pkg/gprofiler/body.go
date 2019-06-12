@@ -17,7 +17,8 @@ type RequestBody struct {
 	UserThreshold               float64  `json:"user_threshold"`
 }
 
-func (r *RequestBody) addDefaults() {
+// AddDefaults adds default values to POST data.
+func (r *RequestBody) AddDefaults() {
 	if r.DomainScope == "" {
 		r.DomainScope = "annotated"
 	}
