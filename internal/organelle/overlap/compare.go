@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"fmt"
 
-	"github.com/knightjdr/cmgo/pkg/fs"
 	"github.com/knightjdr/cmgo/internal/organelle"
+	"github.com/knightjdr/cmgo/pkg/fs"
+	customMath "github.com/knightjdr/cmgo/pkg/math"
 	"github.com/knightjdr/cmgo/pkg/slice"
 	"github.com/knightjdr/cmgo/pkg/stats"
 	"github.com/spf13/afero"
@@ -58,10 +59,10 @@ func compare(compartments organelle.Compartments, similarity map[string]map[stri
 		} else {
 			name = "between"
 		}
-		max := stats.Round(stats.MaxFloat(ranges[i]), 0.001)
-		mean := stats.Round(stats.MeanFloat(ranges[i]), 0.001)
-		median := stats.Round(stats.MedianFloat(ranges[i]), 0.001)
-		min := stats.Round(stats.MinFloat(ranges[i]), 0.001)
+		max := customMath.Round(customMath.MaxSliceFloat(ranges[i]), 0.001)
+		mean := customMath.Round(stats.MeanFloat(ranges[i]), 0.001)
+		median := customMath.Round(stats.MedianFloat(ranges[i]), 0.001)
+		min := customMath.Round(customMath.MinSliceFloat(ranges[i]), 0.001)
 		buffer.WriteString(fmt.Sprintf("%s\t%.3f\t%.3f\t%.3f\t%.3f\n", name, median, mean, min, max))
 	}
 	afero.WriteFile(fs.Instance, outfile, buffer.Bytes(), 0644)

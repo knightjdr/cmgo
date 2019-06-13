@@ -1,7 +1,7 @@
 package subset
 
 import (
-	"github.com/knightjdr/cmgo/pkg/stats"
+	customMath "github.com/knightjdr/cmgo/pkg/math"
 )
 
 func filterBySpecificity(basis [][]float64, rows []string, rank1Indices, rank2Indices []int, specificity float64) ([][]float64, []string) {
@@ -25,7 +25,7 @@ func filterBySpecificity(basis [][]float64, rows []string, rank1Indices, rank2In
 				rankValues = append(rankValues, basisRow[column])
 			}
 		}
-		minRank := stats.MinFloat(append(rankValues))
+		minRank := customMath.MinSliceFloat(append(rankValues))
 
 		// Find other rank values and get the maximum of all.
 		otherValues := make([]float64, 0)
@@ -34,7 +34,7 @@ func filterBySpecificity(basis [][]float64, rows []string, rank1Indices, rank2In
 				otherValues = append(otherValues, value)
 			}
 		}
-		maxOther := stats.MaxFloat(otherValues)
+		maxOther := customMath.MaxSliceFloat(otherValues)
 
 		// Keep the row if the fold-change of the rank value minimum relative to
 		// the rank value maximum is at least the "specificty" argument.

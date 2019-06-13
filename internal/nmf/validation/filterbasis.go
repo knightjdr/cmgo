@@ -4,8 +4,8 @@ import (
 	"sort"
 
 	"github.com/knightjdr/cmgo/pkg/mapfunc"
+	customMath "github.com/knightjdr/cmgo/pkg/math"
 	customSort "github.com/knightjdr/cmgo/pkg/sort"
-	"github.com/knightjdr/cmgo/pkg/stats"
 )
 
 func filterBasis(matrix [][]float64, maxGenesPerRank int, minRankValue, withinRankMax float64) [][]int {
@@ -15,7 +15,7 @@ func filterBasis(matrix [][]float64, maxGenesPerRank int, minRankValue, withinRa
 		filteredRanks[i] = make(map[int]float64)
 	}
 	for i, row := range matrix {
-		max := stats.MaxFloat(row)
+		max := customMath.MaxSliceFloat(row)
 		for j, value := range row {
 			if value >= minRankValue && value/max >= withinRankMax {
 				filteredRanks[j][i] = value

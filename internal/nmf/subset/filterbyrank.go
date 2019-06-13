@@ -1,7 +1,7 @@
 package subset
 
 import (
-	"github.com/knightjdr/cmgo/pkg/stats"
+	customMath "github.com/knightjdr/cmgo/pkg/math"
 )
 
 func filterByRank(basis [][]float64, rows []string, rank1Indices, rank2Indices []int, minNMFScore float64) ([][]float64, []string) {
@@ -13,14 +13,14 @@ func filterByRank(basis [][]float64, rows []string, rank1Indices, rank2Indices [
 
 	for i, basisRow := range basis {
 		// Maximum in row.
-		maxRow := stats.MaxFloat(basisRow)
+		maxRow := customMath.MaxSliceFloat(basisRow)
 
 		// Get desired rank values and get the maximum of all.
 		rankValues := make([]float64, len(rankIndices))
 		for j, column := range rankIndices {
 			rankValues[j] = basisRow[column]
 		}
-		maxRank := stats.MaxFloat(rankValues)
+		maxRank := customMath.MaxSliceFloat(rankValues)
 
 		// Keep the row if it has a rank value matching the row maximum.
 		if maxRank == maxRow && maxRank >= minNMFScore {

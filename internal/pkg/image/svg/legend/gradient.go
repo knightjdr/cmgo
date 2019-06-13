@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/knightjdr/cmgo/internal/pkg/image/svg"
-	"github.com/knightjdr/cmgo/pkg/stats"
+	customMath "github.com/knightjdr/cmgo/pkg/math"
 )
 
 // Gradient draws a color gradient for a legend. It can either be a complete svg
@@ -29,7 +29,7 @@ func Gradient(colorSpace, title string, numColors int, min, max float64, invert 
 	svgSlice = append(svgSlice, titleText)
 
 	// Create gradient. CellWidth is the width of each gradient cell.
-	cellWidth := stats.Round(float64(150)/float64(numColors), 0.01)
+	cellWidth := customMath.Round(float64(150)/float64(numColors), 0.01)
 	svgSlice = append(svgSlice, "\t<g>\n")
 	for i, color := range gradient {
 		xPos := (float64(i) * cellWidth) + 25

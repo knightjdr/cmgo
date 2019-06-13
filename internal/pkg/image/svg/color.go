@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"math"
 
+	customMath "github.com/knightjdr/cmgo/pkg/math"
 	"github.com/knightjdr/cmgo/pkg/slice"
-	"github.com/knightjdr/cmgo/pkg/stats"
 )
 
 // Define bidirectional color scales
@@ -37,14 +37,14 @@ func biDirection(colorSpace string, numColors int) (gradient []string) {
 	startL := .50
 	gradient = make([]string, numColors)
 	for i := 0; i < halfColors; i++ {
-		lightness := stats.Round(startL+(float64(i)*increment), 0.0001)
+		lightness := customMath.Round(startL+(float64(i)*increment), 0.0001)
 		gradient[i] = HSLtoHex(map[string]float64{"h": hStart, "s": s, "l": lightness})
 	}
 	gradient[halfColors] = HSLtoHex(map[string]float64{"h": 0, "s": s, "l": 1})
 	startL = 1.00
 	startIndex := halfColors + 1
 	for i := 0; i < halfColors; i++ {
-		lightness := stats.Round(startL-(float64(i+1)*increment), 0.0001)
+		lightness := customMath.Round(startL-(float64(i+1)*increment), 0.0001)
 		gradient[i+startIndex] = HSLtoHex(map[string]float64{"h": hEnd, "s": s, "l": lightness})
 	}
 	return
@@ -81,7 +81,7 @@ func monoDirection(colorSpace string, numColors int) (gradient []string) {
 	startL := 1.00
 	gradient = make([]string, numColors)
 	for i := 0; i < numColors; i++ {
-		lightness := stats.Round(startL-(float64(i)*increment), 0.0001)
+		lightness := customMath.Round(startL-(float64(i)*increment), 0.0001)
 		gradient[i] = HSLtoHex(map[string]float64{"h": h, "s": s, "l": lightness})
 	}
 	return

@@ -1,8 +1,9 @@
 package notsignificant
 
 import (
-	"github.com/knightjdr/cmgo/pkg/stats"
 	"github.com/knightjdr/cmgo/internal/pkg/read/saint"
+	customMath "github.com/knightjdr/cmgo/pkg/math"
+	"github.com/knightjdr/cmgo/pkg/stats"
 )
 
 type preySummary struct {
@@ -22,7 +23,7 @@ func summarize(data []saint.Row) map[string]*preySummary {
 		ctrl := preyData.Control
 		fdr := preyData.FDR
 		preyName := preyData.PreyGene
-		spec := stats.MaxFloat(preyData.Spec)
+		spec := customMath.MaxSliceFloat(preyData.Spec)
 		if _, ok := preys[preyName]; !ok {
 			preys[preyName] = &preySummary{bestFDR: 1}
 		}
