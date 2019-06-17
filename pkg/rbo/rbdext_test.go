@@ -15,6 +15,14 @@ var _ = Describe("RBDext", func() {
 			T := []string{"a", "b", "c", "d", "e"}
 			Expect(rbo.RBDext(S, T, p, k)).To(Equal(float64(0)))
 		})
+
+		It("should return distance of 0 when floating point errors yielding scores <  0", func() {
+			k := 0
+			p := 0.9
+			S := []string{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t"}
+			T := []string{"a", "b"}
+			Expect(rbo.RBDext(S, T, p, k)).To(Equal(float64(0)))
+		})
 	})
 
 	Context("Identical lists but different order", func() {
@@ -59,6 +67,14 @@ var _ = Describe("RBDext", func() {
 			p := 0.9
 			S := []string{"a", "b", "c", "d", "e"}
 			T := []string{"v", "w", "x", "y", "z"}
+			Expect(rbo.RBDext(S, T, p, k)).To(Equal(float64(1)))
+		})
+
+		It("should return distance of 1 when one list is empty", func() {
+			k := 0
+			p := 0.9
+			S := []string{"a", "b", "c", "d", "e"}
+			T := []string{}
 			Expect(rbo.RBDext(S, T, p, k)).To(Equal(float64(1)))
 		})
 	})

@@ -8,14 +8,15 @@ import (
 	"net/http"
 )
 
-// Service handles
+// Service defines the POST body, URL and contains parsed results.
 type Service struct {
-	Body RequestBody
-	URL  string
+	Body   RequestBody
+	Result []EnrichedTerm
+	URL    string
 }
 
-// Fetch submits a gene list and parse results from g:Profiler
-func (s *Service) Fetch() []EnrichedTerm {
+// Fetch submits a gene list and parses results from g:Profiler
+func Fetch(s *Service) {
 	if s.URL == "" {
 		s.URL = "https://biit.cs.ut.ee/gprofiler/api/gost/profile/"
 	}
@@ -36,5 +37,5 @@ func (s *Service) Fetch() []EnrichedTerm {
 	json.NewDecoder(res.Body).Decode(&result)
 	result.AddIntersectionGenes("query_1")
 
-	return result.Result
+	s.Result = result.Result
 }

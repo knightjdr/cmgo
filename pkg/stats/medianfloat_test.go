@@ -1,17 +1,19 @@
-package stats
+package stats_test
 
 import (
-	"testing"
-
-	"github.com/stretchr/testify/assert"
+	"github.com/knightjdr/cmgo/pkg/stats"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
-func TestMedianFloat(t *testing.T) {
-	// TEST1: odd length slice
-	slice := []float64{7, 6, 3, 9, 12}
-	assert.Equal(t, float64(7), MedianFloat(slice), "Should return median of odd length slice")
+var _ = Describe("Median float", func() {
+	It("Should return median of an odd length slice", func() {
+		slice := []float64{7, 6, 3, 9, 12}
+		Expect(stats.MedianFloat(slice)).To(Equal(float64(7)))
+	})
 
-	// TEST2: even length slice
-	slice = []float64{7, 6, 9, 12}
-	assert.Equal(t, float64(8), MedianFloat(slice), "Should return median of even length slice")
-}
+	It("Should return median of an even length slice", func() {
+		slice := []float64{7, 6, 9, 12}
+		Expect(stats.MedianFloat(slice)).To(Equal(float64(8)))
+	})
+})

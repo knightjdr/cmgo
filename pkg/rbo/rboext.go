@@ -15,6 +15,9 @@ func RBOext(Sinput, Tinput []string, p float64, userK int) float64 {
 	S, T := truncate(Sinput, Tinput, userK)
 	l := customMath.MaxInt(len(S), len(T))
 	s := customMath.MinInt(len(S), len(T))
+	if s == 0 {
+		return 0
+	}
 
 	Xl := X(I(S, T, l))
 	Xs := X(I(S, T, s))
@@ -32,5 +35,9 @@ func RBOext(Sinput, Tinput []string, p float64, userK int) float64 {
 		simAfterS += ((float64(Xs) * float64(d-s)) / float64(s*d)) * math.Pow(p, float64(d))
 	}
 
-	return (((1 - p) / p) * (simL + simAfterS)) + (((float64(Xl-Xs) / float64(l)) + (float64(Xs) / float64(s))) * math.Pow(p, float64(l)))
+	rbo := (((1 - p) / p) * (simL + simAfterS)) + (((float64(Xl-Xs) / float64(l)) + (float64(Xs) / float64(s))) * math.Pow(p, float64(l)))
+	if rbo > 1 {
+		rbo = 1
+	}
+	return rbo
 }

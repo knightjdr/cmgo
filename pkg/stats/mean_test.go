@@ -1,26 +1,31 @@
-package stats
+package stats_test
 
 import (
-	"testing"
-
-	"github.com/stretchr/testify/assert"
+	"github.com/knightjdr/cmgo/pkg/stats"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
-func TestMeanFloat(t *testing.T) {
-	// TEST1: slice of floats
-	slice := []float64{7, 6, 3, 9, 11}
-	assert.Equal(t, 7.2, MeanFloat(slice), "Should return mean of a slice of floats")
+var _ = Describe("Mean float", func() {
+	It("Should return mean of a slice of floats", func() {
+		slice := []float64{7, 6, 3, 9, 11}
+		Expect(stats.MeanFloat(slice)).To(Equal(7.2))
+	})
 
-	// TEST2: nil slice
-	slice = []float64{}
-	assert.Equal(t, float64(0), MeanFloat(slice), "Should return zero for empty slice")
-}
+	It("Should return zero for empty slice", func() {
+		slice := []float64{}
+		Expect(stats.MeanFloat(slice)).To(Equal(float64(0)))
+	})
+})
 
-func TestMeanInt(t *testing.T) {
-	slice := []int{7, 6, 3, 9, 11}
-	assert.Equal(t, 7.2, MeanInt(slice), "Should return mean of a slice of ints")
+var _ = Describe("Mean int", func() {
+	It("Should return mean of a slice of ints", func() {
+		slice := []int{7, 6, 3, 9, 11}
+		Expect(stats.MeanInt(slice)).To(Equal(7.2))
+	})
 
-	// TEST2: nil slice
-	slice = []int{}
-	assert.Equal(t, float64(0), MeanInt(slice), "Should return zero for empty slice")
-}
+	It("Should return zero for empty slice", func() {
+		slice := []int{}
+		Expect(stats.MeanInt(slice)).To(Equal(float64(0)))
+	})
+})

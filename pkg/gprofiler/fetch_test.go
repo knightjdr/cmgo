@@ -128,7 +128,7 @@ var _ = Describe("Fetch from g:Profiler", func() {
 				URL: apiStub.URL,
 			}
 			service.Body.Query = []string{"CASQ2", "CASQ1", "GSTO1", "DMD", "GSTM2"}
-			terms := service.Fetch()
+			gprofiler.Fetch(service)
 
 			expected := []gprofiler.EnrichedTerm{
 				{
@@ -158,7 +158,7 @@ var _ = Describe("Fetch from g:Profiler", func() {
 					TermSize:         22,
 				},
 			}
-			Expect(terms).To(Equal(expected))
+			Expect(service.Result).To(Equal(expected))
 		})
 	})
 })

@@ -9,6 +9,7 @@ import (
 	"github.com/knightjdr/cmgo/internal/assessment/localization/nmfsafe"
 	"github.com/knightjdr/cmgo/internal/enrichment/heatmap"
 	"github.com/knightjdr/cmgo/internal/network/svg"
+	"github.com/knightjdr/cmgo/internal/nmf/robustness"
 	"github.com/knightjdr/cmgo/internal/nmf/subset"
 	"github.com/knightjdr/cmgo/internal/organelle/overlap"
 	"github.com/knightjdr/cmgo/internal/organelle/shared"
@@ -31,6 +32,8 @@ func main() {
 		heatmap.Region(options)
 	case "network-svg":
 		svg.Draw(options)
+	case "nmf-robustness":
+		robustness.Evaluate(options)
 	case "nmf-subset":
 		subset.NMF(options)
 	case "nmf-v-safe":

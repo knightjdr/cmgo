@@ -1,4 +1,4 @@
-package validation
+package robustness
 
 import (
 	"os"
@@ -21,6 +21,9 @@ var _ = Describe("Parseflags", func() {
 				"-maxGenesPerRank", "50",
 				"-minRankValue", "0.5",
 				"-outFile", "out.svg",
+				"-percentiles", "0.9,0.8,0.7",
+				"-persistence", "0.8",
+				"-replicates", "5",
 				"-withinRankMax", "0.6",
 			}
 			fileOptions := map[string]interface{}{}
@@ -30,6 +33,9 @@ var _ = Describe("Parseflags", func() {
 				maxGenesPerRank: 50,
 				minRankValue:    0.5,
 				outFile:         "out.svg",
+				percentiles:     []float64{0.9, 0.8, 0.7},
+				persistence:     0.8,
+				replicates:      5,
 				withinRankMax:   0.6,
 			}
 			options, err := parseFlags(fileOptions)
@@ -50,6 +56,8 @@ var _ = Describe("Parseflags", func() {
 			Expect(err).ShouldNot(HaveOccurred())
 			Expect(options.maxGenesPerRank).To(Equal(100), "should set default maxGenesPerRank")
 			Expect(options.minRankValue).To(Equal(0.25), "should set default minRankValue")
+			Expect(options.replicates).To(Equal(3), "should set default replicates")
+			Expect(options.persistence).To(Equal(0.9), "should set default persistence")
 			Expect(options.withinRankMax).To(Equal(0.75), "should set default withinRankMax")
 		})
 	})
@@ -76,6 +84,9 @@ var _ = Describe("Parseflags", func() {
 				"maxGenesPerRank": 50,
 				"minRankValue":    0.5,
 				"outFile":         "file-out.svg",
+				"percentiles":     "0.9,0.8,0.7",
+				"persistence":     "0.8",
+				"replicates":      5,
 				"withinRankMax":   0.6,
 			}
 
@@ -84,6 +95,9 @@ var _ = Describe("Parseflags", func() {
 				maxGenesPerRank: 50,
 				minRankValue:    0.5,
 				outFile:         "file-out.svg",
+				percentiles:     []float64{0.9, 0.8, 0.7},
+				persistence:     0.8,
+				replicates:      5,
 				withinRankMax:   0.6,
 			}
 			options, err := parseFlags(fileOptions)

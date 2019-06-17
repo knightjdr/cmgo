@@ -70,9 +70,19 @@ Modules for creating networks
 
 Modules for NMF (and related) analysis.
 
+### Module name: `nmf-robustness`
+
+* folder `nmf/robustness`
+
+> Evaluates how robust each rank's GO terms are based on the genes used
+> to define it. It will first define the rank by performing a GO enrichment
+> using at most maxGenesPerRank, and then repeat this when using 90%, 80%...
+> of the maxGenesPerRank. For each evaluation it will calculate the RBD between
+> the list generated for maxGenesPerRank and the fractional list.
+
 ### Module name: `nmf-subset`
 
-* folder `nmf/enrichment`
+* folder `nmf/subset`
 
 > Subset an NMF basis (prey) matrix to only include preys enriched on in specified compartments.
 
