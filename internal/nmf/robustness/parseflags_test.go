@@ -20,7 +20,8 @@ var _ = Describe("Parseflags", func() {
 				"-basisMatrix", "basis.csv",
 				"-maxGenesPerRank", "50",
 				"-minRankValue", "0.5",
-				"-outFile", "out.svg",
+				"-outFile", "out.txt",
+				"-outFileSummary", "out-summary.txt",
 				"-percentiles", "0.9,0.8,0.7",
 				"-persistence", "0.8",
 				"-replicates", "5",
@@ -32,7 +33,8 @@ var _ = Describe("Parseflags", func() {
 				basisMatrix:     "basis.csv",
 				maxGenesPerRank: 50,
 				minRankValue:    0.5,
-				outFile:         "out.svg",
+				outFile:         "out.txt",
+				outFileSummary:  "out-summary.txt",
 				percentiles:     []float64{0.9, 0.8, 0.7},
 				persistence:     0.8,
 				replicates:      5,
@@ -55,7 +57,8 @@ var _ = Describe("Parseflags", func() {
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())
 			Expect(options.maxGenesPerRank).To(Equal(100), "should set default maxGenesPerRank")
-			Expect(options.minRankValue).To(Equal(0.25), "should set default minRankValue")
+			Expect(options.outFile).To(Equal("robustness.txt"), "should set default out file")
+			Expect(options.outFileSummary).To(Equal("summary.txt"), "should set default minRankValue")
 			Expect(options.replicates).To(Equal(3), "should set default replicates")
 			Expect(options.persistence).To(Equal(0.9), "should set default persistence")
 			Expect(options.withinRankMax).To(Equal(0.75), "should set default withinRankMax")
@@ -83,7 +86,8 @@ var _ = Describe("Parseflags", func() {
 				"basisMatrix":     "file-basis.csv",
 				"maxGenesPerRank": 50,
 				"minRankValue":    0.5,
-				"outFile":         "file-out.svg",
+				"outFile":         "file-out.txt",
+				"outFileSummary":  "file-summary.txt",
 				"percentiles":     "0.9,0.8,0.7",
 				"persistence":     "0.8",
 				"replicates":      5,
@@ -94,7 +98,8 @@ var _ = Describe("Parseflags", func() {
 				basisMatrix:     "file-basis.csv",
 				maxGenesPerRank: 50,
 				minRankValue:    0.5,
-				outFile:         "file-out.svg",
+				outFile:         "file-out.txt",
+				outFileSummary:  "file-summary.txt",
 				percentiles:     []float64{0.9, 0.8, 0.7},
 				persistence:     0.8,
 				replicates:      5,

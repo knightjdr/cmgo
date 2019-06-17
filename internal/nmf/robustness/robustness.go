@@ -23,5 +23,6 @@ func Evaluate(fileOptions map[string]interface{}) {
 	for rank, geneIndices := range characterizingGenes {
 		dataPoints[rank] = dataPoint(geneIndices, rows, rankDefinitions[rank], options.percentiles, options.persistence, options.replicates)
 	}
+	summaryStats(dataPoints, options.percentiles)
 	writeData(dataPoints, columns, options.percentiles, options.replicates, options.outFile)
 }

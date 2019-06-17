@@ -30,17 +30,17 @@ var _ = Describe("Writedata", func() {
 		percentile := []float64{0.9, 0.8}
 		rankNames := []string{"1", "2"}
 		replicates := 3
-		expected := "rank\tpercentile\treplicate\tRBD\tmean\tSD\n" +
-			"1\t0.90\t1\t1.00000\t2.0000\t1.0000\n" +
+		expected := "rank\tpercentile\treplicate\tRBD\n" +
+			"1\t0.90\t1\t1.00000\n" +
 			"1\t0.90\t2\t2.00000\n" +
 			"1\t0.90\t3\t3.00000\n" +
-			"1\t0.80\t1\t1.00000\t2.0000\t1.0000\n" +
+			"1\t0.80\t1\t1.00000\n" +
 			"1\t0.80\t2\t2.00000\n" +
 			"1\t0.80\t3\t3.00000\n" +
-			"2\t0.90\t1\t1.00000\t2.0000\t1.0000\n" +
+			"2\t0.90\t1\t1.00000\n" +
 			"2\t0.90\t2\t2.00000\n" +
 			"2\t0.90\t3\t3.00000\n" +
-			"2\t0.80\t1\t1.00000\t2.0000\t1.0000\n" +
+			"2\t0.80\t1\t1.00000\n" +
 			"2\t0.80\t2\t2.00000\n" +
 			"2\t0.80\t3\t3.00000\n"
 		writeData(data, rankNames, percentile, replicates, "test/out.txt")
