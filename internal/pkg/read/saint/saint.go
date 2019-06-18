@@ -15,6 +15,7 @@ import (
 // Row defines the headers in a SAINT file.
 type Row struct {
 	Bait               string
+	Prey               string
 	PreyGene           string
 	Spec               []float64
 	AvgSpec            float64
@@ -40,6 +41,7 @@ func mapSaintLine(line []string) Row {
 		FDR:        fdr,
 		FoldChange: foldchange,
 		PreyGene:   line[2],
+		Prey:       line[1],
 		Spec:       spec,
 	}
 

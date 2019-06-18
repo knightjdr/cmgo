@@ -42,6 +42,14 @@ Modules for calculating term enrichment in compartments and associated images.
 
 Creates a heat map visualizing region (domain/motif) fold enrichment (scaled to Log2) across NMF or SAFE compartments.
 
+## LBA
+
+### Module name: `lba-localize`
+
+* folder `lba/localize`
+
+> Localize preys using the localization by association (LBA) technique
+
 ## Localization assessment
 
 ### Module name: `bait-gradient`

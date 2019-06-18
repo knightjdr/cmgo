@@ -8,6 +8,7 @@ import (
 	"github.com/knightjdr/cmgo/internal/assessment/bait/gradient"
 	"github.com/knightjdr/cmgo/internal/assessment/localization/nmfsafe"
 	"github.com/knightjdr/cmgo/internal/enrichment/heatmap"
+	lbaLocalize "github.com/knightjdr/cmgo/internal/lba/localize"
 	"github.com/knightjdr/cmgo/internal/network/svg"
 	"github.com/knightjdr/cmgo/internal/nmf/robustness"
 	"github.com/knightjdr/cmgo/internal/nmf/subset"
@@ -30,6 +31,8 @@ func main() {
 		gradient.Draw(options)
 	case "enrichment-heatmap":
 		heatmap.Region(options)
+	case "lba-localize":
+		lbaLocalize.Localize(options)
 	case "network-svg":
 		svg.Draw(options)
 	case "nmf-robustness":

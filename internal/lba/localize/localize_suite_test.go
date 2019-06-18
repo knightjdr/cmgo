@@ -1,0 +1,13 @@
+package localize_test
+
+import (
+	"testing"
+
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
+)
+
+func TestLocalize(t *testing.T) {
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "Localize Suite")
+}
