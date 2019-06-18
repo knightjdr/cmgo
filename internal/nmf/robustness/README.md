@@ -8,10 +8,14 @@
 
 | parameters | definition | default |
 |------------|------------|---------|
-| basisMatrix | | |
+| basisMatrix | NMF basis matrix | |
 | maxGenesPerRank | maximum number of genes to use per rank for enrichments | 100 |
 | minRankValue | a prey must have an NMF value at or above this value to be used for enrichment | 0.25 |
-| outFile | output file name | robustness.txt |
+| outFile | output file name for RBD data points | robustness.txt |
+| outFileSummary | output file name for summary (mean, SD) statistics | summary.txt |
+| percentiles | comma-separated string defining percentiles to test, e.g "0.9,0.8" | |
+| persistence | RBO persistence value | 0.9 |
+| replicates | number of replicates to perform for each percentile | 3 |
 | withinRankMax | if a prey has an NMF value within this % of max in its non-primary rank, it can be used for enrichment | 0.75 |
 
 ## Example file formats
@@ -26,4 +30,5 @@ AARS2,0.0,0.0,0.001598769548285137
 ```
 
 ### Output
-* 
+* `robustness.txt`: RBD data points for each rank, percentile and replicate
+* `summary.txt`: mean and SD for each rank and percentile
