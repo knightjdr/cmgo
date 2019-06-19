@@ -1,6 +1,8 @@
 package uv
 
 import (
+	"sort"
+
 	readNMF "github.com/knightjdr/cmgo/internal/pkg/read/nmf"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -39,10 +41,13 @@ var _ = Describe("Define non characterizing genes", func() {
 			},
 		}
 
+		actual := defineNonCharacterizingGenes(charaterizingGenes, nmfLocalizations)
+		sort.Strings(actual[0])
+		sort.Strings(actual[1])
 		expected := [][]string{
 			{"f", "h"},
 			{"g"},
 		}
-		Expect(defineNonCharacterizingGenes(charaterizingGenes, nmfLocalizations)).To(Equal(expected))
+		Expect(actual).To(Equal(expected))
 	})
 })
