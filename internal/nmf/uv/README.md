@@ -89,4 +89,4 @@ rank	term	displayname	go	synonyms	ic
 ```
 
 ### Output
-* `uv-assessment.txt`:
+* `uv-assessment.txt`
