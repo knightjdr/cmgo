@@ -1,6 +1,7 @@
-package robustness
+package nmf_test
 
 import (
+	"github.com/knightjdr/cmgo/internal/pkg/nmf"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -21,7 +22,7 @@ var _ = Describe("Filterbasis", func() {
 			{2},
 		}
 
-		actual := filterBasis(matrix, 3, 0.25, 0.75)
+		actual := nmf.FilterBasis(matrix, 3, 0.25, 0.75)
 		Expect(actual).To(Equal(expected), "should return matrix of top rows per rank")
 	})
 })

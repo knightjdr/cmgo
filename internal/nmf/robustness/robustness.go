@@ -4,7 +4,8 @@ package robustness
 import (
 	"log"
 
-	"github.com/knightjdr/cmgo/internal/pkg/read/nmf"
+	"github.com/knightjdr/cmgo/internal/pkg/nmf"
+	readNMF "github.com/knightjdr/cmgo/internal/pkg/read/nmf"
 )
 
 // Evaluate performs GO enrichments on each NMF rank and tests how
@@ -15,8 +16,8 @@ func Evaluate(fileOptions map[string]interface{}) {
 		log.Fatalln(err)
 	}
 
-	basis, columns, rows := nmf.Basis(options.basisMatrix)
-	characterizingGenes := filterBasis(basis, options.maxGenesPerRank, options.minRankValue, options.withinRankMax)
+	basis, columns, rows := readNMF.Basis(options.basisMatrix)
+	characterizingGenes := nmf.FilterBasis(basis, options.maxGenesPerRank, options.minRankValue, options.withinRankMax)
 	rankDefinitions := defineRanks(characterizingGenes, rows)
 
 	dataPoints := make([][][]float64, len(columns))

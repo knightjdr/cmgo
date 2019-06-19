@@ -1,4 +1,5 @@
-package robustness
+// Package nmf implements common functions for NMF analysis.
+package nmf
 
 import (
 	"sort"
@@ -8,7 +9,8 @@ import (
 	customSort "github.com/knightjdr/cmgo/pkg/sort"
 )
 
-func filterBasis(matrix [][]float64, maxGenesPerRank int, minRankValue, withinRankMax float64) [][]int {
+// FilterBasis filters a basis matrix to return genes used for defining localization.
+func FilterBasis(matrix [][]float64, maxGenesPerRank int, minRankValue, withinRankMax float64) [][]int {
 	// For each rank store all genes that satisfy filtering criteria.
 	filteredRanks := make(map[int]map[int]float64)
 	for i := 0; i < len(matrix[0]); i++ {

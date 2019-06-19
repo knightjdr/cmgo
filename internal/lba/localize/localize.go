@@ -28,7 +28,8 @@ func Localize(fileOptions map[string]interface{}) {
 	addUniprotIDs(&refseqMapping, entrezToUniprotMap)
 
 	// Read GO terms.
-	goAnnotations := geneontology.Annotations(options.goAnnotations)
+	/* goAnnotations := */
+	geneontology.Annotations(options.goAnnotations)
 	goHierarchy := geneontology.OBO(options.goHierarchy)
 	goHierarchy.GetChildren(options.namespace)
 	goHierarchy.GetParents(options.namespace)

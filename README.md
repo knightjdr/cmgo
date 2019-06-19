@@ -94,6 +94,14 @@ Modules for NMF (and related) analysis.
 
 > Subset an NMF basis (prey) matrix to only include preys enriched on in specified compartments.
 
+### Module name: `nmf-uv`
+
+* folder `nmf/uv`
+
+> For all prey genes not used to define an NMF rank, it calculates what
+> proportion are being assigned to a previously known localization. UV:
+> unused validation
+
 ## Organelle comparison
 
 Modules for comparing cell map compartments.

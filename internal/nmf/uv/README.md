@@ -1,20 +1,32 @@
-# Module name: `nmf-v-safe`
+# Module name: `nmf-uv`
 
-> Check concordance between NMF and SAFE localizations.
+> For all prey genes not used to define an NMF rank, it calculates what
+> proportion are being assigned to a previously known localization. UV:
+> unused validation
 
 | parameters | definition | default |
 |------------|------------|---------|
+| basisMatrix | NMF basis matrix | |
 | goAnnotations | GO annotations in .gaf format | |
 | goHierarchy | GO hierarchy in .obo format | |
+| maxGenesPerRank | maximum number of genes to use per rank for enrichments | 100 |
+| minRankValue | a prey must have an NMF value at or above this value to be used for enrichment | 0.25 |
 | namespace | GO namespace to use, one of BP, CC, MF | CC |
 | nmfLocalization | Text file with assigned NMF rank and score for each gene | |
 | nmfSummary | NMF rank summary file | |
-| outFile | output file name | concordance.txt |
-| outSummaryFile | file with summary statistics | summary.txt
-| safeLocalization | Node properties file output from SAFE | |
-| safeSummary | SAFE domain summary file | |
+| outFile | output file name for RBD data points | uv-assessment.txt |
+| withinRankMax | if a prey has an NMF value within this % of max in its non-primary rank, it can be used for enrichment | 0.75 |
 
 ## Example file formats
+
+### basisMatrix
+```
+variable,1,2,3
+AAAS,0.0,0.18373784550412228,0.0
+AAK1,0.13963834317658874,0.0,0.0
+AAR2,0.0,0.016517285371126216,0.034697999230769466
+AARS2,0.0,0.0,0.001598769548285137
+```
 
 ### annotationsFile
 ```
@@ -69,25 +81,12 @@ AARS2	6	0.2251458
 AASDH	2	0.09391108
 ```
 
-### nmfSummary and safeSummary
+### nmfSummary
 ```
 rank	term	displayname	go	synonyms	ic
 1	[cell junction]	[cell junction]	[GO:0030054]	[]	[1.166]
 2	[chromosome]	[chromatin]	[GO:0005694]	"[[chromatid, interphase chromosome, prophase chromosome]]"	[1.256]
 ```
 
-### safeLocalization
-```
-## 
-## This file lists the properties of all nodes in the network.
-## 
-
-Node label	Node label ORF	Domain (predominant)	Neighborhood score [max=1, min=0] (predominant)	Total number of enriched domains	Number of enriched attributes per domain
-VAMP3	VAMP3	20	0.600	1	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0
-SNAP29	SNAP29	1	0.263	0	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-CDCA3	CDCA3	20	1.000	1	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,61,0,0,0,0
-```
-
 ### Output
-* txt file: for each gene list NMF and SAFE term, is it known, and whether they agree
-* txt file with summary statistics
+* `uv-assessment.txt`:

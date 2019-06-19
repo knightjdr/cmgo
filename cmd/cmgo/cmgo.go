@@ -12,6 +12,7 @@ import (
 	"github.com/knightjdr/cmgo/internal/network/svg"
 	"github.com/knightjdr/cmgo/internal/nmf/robustness"
 	"github.com/knightjdr/cmgo/internal/nmf/subset"
+	"github.com/knightjdr/cmgo/internal/nmf/uv"
 	"github.com/knightjdr/cmgo/internal/organelle/overlap"
 	"github.com/knightjdr/cmgo/internal/organelle/shared"
 	"github.com/knightjdr/cmgo/internal/summary/crapome"
@@ -37,6 +38,8 @@ func main() {
 		svg.Draw(options)
 	case "nmf-robustness":
 		robustness.Evaluate(options)
+	case "nmf-uv":
+		uv.Assess(options)
 	case "nmf-subset":
 		subset.NMF(options)
 	case "nmf-v-safe":
