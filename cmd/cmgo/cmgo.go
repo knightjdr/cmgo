@@ -6,6 +6,7 @@ import (
 
 	"github.com/knightjdr/cmgo/internal/analysis/dbgenes"
 	"github.com/knightjdr/cmgo/internal/assessment/bait/gradient"
+	"github.com/knightjdr/cmgo/internal/assessment/hydropathy"
 	"github.com/knightjdr/cmgo/internal/assessment/localization/nmfsafe"
 	"github.com/knightjdr/cmgo/internal/enrichment/heatmap"
 	lbaLocalize "github.com/knightjdr/cmgo/internal/lba/localize"
@@ -28,6 +29,8 @@ func main() {
 	switch module := options["module"]; module {
 	case "analysis-dbgenes":
 		dbgenes.List(options)
+	case "assessment-hydropathy":
+		hydropathy.Assess(options)
 	case "bait-gradient":
 		gradient.Draw(options)
 	case "enrichment-heatmap":

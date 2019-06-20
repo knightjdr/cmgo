@@ -32,6 +32,22 @@ Modules for generating files for upload and query file processing.
 
 Generates a txt file of genes in FASTA database
 
+## Assessment
+
+### Module name: `bait-gradient`
+
+* folder `assessment/bait/gradient`
+
+> Takes an ordered bait list and expected localizations for the baits and outputs a gradient showing
+> adjacent bait similarity: black if the two adjacent baits share an expected localization, grey
+> if only one does and white otherwise.
+
+### Module name: `assessment-hydropathy`
+
+* folder `assessment/hydropathy`
+
+> Measures the average hydropathy of proteins in a SAINT file and a BioPlex dataset
+
 ## Enrichment
 
 Modules for calculating term enrichment in compartments and associated images.
@@ -49,16 +65,6 @@ Creates a heat map visualizing region (domain/motif) fold enrichment (scaled to 
 * folder `lba/localize`
 
 > Localize preys using the localization by association (LBA) technique
-
-## Localization assessment
-
-### Module name: `bait-gradient`
-
-* folder `assessment/bait/gradient`
-
-> Takes an ordered bait list and expected localizations for the baits and outputs a gradient showing
-> adjacent bait similarity: black if the two adjacent baits share an expected localization, grey
-> if only one does and white otherwise.
 
 ### Module name: `nmf-v-safe`
 
