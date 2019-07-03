@@ -7,6 +7,42 @@ import (
 )
 
 var _ = Describe("ByMapValue", func() {
+	Describe("Sort map[string]float64", func() {
+		Context("in descending order", func() {
+			It("should return sorted map", func() {
+				m := map[string]float64{
+					"a": 5,
+					"b": 20,
+					"c": 7,
+				}
+
+				expected := []sort.KeyValueStringFloat{
+					{Key: "b", Value: 20},
+					{Key: "c", Value: 7},
+					{Key: "a", Value: 5},
+				}
+				Expect(sort.ByMapValueStringFloat(m, "descending")).To(Equal(expected), "should sort in descending order")
+			})
+		})
+
+		Context("in ascending order", func() {
+			It("should return sorted map", func() {
+				m := map[string]float64{
+					"a": 5,
+					"b": 20,
+					"c": 7,
+				}
+
+				expected := []sort.KeyValueStringFloat{
+					{Key: "a", Value: 5},
+					{Key: "c", Value: 7},
+					{Key: "b", Value: 20},
+				}
+				Expect(sort.ByMapValueStringFloat(m, "ascending")).To(Equal(expected), "should sort in ascending order")
+			})
+		})
+	})
+
 	Describe("Sort map[string]int", func() {
 		Context("in descending order", func() {
 			It("should return sorted map", func() {

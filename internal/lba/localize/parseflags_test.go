@@ -19,24 +19,22 @@ var _ = Describe("Parseflags", func() {
 				"cmd",
 				"database", "database.fasta",
 				"-fdr", "0.02",
-				"-goAnnotations", "annotations.gaf",
-				"-goHierarchy", "hierarchy.obo",
 				"-minBaits", "2",
 				"-namespace", "BP",
 				"-outFile", "out.txt",
 				"-saintFile", "saint.txt",
+				"-preyLimit", "50",
 			}
 			fileOptions := map[string]interface{}{}
 
 			expected := parameters{
-				database:      "database.fasta",
-				fdr:           0.02,
-				goAnnotations: "annotations.gaf",
-				goHierarchy:   "hierarchy.obo",
-				minBaits:      2,
-				namespace:     "BP",
-				outFile:       "out.txt",
-				saintFile:     "saint.txt",
+				database:  "database.fasta",
+				fdr:       0.02,
+				minBaits:  2,
+				namespace: "BP",
+				outFile:   "out.txt",
+				saintFile: "saint.txt",
+				preyLimit: 50,
 			}
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())
@@ -61,6 +59,7 @@ var _ = Describe("Parseflags", func() {
 			Expect(options.minBaits).To(Equal(1), "should set default minimum baits")
 			Expect(options.namespace).To(Equal("CC"), "should set default GO namespace")
 			Expect(options.outFile).To(Equal("lba-localization.txt"), "should set default out file")
+			Expect(options.preyLimit).To(Equal(100), "should set default number of preys to use for enrichment")
 		})
 	})
 
@@ -82,25 +81,23 @@ var _ = Describe("Parseflags", func() {
 				"cmd",
 			}
 			fileOptions := map[string]interface{}{
-				"database":      "file-database.fasta",
-				"fdr":           0.02,
-				"goAnnotations": "file-annotations.gaf",
-				"goHierarchy":   "file-hierarchy.obo",
-				"minBaits":      2,
-				"namespace":     "BP",
-				"outFile":       "file-out.txt",
-				"saintFile":     "file-saint.txt",
+				"database":  "file-database.fasta",
+				"fdr":       0.02,
+				"minBaits":  2,
+				"namespace": "BP",
+				"outFile":   "file-out.txt",
+				"saintFile": "file-saint.txt",
+				"preyLimit": 50,
 			}
 
 			expected := parameters{
-				database:      "file-database.fasta",
-				fdr:           0.02,
-				goAnnotations: "file-annotations.gaf",
-				goHierarchy:   "file-hierarchy.obo",
-				minBaits:      2,
-				namespace:     "BP",
-				outFile:       "file-out.txt",
-				saintFile:     "file-saint.txt",
+				database:  "file-database.fasta",
+				fdr:       0.02,
+				minBaits:  2,
+				namespace: "BP",
+				outFile:   "file-out.txt",
+				saintFile: "file-saint.txt",
+				preyLimit: 50,
 			}
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())

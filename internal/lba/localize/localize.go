@@ -2,10 +2,10 @@
 package localize
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/knightjdr/cmgo/internal/pkg/read/database"
-	"github.com/knightjdr/cmgo/internal/pkg/read/geneontology"
 	"github.com/knightjdr/cmgo/internal/pkg/read/saint"
 	"github.com/knightjdr/cmgo/pkg/gene"
 )
@@ -27,12 +27,10 @@ func Localize(fileOptions map[string]interface{}) {
 	entrezToUniprotMap := gene.MapIDs(geneIDs, "Entrez", "UniProt", "")
 	addUniprotIDs(&refseqMapping, entrezToUniprotMap)
 
-	// Read GO terms.
-	/* goAnnotations := */
-	geneontology.Annotations(options.goAnnotations)
-	goHierarchy := geneontology.OBO(options.goHierarchy)
-	goHierarchy.GetChildren(options.namespace)
-	goHierarchy.GetParents(options.namespace)
-
-	/* preyAssociations := countAssociations(saintData) */
+	baitsPerPrey, preysPerBait := associations(saintData)
+	_, topPreysPerPrey := topPreyPartners(baitsPerPrey, preysPerBait, options.preyLimit)
+	enrichment := profile(topPreysPerPrey, preys)
+	for _, term := range enrichment["NP_001136120.1"] {
+		fmt.Println(term.Name, term.Pvalue)
+	}
 }
