@@ -20,6 +20,7 @@ var _ = Describe("Parseflags", func() {
 				"database", "database.fasta",
 				"-fdr", "0.02",
 				"-minBaits", "2",
+				"-minFC", "1",
 				"-namespace", "BP",
 				"-outFile", "out.txt",
 				"-saintFile", "saint.txt",
@@ -31,6 +32,7 @@ var _ = Describe("Parseflags", func() {
 				database:  "database.fasta",
 				fdr:       0.02,
 				minBaits:  2,
+				minFC:     1,
 				namespace: "BP",
 				outFile:   "out.txt",
 				saintFile: "saint.txt",
@@ -57,6 +59,7 @@ var _ = Describe("Parseflags", func() {
 			Expect(err).ShouldNot(HaveOccurred())
 			Expect(options.fdr).To(Equal(0.01), "should set default FDR")
 			Expect(options.minBaits).To(Equal(1), "should set default minimum baits")
+			Expect(options.minFC).To(Equal(float64(1)), "should set default minimum fold change")
 			Expect(options.namespace).To(Equal("CC"), "should set default GO namespace")
 			Expect(options.outFile).To(Equal("lba-localization.txt"), "should set default out file")
 			Expect(options.preyLimit).To(Equal(100), "should set default number of preys to use for enrichment")
@@ -84,6 +87,7 @@ var _ = Describe("Parseflags", func() {
 				"database":  "file-database.fasta",
 				"fdr":       0.02,
 				"minBaits":  2,
+				"minFC":     1,
 				"namespace": "BP",
 				"outFile":   "file-out.txt",
 				"saintFile": "file-saint.txt",
@@ -94,6 +98,7 @@ var _ = Describe("Parseflags", func() {
 				database:  "file-database.fasta",
 				fdr:       0.02,
 				minBaits:  2,
+				minFC:     1,
 				namespace: "BP",
 				outFile:   "file-out.txt",
 				saintFile: "file-saint.txt",

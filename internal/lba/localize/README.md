@@ -7,6 +7,7 @@
 | database | fasta database for mapping gene names to IDs | |
 | fdr | FDR threshold for defining significant preys | 0.01 |
 | minBaits | minimum baits a prey must be seen with to be included in the analysis | 1 |
+| minFC | minimum fold change to include a prey in an association list (exclusive) | 1 |
 | namespace | GO namespace to use, one of BP, CC, MF | CC |
 | outFile | output file name for prey localization data | lba-localization.txt |
 | preyLimit | the maximum number of associated preys to use for defining prey profile | 100 |

@@ -8,6 +8,7 @@ func topPreyPartners(
 	baitsPerPrey map[string][]string,
 	preysPerBait map[string][]string,
 	preyLimit int,
+	minFC float64,
 ) (map[string]map[string]float64, map[string][]string) {
 	foldChange := make(map[string]map[string]float64, 0)
 	topPreys := make(map[string][]string, 0)
@@ -27,9 +28,12 @@ func topPreyPartners(
 		totalBaits := len(preysPerBait)
 		foldChange[prey] = make(map[string]float64, 0)
 		for partnerPrey, count := range partnerCount {
-			foldChangeForSelectedPrey := float64(count) / float64(numberBaitsForSelectedPrey)
+			foldChangeBaitSubset := float64(count) / float64(numberBaitsForSelectedPrey)
 			foldChangeDataset := float64(len(baitsPerPrey[partnerPrey])) / float64(totalBaits)
-			foldChange[prey][partnerPrey] = foldChangeForSelectedPrey / foldChangeDataset
+			foldChangeForSelectedPrey := foldChangeBaitSubset / foldChangeDataset
+			if foldChangeForSelectedPrey > minFC {
+				foldChange[prey][partnerPrey] = foldChangeForSelectedPrey
+			}
 		}
 
 		// Filter the list to only keep the top "preyLimit" entries.

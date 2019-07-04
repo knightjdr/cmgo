@@ -28,9 +28,11 @@ func Localize(fileOptions map[string]interface{}) {
 	addUniprotIDs(&refseqMapping, entrezToUniprotMap)
 
 	baitsPerPrey, preysPerBait := associations(saintData)
-	_, topPreysPerPrey := topPreyPartners(baitsPerPrey, preysPerBait, options.preyLimit)
+	_, topPreysPerPrey := topPreyPartners(baitsPerPrey, preysPerBait, options.preyLimit, options.minFC)
 	enrichment := profile(topPreysPerPrey, preys)
-	for _, term := range enrichment["NP_001136120.1"] {
-		fmt.Println(term.Name, term.Pvalue)
+	for gene, terms := range enrichment {
+		for _, term := range terms {
+			fmt.Println(gene, term.Recall, term.Precision, term.Name, term.Pvalue)
+		}
 	}
 }
