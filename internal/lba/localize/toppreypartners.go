@@ -12,42 +12,45 @@ func topPreyPartners(
 ) (map[string]map[string]float64, map[string][]string) {
 	foldChange := make(map[string]map[string]float64, 0)
 	topPreys := make(map[string][]string, 0)
-	for prey, baitList := range baitsPerPrey {
-		// Count all partner preys the prey was seen with across the baits
-		// it was detected with. Remove the prey itself from map.
+	for poi, baitList := range baitsPerPrey {
+		// Count all partner preys the prey of interest (POI) was seen with across the baits
+		// it was detected with. Remove the POI itself from map.
 		partnerCount := make(map[string]int, 0)
 		for _, bait := range baitList {
 			for _, partnerPrey := range preysPerBait[bait] {
 				partnerCount[partnerPrey]++
 			}
 		}
-		delete(partnerCount, prey)
+		delete(partnerCount, poi)
 
-		// Calculate the fold change for each partner prey.
-		numberBaitsForSelectedPrey := len(baitList)
+		// Calculate the fold change for each partner prey and ignore those with
+		// a value below minFC threshold (exclusive).
+		foldChange[poi] = make(map[string]float64, 0)
+		numberBaitsForPOI := len(baitList)
 		totalBaits := len(preysPerBait)
-		foldChange[prey] = make(map[string]float64, 0)
 		for partnerPrey, count := range partnerCount {
-			foldChangeBaitSubset := float64(count) / float64(numberBaitsForSelectedPrey)
+			foldChangeBaitSubset := float64(count) / float64(numberBaitsForPOI)
 			foldChangeDataset := float64(len(baitsPerPrey[partnerPrey])) / float64(totalBaits)
-			foldChangeForSelectedPrey := foldChangeBaitSubset / foldChangeDataset
-			if foldChangeForSelectedPrey > minFC {
-				foldChange[prey][partnerPrey] = foldChangeForSelectedPrey
+			foldChangeForPartnerPrey := foldChangeBaitSubset / foldChangeDataset
+			if foldChangeForPartnerPrey > minFC {
+				foldChange[poi][partnerPrey] = foldChangeForPartnerPrey
+			} else {
+				delete(partnerCount, partnerPrey)
 			}
 		}
 
 		// Filter the list to only keep the top "preyLimit" entries.
 		limit := preyLimit
-		if len(foldChange[prey]) < limit {
-			limit = len(foldChange[prey])
+		if len(partnerCount) < limit {
+			limit = len(partnerCount)
 		}
-		topPreys[prey] = make([]string, limit)
-		order := customSort.ByMapValueStringFloat(foldChange[prey], "descending")
+		topPreys[poi] = make([]string, limit)
+		order := customSort.ByMapValueStringInt(partnerCount, "descending")
 		for i, entry := range order {
 			if i >= limit {
 				break
 			}
-			topPreys[prey][i] = entry.Key
+			topPreys[poi][i] = entry.Key
 		}
 	}
 
