@@ -48,6 +48,12 @@ Generates a txt file of genes in FASTA database
 
 > Measures the average hydropathy of proteins in a SAINT file and a BioPlex dataset
 
+### Module name: `assessment-localization`
+
+* folder `assessment/localization/evaluate`
+
+> Report on which localizations are previously known.
+
 ## Enrichment
 
 Modules for calculating term enrichment in compartments and associated images.
@@ -60,11 +66,17 @@ Creates a heat map visualizing region (domain/motif) fold enrichment (scaled to 
 
 ## LBA
 
+### Module name: `lba-enrichment`
+
+* folder `lba/enrichment`
+
+> Enrichment performs GO enrichments of preys from a SAINT file using LBA
+
 ### Module name: `lba-localize`
 
 * folder `lba/localize`
 
-> Localize preys using the localization by association (LBA) technique
+> Localize preys based on enriched terms for LBA
 
 ### Module name: `nmf-v-safe`
 

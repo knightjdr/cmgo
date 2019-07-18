@@ -1,4 +1,4 @@
-package localize
+package evaluate
 
 import (
 	"os"
@@ -17,16 +17,22 @@ var _ = Describe("Parseflags", func() {
 		It("should parse arguments", func() {
 			os.Args = []string{
 				"cmd",
-				"-enrichment", "enrichment.txt",
+				"-goAnnotations", "annotations.gaf",
+				"-goHierarchy", "hierarchy.obo",
 				"-localization", "localization.txt",
-				"-outFilePrimary", "out.txt",
+				"-namespace", "BP",
+				"-outFile", "out.txt",
+				"-outFileSummary", "out-summary.txt",
 			}
 			fileOptions := map[string]interface{}{}
 
 			expected := parameters{
-				enrichment:     "enrichment.txt",
+				goAnnotations:  "annotations.gaf",
+				goHierarchy:    "hierarchy.obo",
 				localization:   "localization.txt",
-				outFilePrimary: "out.txt",
+				namespace:      "BP",
+				outFile:        "out.txt",
+				outFileSummary: "out-summary.txt",
 			}
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())
@@ -38,14 +44,16 @@ var _ = Describe("Parseflags", func() {
 		It("should set defaults", func() {
 			os.Args = []string{
 				"cmd",
-				"-enrichment", "enrichment.txt",
+				"-goAnnotations", "annotations.gaf",
+				"-goHierarchy", "hierarchy.obo",
 				"-localization", "localization.txt",
 			}
 			fileOptions := map[string]interface{}{}
 
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())
-			Expect(options.outFilePrimary).To(Equal("lba-primary.txt"), "should set default out file")
+			Expect(options.outFile).To(Equal("localization-known.txt"), "should set default out file")
+			Expect(options.outFileSummary).To(Equal("summary.txt"), "should set summary out file")
 		})
 	})
 
@@ -67,15 +75,21 @@ var _ = Describe("Parseflags", func() {
 				"cmd",
 			}
 			fileOptions := map[string]interface{}{
-				"enrichment":     "file-enrichment.txt",
+				"goAnnotations":  "file-annotations.gaf",
+				"goHierarchy":    "file-hierarchy.obo",
+				"namespace":      "BP",
 				"localization":   "file-localization.txt",
-				"outFilePrimary": "file-out.txt",
+				"outFile":        "file-out.txt",
+				"outFileSummary": "file-out-summary.txt",
 			}
 
 			expected := parameters{
-				enrichment:     "file-enrichment.txt",
+				goAnnotations:  "file-annotations.gaf",
+				goHierarchy:    "file-hierarchy.obo",
 				localization:   "file-localization.txt",
-				outFilePrimary: "file-out.txt",
+				namespace:      "BP",
+				outFile:        "file-out.txt",
+				outFileSummary: "file-out-summary.txt",
 			}
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())

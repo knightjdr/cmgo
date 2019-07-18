@@ -38,4 +38,19 @@ var _ = Describe("Keys", func() {
 			Expect(actual).To(Equal(expected), "should return string keys")
 		})
 	})
+
+	Describe("Map of type map[string]string", func() {
+		It("should return integer string", func() {
+			m := map[string]string{
+				"a": "test",
+				"d": "test",
+				"c": "test",
+			}
+
+			actual := mapfunc.KeysStringString(m)
+			sort.Strings(actual)
+			expected := []string{"a", "c", "d"}
+			Expect(actual).To(Equal(expected), "should return string keys")
+		})
+	})
 })

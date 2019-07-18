@@ -1,4 +1,4 @@
-package localize
+package enrichment
 
 func addUniprotIDs(mapping *map[string]map[string]string, entrezToUniprot map[string]string) {
 	for _, otherIDs := range *mapping {

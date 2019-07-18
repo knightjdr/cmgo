@@ -7,9 +7,10 @@ import (
 	"github.com/knightjdr/cmgo/internal/analysis/dbgenes"
 	"github.com/knightjdr/cmgo/internal/assessment/bait/gradient"
 	"github.com/knightjdr/cmgo/internal/assessment/hydropathy"
+	assessLocalization "github.com/knightjdr/cmgo/internal/assessment/localization/evaluate"
 	"github.com/knightjdr/cmgo/internal/assessment/localization/nmfsafe"
 	"github.com/knightjdr/cmgo/internal/enrichment/heatmap"
-	lbaLocalize "github.com/knightjdr/cmgo/internal/lba/localize"
+	"github.com/knightjdr/cmgo/internal/lba"
 	"github.com/knightjdr/cmgo/internal/network/svg"
 	"github.com/knightjdr/cmgo/internal/nmf/robustness"
 	"github.com/knightjdr/cmgo/internal/nmf/subset"
@@ -31,12 +32,16 @@ func main() {
 		dbgenes.List(options)
 	case "assessment-hydropathy":
 		hydropathy.Assess(options)
+	case "assessment-localization":
+		assessLocalization.Evaluate(options)
 	case "bait-gradient":
 		gradient.Draw(options)
 	case "enrichment-heatmap":
 		heatmap.Region(options)
+	case "lba-enrichment":
+		lba.Enrichment(options)
 	case "lba-localize":
-		lbaLocalize.Localize(options)
+		lba.Localize(options)
 	case "network-svg":
 		svg.Draw(options)
 	case "nmf-robustness":

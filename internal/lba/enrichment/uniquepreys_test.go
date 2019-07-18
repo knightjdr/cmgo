@@ -1,4 +1,4 @@
-package localize
+package enrichment
 
 import (
 	"sort"

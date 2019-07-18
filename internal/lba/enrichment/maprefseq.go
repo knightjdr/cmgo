@@ -1,4 +1,4 @@
-package localize
+package enrichment
 
 import (
 	"github.com/knightjdr/cmgo/internal/pkg/read/database"

@@ -8,45 +8,30 @@ import (
 )
 
 type parameters struct {
-	database  string
-	fdr       float64
-	minBaits  int
-	minFC     float64
-	namespace string
-	outFile   string
-	saintFile string
-	preyLimit int
+	enrichment     string
+	localization   string
+	outFilePrimary string
 }
 
 func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	args := flags.Parse()
-	database := flags.SetString("database", args, fileOptions, "")
-	fdr := flags.SetFloat("fdr", args, fileOptions, 0.01)
-	minBaits := flags.SetInt("minBaits", args, fileOptions, 1)
-	minFC := flags.SetFloat("minFC", args, fileOptions, 1)
-	namespace := flags.SetString("namespace", args, fileOptions, "CC")
-	outFile := flags.SetString("outFile", args, fileOptions, "lba-localization.txt")
-	saintFile := flags.SetString("saintFile", args, fileOptions, "")
-	preyLimit := flags.SetInt("preyLimit", args, fileOptions, 100)
+	enrichment := flags.SetString("enrichment", args, fileOptions, "")
+	localization := flags.SetString("localization", args, fileOptions, "")
+	outFilePrimary := flags.SetString("outFilePrimary", args, fileOptions, "lba-primary.txt")
 
 	options := parameters{
-		database:  database,
-		fdr:       fdr,
-		namespace: namespace,
-		minBaits:  minBaits,
-		minFC:     minFC,
-		outFile:   outFile,
-		saintFile: saintFile,
-		preyLimit: preyLimit,
+		enrichment:     enrichment,
+		localization:   localization,
+		outFilePrimary: outFilePrimary,
 	}
 
 	// Check for missing arguments.
 	messages := make([]string, 0)
-	if options.database == "" {
-		messages = append(messages, "missing database file")
+	if options.enrichment == "" {
+		messages = append(messages, "missing enrichment file")
 	}
-	if options.saintFile == "" {
-		messages = append(messages, "missing SAINT file")
+	if options.localization == "" {
+		messages = append(messages, "missing localization file")
 	}
 
 	// Format error message.

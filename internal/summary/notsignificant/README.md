@@ -1,6 +1,6 @@
 # Module name: `summary-notsignificant`
 
-> Subset an NMF basis (prey) matrix to only include preys enriched in specified compartments.
+> Generates a list of preys that were not significant with any bait in a SAINT file.
 
 | parameters | definition | default |
 |------------|------------|---------|

@@ -51,6 +51,6 @@ var _ = Describe("Read", func() {
 				UniProt: bioplex.Interaction{Source: "Q6ZMN8", Target: "P11142"},
 			},
 		}
-		Expect(bioplex.Read("test/bioplex.txt", true)).To(Equal(expected))
+		Expect(bioplex.Read("test/bioplex.txt")).To(Equal(expected))
 	})
 })

@@ -28,7 +28,7 @@ var _ = Describe("SliceIntN", func() {
 			}
 
 			for i := 0; i < 5; i++ {
-				Expect(occurence[i]).To(BeNumerically("~", 800, 20))
+				Expect(occurence[i]).To(BeNumerically("~", 800, 30))
 			}
 		})
 	})

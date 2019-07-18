@@ -1,4 +1,4 @@
-package localize
+package enrichment
 
 import (
 	"os"
@@ -17,16 +17,26 @@ var _ = Describe("Parseflags", func() {
 		It("should parse arguments", func() {
 			os.Args = []string{
 				"cmd",
-				"-enrichment", "enrichment.txt",
-				"-localization", "localization.txt",
-				"-outFilePrimary", "out.txt",
+				"-database", "database.fasta",
+				"-fdr", "0.02",
+				"-minBaits", "2",
+				"-minFC", "1",
+				"-namespace", "BP",
+				"-outFile", "out.txt",
+				"-saintFile", "saint.txt",
+				"-preyLimit", "50",
 			}
 			fileOptions := map[string]interface{}{}
 
 			expected := parameters{
-				enrichment:     "enrichment.txt",
-				localization:   "localization.txt",
-				outFilePrimary: "out.txt",
+				database:  "database.fasta",
+				fdr:       0.02,
+				minBaits:  2,
+				minFC:     1,
+				namespace: "BP",
+				outFile:   "out.txt",
+				saintFile: "saint.txt",
+				preyLimit: 50,
 			}
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())
@@ -38,14 +48,21 @@ var _ = Describe("Parseflags", func() {
 		It("should set defaults", func() {
 			os.Args = []string{
 				"cmd",
-				"-enrichment", "enrichment.txt",
-				"-localization", "localization.txt",
+				"-database", "database.fasta",
+				"-goAnnotations", "annotations.gaf",
+				"-goHierarchy", "hierarchy.obo",
+				"-saintFile", "saint.txt",
 			}
 			fileOptions := map[string]interface{}{}
 
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())
-			Expect(options.outFilePrimary).To(Equal("lba-primary.txt"), "should set default out file")
+			Expect(options.fdr).To(Equal(0.01), "should set default FDR")
+			Expect(options.minBaits).To(Equal(1), "should set default minimum baits")
+			Expect(options.minFC).To(Equal(float64(1)), "should set default minimum fold change")
+			Expect(options.namespace).To(Equal("CC"), "should set default GO namespace")
+			Expect(options.outFile).To(Equal("lba-enrichment.txt"), "should set default out file")
+			Expect(options.preyLimit).To(Equal(100), "should set default number of preys to use for enrichment")
 		})
 	})
 
@@ -67,15 +84,25 @@ var _ = Describe("Parseflags", func() {
 				"cmd",
 			}
 			fileOptions := map[string]interface{}{
-				"enrichment":     "file-enrichment.txt",
-				"localization":   "file-localization.txt",
-				"outFilePrimary": "file-out.txt",
+				"database":  "file-database.fasta",
+				"fdr":       0.02,
+				"minBaits":  2,
+				"minFC":     1,
+				"namespace": "BP",
+				"outFile":   "file-out.txt",
+				"saintFile": "file-saint.txt",
+				"preyLimit": 50,
 			}
 
 			expected := parameters{
-				enrichment:     "file-enrichment.txt",
-				localization:   "file-localization.txt",
-				outFilePrimary: "file-out.txt",
+				database:  "file-database.fasta",
+				fdr:       0.02,
+				minBaits:  2,
+				minFC:     1,
+				namespace: "BP",
+				outFile:   "file-out.txt",
+				saintFile: "file-saint.txt",
+				preyLimit: 50,
 			}
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())

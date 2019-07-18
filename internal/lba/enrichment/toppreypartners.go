@@ -1,4 +1,4 @@
-package localize
+package enrichment
 
 import (
 	customSort "github.com/knightjdr/cmgo/pkg/sort"

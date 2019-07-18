@@ -2,37 +2,22 @@
 package localize
 
 import (
-	"fmt"
 	"log"
-
-	"github.com/knightjdr/cmgo/internal/pkg/read/database"
-	"github.com/knightjdr/cmgo/internal/pkg/read/saint"
-	"github.com/knightjdr/cmgo/pkg/gene"
 )
 
-// Localize localizes preys from a SAINT file using LBA
+// Localize assigns genes to a compartment and generates a localization
+// profile from enriched terms and a list of valid localizations.
 func Localize(fileOptions map[string]interface{}) {
 	options, err := parseFlags(fileOptions)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	saintData := saint.Read(options.saintFile, options.fdr, options.minBaits)
-	preys := uniquePreys(saintData)
+	enrichment := readEnrichment(options.enrichment)
+	goIDs := readLocalizations(options.localization)
 
-	// Read database and create a mapping from Refseq to gene name,
-	// gene ID and UniProt ID for significant preys
-	databaseData := database.Read(options.database, false)
-	refseqMapping, geneIDs := mapRefseq(databaseData, preys)
-	entrezToUniprotMap := gene.MapIDs(geneIDs, "Entrez", "UniProt", "")
-	addUniprotIDs(&refseqMapping, entrezToUniprotMap)
+	// Remove invalid localizations.
+	enrichment = filterEnrichment(enrichment, goIDs)
 
-	baitsPerPrey, preysPerBait := associations(saintData)
-	_, topPreysPerPrey := topPreyPartners(baitsPerPrey, preysPerBait, options.preyLimit, options.minFC)
-	enrichment := profile(topPreysPerPrey, preys)
-	for gene, terms := range enrichment {
-		for _, term := range terms {
-			fmt.Println(gene, term.Recall, term.Precision, term.Name, term.Pvalue)
-		}
-	}
+	writePrimary(enrichment, goIDs, options.outFilePrimary)
 }
