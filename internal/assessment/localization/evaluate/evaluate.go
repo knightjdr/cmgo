@@ -7,7 +7,6 @@ import (
 	"github.com/knightjdr/cmgo/internal/pkg/localization"
 	"github.com/knightjdr/cmgo/internal/pkg/read/geneontology"
 	readLocalization "github.com/knightjdr/cmgo/internal/pkg/read/localization"
-	"github.com/knightjdr/cmgo/pkg/mapfunc"
 )
 
 // Evaluate determines whether localizations are previously known
@@ -26,10 +25,16 @@ func Evaluate(fileOptions map[string]interface{}) {
 	// Read and assess localizations.
 	localizations := readLocalization.Prey(options.localization)
 
-	genes := make(map[string]bool, len(localizations))
+	genes := make(map[string]map[string]map[string]interface{}, len(localizations))
 	for gene, prediction := range localizations {
-		ids := mapfunc.KeysStringString(prediction)
-		genes[gene] = localization.IsKnown(gene, ids, (*goAnnotations.Genes)[options.namespace], (*goHierarchy)[options.namespace])
+		genes[gene] = make(map[string]map[string]interface{}, 0)
+		for id, name := range prediction {
+			genes[gene][id] = map[string]interface{}{
+				"known": localization.IsKnown(gene, []string{id}, (*goAnnotations.Genes)[options.namespace], (*goHierarchy)[options.namespace]),
+				"name":  name,
+			}
+		}
+
 	}
 
 	summarize(genes, options.outFileSummary)
