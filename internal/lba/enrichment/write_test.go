@@ -124,10 +124,10 @@ var _ = Describe("Write results to file", func() {
 
 		write(enrichment, refseqMap, "test/out.txt")
 		expected := "symbol\tEntrez\tRefseq\tUniProt\tGO ID\tGO term\tp-value\trecall\tprecision\tquery size\tterm size\tgenes\n" +
-			"a\t3\tA\tQA\tGO:1\tTerm 1\t1.08e-17\t0.01\t0.50\t2\t100\tb, c\n" +
-			"a\t3\tA\tQA\tGO:2\tTerm 2\t9.08e-13\t0.20\t1.00\t1\t5\tc\n" +
-			"b\t1\tB\tQB\tGO:3\tTerm 3\t4.56e-02\t0.01\t0.50\t2\t100\ta, c\n" +
-			"c\t2\tC\tQC\tGO:4\tTerm 4\t7.11e-07\t0.01\t0.50\t2\t100\ta, b\n"
+			"a\t3\tA\tQA\tGO:1\tTerm 1\t1.08e-17\t0.0100\t0.5000\t2\t100\tb, c\n" +
+			"a\t3\tA\tQA\tGO:2\tTerm 2\t9.08e-13\t0.2000\t1.0000\t1\t5\tc\n" +
+			"b\t1\tB\tQB\tGO:3\tTerm 3\t4.56e-02\t0.0100\t0.5000\t2\t100\ta, c\n" +
+			"c\t2\tC\tQC\tGO:4\tTerm 4\t7.11e-07\t0.0100\t0.5000\t2\t100\ta, b\n"
 		bytes, _ := afero.ReadFile(fs.Instance, "test/out.txt")
 		Expect(string(bytes)).To(Equal(expected))
 	})

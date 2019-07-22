@@ -20,6 +20,7 @@ var _ = Describe("Parseflags", func() {
 				"-enrichment", "enrichment.txt",
 				"-localization", "localization.txt",
 				"-outFilePrimary", "out.txt",
+				"-outFileProfile", "profile.txt",
 			}
 			fileOptions := map[string]interface{}{}
 
@@ -27,6 +28,7 @@ var _ = Describe("Parseflags", func() {
 				enrichment:     "enrichment.txt",
 				localization:   "localization.txt",
 				outFilePrimary: "out.txt",
+				outFileProfile: "profile.txt",
 			}
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())
@@ -45,7 +47,8 @@ var _ = Describe("Parseflags", func() {
 
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())
-			Expect(options.outFilePrimary).To(Equal("lba-primary.txt"), "should set default out file")
+			Expect(options.outFilePrimary).To(Equal("lba-primary.txt"), "should set default primary localization out file")
+			Expect(options.outFileProfile).To(Equal("lba-profile.txt"), "should set default profile out file")
 		})
 	})
 
@@ -70,12 +73,14 @@ var _ = Describe("Parseflags", func() {
 				"enrichment":     "file-enrichment.txt",
 				"localization":   "file-localization.txt",
 				"outFilePrimary": "file-out.txt",
+				"outFileProfile": "file-profile.txt",
 			}
 
 			expected := parameters{
 				enrichment:     "file-enrichment.txt",
 				localization:   "file-localization.txt",
 				outFilePrimary: "file-out.txt",
+				outFileProfile: "file-profile.txt",
 			}
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())

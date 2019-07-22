@@ -48,7 +48,7 @@ func write(enrichment map[string][]gprofiler.EnrichedTerm, refseqMap map[string]
 			}
 
 			buffer.WriteString(fmt.Sprintf(
-				"%s\t%s\t%s\t%s\t%s\t%s\t%0.2e\t%0.2f\t%0.2f\t%d\t%d\t%s\n",
+				"%s\t%s\t%s\t%s\t%s\t%s\t%0.2e\t%0.4f\t%0.4f\t%d\t%d\t%s\n",
 				refseqMap[refseq]["Symbol"],
 				refseqMap[refseq]["Entrez"],
 				refseq,

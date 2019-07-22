@@ -11,6 +11,7 @@ type parameters struct {
 	enrichment     string
 	localization   string
 	outFilePrimary string
+	outFileProfile string
 }
 
 func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
@@ -18,11 +19,13 @@ func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	enrichment := flags.SetString("enrichment", args, fileOptions, "")
 	localization := flags.SetString("localization", args, fileOptions, "")
 	outFilePrimary := flags.SetString("outFilePrimary", args, fileOptions, "lba-primary.txt")
+	outFileProfile := flags.SetString("outFileProfile", args, fileOptions, "lba-profile.txt")
 
 	options := parameters{
 		enrichment:     enrichment,
 		localization:   localization,
 		outFilePrimary: outFilePrimary,
+		outFileProfile: outFileProfile,
 	}
 
 	// Check for missing arguments.

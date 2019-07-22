@@ -26,11 +26,15 @@ var _ = Describe("Read localization file", func() {
 			[]byte(localizationText),
 			0444,
 		)
-		expected := map[string]string{
+
+		actualLocalizations, actualOrder := readLocalizations("test/localization.txt")
+		expectedOrder := []string{"GO:0005654", "GO:0005694", "GO:0005730"}
+		expectedLocalizations := map[string]string{
 			"GO:0005654": "nucleoplasm",
 			"GO:0005694": "chromosome",
 			"GO:0005730": "nucleolus",
 		}
-		Expect(readLocalizations("test/localization.txt")).To(Equal(expected))
+		Expect(actualOrder).To(Equal(expectedOrder))
+		Expect(actualLocalizations).To(Equal(expectedLocalizations))
 	})
 })

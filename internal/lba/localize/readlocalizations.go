@@ -8,7 +8,7 @@ import (
 	"github.com/knightjdr/cmgo/pkg/fs"
 )
 
-func readLocalizations(filename string) map[string]string {
+func readLocalizations(filename string) (map[string]string, []string) {
 	file, err := fs.Instance.Open(filename)
 	if err != nil {
 		log.Fatalln(err)
@@ -18,6 +18,7 @@ func readLocalizations(filename string) map[string]string {
 	reader.Comma = '\t'
 	reader.LazyQuotes = true
 
+	localizationOrder := make([]string, 0)
 	localizations := make(map[string]string, 0)
 	for {
 		line, err := reader.Read()
@@ -28,8 +29,9 @@ func readLocalizations(filename string) map[string]string {
 			log.Fatalln(err)
 		}
 
+		localizationOrder = append(localizationOrder, line[0])
 		localizations[line[0]] = line[1]
 	}
 
-	return localizations
+	return localizations, localizationOrder
 }

@@ -37,5 +37,6 @@ func Evaluate(fileOptions map[string]interface{}) {
 
 	}
 
+	knownList(genes, options.outFile)
 	summarize(genes, options.outFileSummary)
 }

@@ -14,10 +14,11 @@ func Localize(fileOptions map[string]interface{}) {
 	}
 
 	enrichment := readEnrichment(options.enrichment)
-	goIDs := readLocalizations(options.localization)
+	goIDs, orderIDs := readLocalizations(options.localization)
 
 	// Remove invalid localizations.
 	enrichment = filterEnrichment(enrichment, goIDs)
 
 	writePrimary(enrichment, goIDs, options.outFilePrimary)
+	writeProfile(enrichment, orderIDs, options.outFileProfile)
 }

@@ -68,5 +68,5 @@ AASS	mitochondrial matrix	GO:0005759	0.76
 ```
 
 ### Output
-* `localization-known.txt`: the input file with a boolean indicate if known
+* `localization-known.txt`: the input file with a boolean indicating if known
 * `summary.txt`: summary statistics

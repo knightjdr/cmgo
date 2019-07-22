@@ -33,3 +33,5 @@ GO:0005743	mitochondrial inner membrane
 
 ### Output
 * `lba-primary.txt`: a file with the GO ID(s) and term name(s) for every prey's assigned localization
+* `lba-profile.txt`: matrix showing the precision for each gene across specified localizations. Localizations are
+in the same order as they are input
