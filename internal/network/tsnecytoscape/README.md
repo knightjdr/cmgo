@@ -36,5 +36,11 @@ ABCB1	-16.1846453937935	91.5103672699896
 ABCB10	-52.4758726133164	73.6495265978388
 ```
 
+### nodeLocalizations
+```
+gene	GO:0005694	GO:0016604	GO:0005635
+AAAS	0.0000	0.0000	0.2500
+AAK1	0.0000	0.2200	0.6700
+
 ### Output
 * `map.cyjs`: map in .cyjs format for Cytoscape

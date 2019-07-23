@@ -39,6 +39,8 @@ func main() {
 		gradient.Draw(options)
 	case "enrichment-heatmap":
 		heatmap.Region(options)
+	case "lba-correlation":
+		lba.Correlation(options)
 	case "lba-enrichment":
 		lba.Enrichment(options)
 	case "lba-localize":

@@ -66,11 +66,17 @@ Creates a heat map visualizing region (domain/motif) fold enrichment (scaled to 
 
 ## LBA
 
+### Module name: `lba-correlation`
+
+* folder `lba/correlation`
+
+> Calculate correlation between LBA profiles and output Cytoscape formatted file for viewing network.
+
 ### Module name: `lba-enrichment`
 
 * folder `lba/enrichment`
 
-> Enrichment performs GO enrichments of preys from a SAINT file using LBA
+> Enrichment performs GO enrichments of preys from a SAINT file using LBA.
 
 ### Module name: `lba-localize`
 
