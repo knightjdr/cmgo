@@ -7,7 +7,7 @@ Cellmap analysis modules written in GO. This was built with GO modules.
 ```
 git clone https://github.com/knightjdr/cmgo.git
 cd cmgo
-go build
+go build ./...
 ```
 
 ## Run an analysis module
