@@ -12,6 +12,7 @@ import (
 	"github.com/knightjdr/cmgo/internal/enrichment/heatmap"
 	"github.com/knightjdr/cmgo/internal/lba"
 	"github.com/knightjdr/cmgo/internal/network/svg"
+	"github.com/knightjdr/cmgo/internal/network/tsnecytoscape"
 	"github.com/knightjdr/cmgo/internal/nmf/robustness"
 	"github.com/knightjdr/cmgo/internal/nmf/subset"
 	"github.com/knightjdr/cmgo/internal/nmf/uv"
@@ -44,6 +45,8 @@ func main() {
 		lba.Localize(options)
 	case "network-svg":
 		svg.Draw(options)
+	case "network-tsnecytoscape":
+		tsnecytoscape.Create(options)
 	case "nmf-robustness":
 		robustness.Evaluate(options)
 	case "nmf-uv":

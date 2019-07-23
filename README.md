@@ -92,6 +92,10 @@ Modules for creating networks
 
 > Create an svg network for NMF or SAFE
 
+### Module name: `network-tsnecytoscape`
+
+> Convert a tSNE coordinate system into a .cyjs file for Cytoscape
+
 ## NMF
 
 Modules for NMF (and related) analysis.

@@ -6,6 +6,7 @@ import (
 
 	"github.com/knightjdr/cmgo/internal/pkg/read/list"
 	"github.com/knightjdr/cmgo/internal/pkg/read/nmf"
+	"github.com/knightjdr/cmgo/internal/pkg/read/tsne"
 )
 
 // Draw creates an svg version of a network.
@@ -17,7 +18,7 @@ func Draw(fileOptions map[string]interface{}) {
 
 	colors := list.ParseSlice(options.colorList)
 	localization := nmf.Localization(options.localizations)
-	coordinates := readCoordinates(options.nodeCoordinates)
+	coordinates := tsne.Coordinates(options.nodeCoordinates)
 
 	// Scale coordinates to defined plot width.
 	plotWidth := float64(1000)

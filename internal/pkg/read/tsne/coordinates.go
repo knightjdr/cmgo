@@ -1,4 +1,5 @@
-package svg
+// Package tsne reads t-SNE coordinate file.
+package tsne
 
 import (
 	"encoding/csv"
@@ -9,12 +10,14 @@ import (
 	"github.com/knightjdr/cmgo/pkg/fs"
 )
 
-type coordinate struct {
+// Coordinate are X and Y coordinates for a 2D space.
+type Coordinate struct {
 	X float64
 	Y float64
 }
 
-func readCoordinates(filename string) map[string]coordinate {
+// Coordinates reads t-SNE coordinates.
+func Coordinates(filename string) map[string]Coordinate {
 	file, err := fs.Instance.Open(filename)
 	if err != nil {
 		log.Fatalln(err)
@@ -31,7 +34,7 @@ func readCoordinates(filename string) map[string]coordinate {
 	}
 
 	// Read compartment information.
-	coordinates := make(map[string]coordinate, 0)
+	coordinates := make(map[string]Coordinate, 0)
 	for {
 		line, err := reader.Read()
 		if err != nil {
@@ -45,7 +48,7 @@ func readCoordinates(filename string) map[string]coordinate {
 		x, _ := strconv.ParseFloat(line[1], 64)
 		y, _ := strconv.ParseFloat(line[2], 64)
 
-		coordinates[gene] = coordinate{
+		coordinates[gene] = Coordinate{
 			X: x,
 			Y: y,
 		}

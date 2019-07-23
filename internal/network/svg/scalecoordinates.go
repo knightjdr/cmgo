@@ -1,8 +1,12 @@
 package svg
 
-import "math"
+import (
+	"math"
 
-func scaleCoordinates(coordinates map[string]coordinate, scaleWidth float64, radius, borderWidth int) (map[string]coordinate, float64) {
+	"github.com/knightjdr/cmgo/internal/pkg/read/tsne"
+)
+
+func scaleCoordinates(coordinates map[string]tsne.Coordinate, scaleWidth float64, radius, borderWidth int) (map[string]tsne.Coordinate, float64) {
 	maxX := -math.MaxFloat64
 	maxY := -math.MaxFloat64
 	minX := math.MaxFloat64
@@ -32,9 +36,9 @@ func scaleCoordinates(coordinates map[string]coordinate, scaleWidth float64, rad
 
 	scale := scaleWidth / inputWidth
 
-	scaledCoordinates := make(map[string]coordinate, len(coordinates))
+	scaledCoordinates := make(map[string]tsne.Coordinate, len(coordinates))
 	for gene, position := range coordinates {
-		scaledCoordinates[gene] = coordinate{
+		scaledCoordinates[gene] = tsne.Coordinate{
 			X: scale * (position.X - minX),
 			Y: scale * (position.Y - minY),
 		}

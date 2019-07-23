@@ -6,12 +6,13 @@ import (
 	"math"
 	"sort"
 
-	"github.com/knightjdr/cmgo/pkg/fs"
 	"github.com/knightjdr/cmgo/internal/pkg/read/nmf"
+	"github.com/knightjdr/cmgo/internal/pkg/read/tsne"
+	"github.com/knightjdr/cmgo/pkg/fs"
 	"github.com/spf13/afero"
 )
 
-func writeSVG(coordinates map[string]coordinate, colors []string, localization nmf.NMFlocalization, plotWidth, plotHeight float64, outfile string) {
+func writeSVG(coordinates map[string]tsne.Coordinate, colors []string, localization nmf.NMFlocalization, plotWidth, plotHeight float64, outfile string) {
 	// Determine order for outputting nodes.
 	nodeOrder := make([]string, len(coordinates))
 	i := 0

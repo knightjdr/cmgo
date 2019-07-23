@@ -3,8 +3,9 @@ package svg
 import (
 	"testing"
 
-	"github.com/knightjdr/cmgo/pkg/fs"
 	"github.com/knightjdr/cmgo/internal/pkg/read/nmf"
+	"github.com/knightjdr/cmgo/internal/pkg/read/tsne"
+	"github.com/knightjdr/cmgo/pkg/fs"
 	"github.com/spf13/afero"
 	"github.com/stretchr/testify/assert"
 )
@@ -18,10 +19,10 @@ func TestWriteSVG(t *testing.T) {
 	fs.Instance.MkdirAll("test", 0755)
 
 	colors := []string{"#f00", "#000", "#ccc", "#fff"}
-	coordinates := map[string]coordinate{
-		"a": coordinate{X: 10, Y: 25},
-		"b": coordinate{X: 20, Y: 35},
-		"c": coordinate{X: 56, Y: 7},
+	coordinates := map[string]tsne.Coordinate{
+		"a": tsne.Coordinate{X: 10, Y: 25},
+		"b": tsne.Coordinate{X: 20, Y: 35},
+		"c": tsne.Coordinate{X: 56, Y: 7},
 	}
 	localization := nmf.NMFlocalization{
 		"a": nmf.GeneLocalization{Compartment: 3},
