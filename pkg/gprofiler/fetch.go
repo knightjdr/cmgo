@@ -27,7 +27,14 @@ func Fetch(s *Service) {
 		log.Fatal(err)
 	}
 
-	res, err := http.Post(s.URL, "application/json", bytes.NewBuffer(data))
+	client := &http.Client{}
+	req, err := http.NewRequest("Post", s.URL, bytes.NewBuffer(data))
+	if err != nil {
+		log.Fatalln(err)
+	}
+	req.Header.Set("User-Agent", "Gingas-lab cmgo (jknight@lunenfeld.ca)")
+
+	res, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
 	}

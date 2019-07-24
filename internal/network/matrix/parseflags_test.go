@@ -1,4 +1,4 @@
-package correlation
+package matrix
 
 import (
 	"os"
@@ -18,10 +18,10 @@ var _ = Describe("Parseflags", func() {
 			os.Args = []string{
 				"cmd",
 				"-colorList", "colors.txt",
-				"-edgesPerNode", "50",
+				"-cutoff", "0.5",
 				"-localizations", "localizations.txt",
+				"-matrix", "node-profiles.txt",
 				"-nodeLocalizations", "node-localizations.txt",
-				"-nodeProfiles", "node-profiles.txt",
 				"-outFile", "out.txt",
 				"-outFileNetwork", "out.cyjs",
 			}
@@ -29,10 +29,10 @@ var _ = Describe("Parseflags", func() {
 
 			expected := parameters{
 				colorList:         "colors.txt",
-				edgesPerNode:      50,
+				cutoff:            0.5,
 				localizations:     "localizations.txt",
+				matrix:            "node-profiles.txt",
 				nodeLocalizations: "node-localizations.txt",
-				nodeProfiles:      "node-profiles.txt",
 				outFile:           "out.txt",
 				outFileNetwork:    "out.cyjs",
 			}
@@ -48,14 +48,14 @@ var _ = Describe("Parseflags", func() {
 				"cmd",
 				"-colorList", "colors.txt",
 				"-localizations", "localizations.txt",
+				"-matrix", "node-profiles.txt",
 				"-nodeLocalizations", "node-localizations.txt",
-				"-nodeProfiles", "node-profiles.txt",
 			}
 			fileOptions := map[string]interface{}{}
 
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())
-			Expect(options.edgesPerNode).To(Equal(20), "should set default edges per node")
+			Expect(options.cutoff).To(Equal(0.01), "should set default cutoff")
 			Expect(options.outFile).To(Equal("corr.txt"), "should set default out file")
 			Expect(options.outFileNetwork).To(Equal("corr.cyjs"), "should set default network out file")
 		})
@@ -80,20 +80,20 @@ var _ = Describe("Parseflags", func() {
 			}
 			fileOptions := map[string]interface{}{
 				"colorList":         "file-colors.txt",
-				"edgesPerNode":      50,
+				"cutoff":            0.5,
 				"localizations":     "file-localizations.txt",
+				"matrix":            "file-node-profiles.txt",
 				"nodeLocalizations": "file-node-localizations.txt",
-				"nodeProfiles":      "file-node-profiles.txt",
 				"outFile":           "file-out.txt",
 				"outFileNetwork":    "file-out.cyjs",
 			}
 
 			expected := parameters{
 				colorList:         "file-colors.txt",
-				edgesPerNode:      50,
+				cutoff:            0.5,
 				localizations:     "file-localizations.txt",
+				matrix:            "file-node-profiles.txt",
 				nodeLocalizations: "file-node-localizations.txt",
-				nodeProfiles:      "file-node-profiles.txt",
 				outFile:           "file-out.txt",
 				outFileNetwork:    "file-out.cyjs",
 			}

@@ -1,4 +1,4 @@
-package correlation
+package matrix
 
 import (
 	"errors"
@@ -9,10 +9,10 @@ import (
 
 type parameters struct {
 	colorList         string
-	edgesPerNode      int
+	cutoff            float64
 	localizations     string
+	matrix            string
 	nodeLocalizations string
-	nodeProfiles      string
 	outFile           string
 	outFileNetwork    string
 }
@@ -20,19 +20,19 @@ type parameters struct {
 func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	args := flags.Parse()
 	colorList := flags.SetString("colorList", args, fileOptions, "")
-	edgesPerNode := flags.SetInt("edgesPerNode", args, fileOptions, 20)
+	cutoff := flags.SetFloat("cutoff", args, fileOptions, 0.01)
 	localizations := flags.SetString("localizations", args, fileOptions, "")
+	matrix := flags.SetString("matrix", args, fileOptions, "")
 	nodeLocalizations := flags.SetString("nodeLocalizations", args, fileOptions, "")
-	nodeProfiles := flags.SetString("nodeProfiles", args, fileOptions, "")
 	outFile := flags.SetString("outFile", args, fileOptions, "corr.txt")
 	outFileNetwork := flags.SetString("outFileNetwork", args, fileOptions, "corr.cyjs")
 
 	options := parameters{
 		colorList:         colorList,
-		edgesPerNode:      edgesPerNode,
+		cutoff:            cutoff,
 		localizations:     localizations,
+		matrix:            matrix,
 		nodeLocalizations: nodeLocalizations,
-		nodeProfiles:      nodeProfiles,
 		outFile:           outFile,
 		outFileNetwork:    outFileNetwork,
 	}
@@ -45,11 +45,11 @@ func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	if options.localizations == "" {
 		messages = append(messages, "missing localization file")
 	}
+	if options.matrix == "" {
+		messages = append(messages, "missing matrix file")
+	}
 	if options.nodeLocalizations == "" {
 		messages = append(messages, "missing node localization file")
-	}
-	if options.nodeProfiles == "" {
-		messages = append(messages, "missing node profile file")
 	}
 
 	// Format error message.

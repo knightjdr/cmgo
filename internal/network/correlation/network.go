@@ -10,8 +10,8 @@ import (
 	"github.com/knightjdr/cmgo/pkg/correlation"
 )
 
-// Network creates a Cytoscape and txt of node pairs for visualizing an LBA
-// profile as a network.
+// Network creates a Cytoscape and txt of node pairs for visualizing localization
+// profiles as a network.
 func Network(fileOptions map[string]interface{}) {
 	options, err := parseFlags(fileOptions)
 	if err != nil {
@@ -24,6 +24,11 @@ func Network(fileOptions map[string]interface{}) {
 	genes, _, profiles := matrix.Read(options.nodeProfiles)
 
 	corr := correlation.CoefficientMatrix(profiles, true, "Pearson")
-	cutoff := calculateCutoff(corr, options.edgesPerNode)
-	writeJSON(corr, genes, cutoff, nodeLocalizations, possibleLocalizations, colors, options.outFileNetwork)
+	cutoff := options.cutoff
+	if cutoff == 0 {
+		cutoff = calculateCutoff(corr, options.edgesPerNode)
+	}
+	pairs := filterPairs(corr, genes, cutoff, options.maxEdges)
+	writeJSON(genes, pairs, nodeLocalizations, possibleLocalizations, colors, options.outFileNetwork)
+	writeTXT(genes, pairs, options.outFile)
 }

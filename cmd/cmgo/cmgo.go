@@ -11,6 +11,8 @@ import (
 	"github.com/knightjdr/cmgo/internal/assessment/localization/nmfsafe"
 	"github.com/knightjdr/cmgo/internal/enrichment/heatmap"
 	"github.com/knightjdr/cmgo/internal/lba"
+	"github.com/knightjdr/cmgo/internal/network/correlation"
+	"github.com/knightjdr/cmgo/internal/network/matrix"
 	"github.com/knightjdr/cmgo/internal/network/svg"
 	"github.com/knightjdr/cmgo/internal/network/tsnecytoscape"
 	"github.com/knightjdr/cmgo/internal/nmf/robustness"
@@ -39,12 +41,14 @@ func main() {
 		gradient.Draw(options)
 	case "enrichment-heatmap":
 		heatmap.Region(options)
-	case "lba-correlation":
-		lba.Correlation(options)
 	case "lba-enrichment":
 		lba.Enrichment(options)
 	case "lba-localize":
 		lba.Localize(options)
+	case "network-correlation":
+		correlation.Network(options)
+	case "network-matrix":
+		matrix.Network(options)
 	case "network-svg":
 		svg.Draw(options)
 	case "network-tsnecytoscape":

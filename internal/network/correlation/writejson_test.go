@@ -17,12 +17,6 @@ var _ = Describe("Write cyjs", func() {
 		fs.Instance.MkdirAll("test", 0755)
 
 		colors := []string{"#000", "#f00", "#0f0", "#00f"}
-		corr := [][]float64{
-			{1, -0.2, 0.71, 0.82},
-			{-0.2, 1, 0.95, 0.3},
-			{0.71, 0.95, 1, 0.71},
-			{0.82, 0.3, 0.71, 1},
-		}
 		genes := []string{"a", "b", "c", "d"}
 		nodeLocalizations := map[string]map[string]string{
 			"a": map[string]string{
@@ -36,6 +30,19 @@ var _ = Describe("Write cyjs", func() {
 				"GO:2": "2",
 			},
 			"d": map[string]string{},
+		}
+		pairs := map[string][]edgePair{
+			"a": []edgePair{
+				{Target: "c", Weight: 0.71},
+				{Target: "d", Weight: 0.82},
+			},
+			"b": []edgePair{
+				{Target: "c", Weight: 0.95},
+			},
+			"c": []edgePair{
+				{Target: "d", Weight: 0.71},
+			},
+			"d": []edgePair{},
 		}
 		possibleLocalizations := []string{"GO:2", "GO:1", "GO:3"}
 
@@ -94,45 +101,45 @@ var _ = Describe("Write cyjs", func() {
 			"\t\t\"edges\": [\n" +
 			"\t\t\t{\n" +
 			"\t\t\t\t\"data\": {\n" +
-			"\t\t\t\t\t\"distance\": 0.71,\n" +
 			"\t\t\t\t\t\"id\": \"a-c\",\n" +
 			"\t\t\t\t\t\"name\": \"a (interacts with) c\",\n" +
 			"\t\t\t\t\t\"source\": \"a\",\n" +
-			"\t\t\t\t\t\"target\": \"c\"\n" +
+			"\t\t\t\t\t\"target\": \"c\",\n" +
+			"\t\t\t\t\t\"weight\": 0.71\n" +
 			"\t\t\t\t}\n" +
 			"\t\t\t},\n" +
 			"\t\t\t{\n" +
 			"\t\t\t\t\"data\": {\n" +
-			"\t\t\t\t\t\"distance\": 0.82,\n" +
 			"\t\t\t\t\t\"id\": \"a-d\",\n" +
 			"\t\t\t\t\t\"name\": \"a (interacts with) d\",\n" +
 			"\t\t\t\t\t\"source\": \"a\",\n" +
-			"\t\t\t\t\t\"target\": \"d\"\n" +
+			"\t\t\t\t\t\"target\": \"d\",\n" +
+			"\t\t\t\t\t\"weight\": 0.82\n" +
 			"\t\t\t\t}\n" +
 			"\t\t\t},\n" +
 			"\t\t\t{\n" +
 			"\t\t\t\t\"data\": {\n" +
-			"\t\t\t\t\t\"distance\": 0.95,\n" +
 			"\t\t\t\t\t\"id\": \"b-c\",\n" +
 			"\t\t\t\t\t\"name\": \"b (interacts with) c\",\n" +
 			"\t\t\t\t\t\"source\": \"b\",\n" +
-			"\t\t\t\t\t\"target\": \"c\"\n" +
+			"\t\t\t\t\t\"target\": \"c\",\n" +
+			"\t\t\t\t\t\"weight\": 0.95\n" +
 			"\t\t\t\t}\n" +
 			"\t\t\t},\n" +
 			"\t\t\t{\n" +
 			"\t\t\t\t\"data\": {\n" +
-			"\t\t\t\t\t\"distance\": 0.71,\n" +
 			"\t\t\t\t\t\"id\": \"c-d\",\n" +
 			"\t\t\t\t\t\"name\": \"c (interacts with) d\",\n" +
 			"\t\t\t\t\t\"source\": \"c\",\n" +
-			"\t\t\t\t\t\"target\": \"d\"\n" +
+			"\t\t\t\t\t\"target\": \"d\",\n" +
+			"\t\t\t\t\t\"weight\": 0.71\n" +
 			"\t\t\t\t}\n" +
 			"\t\t\t}\n" +
 			"\t\t]\n" +
 			"\t}\n" +
 			"}"
 
-		writeJSON(corr, genes, 0.71, nodeLocalizations, possibleLocalizations, colors, "test/out.txt")
+		writeJSON(genes, pairs, nodeLocalizations, possibleLocalizations, colors, "test/out.txt")
 		bytes, _ := afero.ReadFile(fs.Instance, "test/out.txt")
 		Expect(string(bytes)).To(Equal(expected))
 	})

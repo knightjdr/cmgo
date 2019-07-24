@@ -1,4 +1,4 @@
-package correlation
+package matrix
 
 import (
 	"encoding/json"
@@ -20,11 +20,11 @@ type edge struct {
 }
 
 type edgeData struct {
-	Distance float64 `json:"distance"`
-	ID       string  `json:"id"`
-	Name     string  `json:"name"`
-	Source   string  `json:"source"`
-	Target   string  `json:"target"`
+	ID     string  `json:"id"`
+	Name   string  `json:"name"`
+	Source string  `json:"source"`
+	Target string  `json:"target"`
+	Weight float64 `json:"weight"`
 }
 
 type elements struct {
@@ -74,7 +74,7 @@ func firstLocalization(localizations map[string]string) (string, string) {
 }
 
 func writeJSON(
-	corr [][]float64,
+	matrix [][]float64,
 	genes []string,
 	cutoff float64,
 	nodeLocalizations map[string]map[string]string,
@@ -97,15 +97,21 @@ func writeJSON(
 			Y: 1,
 		}
 		fileData.Elements.Nodes = append(fileData.Elements.Nodes, node{Data: geneNodeData, Position: genePosition})
-		for j := i + 1; j < len(corr); j++ {
-			coefficient := corr[i][j]
-			if coefficient >= cutoff {
+		for j := i + 1; j < len(matrix); j++ {
+			weight := float64(0)
+			for k := range matrix[j] {
+				if matrix[i][k] > weight && matrix[i][k] >= cutoff && matrix[j][k] >= cutoff {
+					weight = matrix[i][k]
+				}
+			}
+
+			if weight != 0 {
 				edgeNodeData := edgeData{
-					Distance: coefficient,
-					ID:       fmt.Sprintf("%s-%s", genes[i], genes[j]),
-					Name:     fmt.Sprintf("%s (interacts with) %s", genes[i], genes[j]),
-					Source:   genes[i],
-					Target:   genes[j],
+					ID:     fmt.Sprintf("%s-%s", genes[i], genes[j]),
+					Name:   fmt.Sprintf("%s (interacts with) %s", genes[i], genes[j]),
+					Source: genes[i],
+					Target: genes[j],
+					Weight: weight,
 				}
 				fileData.Elements.Edges = append(fileData.Elements.Edges, edge{Data: edgeNodeData})
 			}
