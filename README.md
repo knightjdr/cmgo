@@ -56,13 +56,19 @@ Generates a txt file of genes in FASTA database
 
 ## Enrichment
 
-Modules for calculating term enrichment in compartments and associated images.
+Modules for calculating term enrichment in compartments and lists.
+
+### Module name: `enrichment-genes`
+
+* folder `enrichment/genes`
+
+> Perform a g:Profiler enrichment on a list of genes
 
 ### Module name: `enrichment-heatmap`
 
 * folder `enrichment/heatmap`
 
-Creates a heat map visualizing region (domain/motif) fold enrichment (scaled to Log2) across NMF or SAFE compartments.
+> Creates a heat map visualizing region (domain/motif) fold enrichment (scaled to Log2) across NMF or SAFE compartments.
 
 ## LBA
 
@@ -139,6 +145,22 @@ Modules for comparing cell map compartments.
 * folder `organelle/overlap`
 
 Takes two lists of proteins and a txt file with similarity scores between proteins and outputs metrics on the similarity within and between the lists.
+
+### Module name: `organelle-sharedregion`
+
+* folder `organelle/shared`
+
+Takes two lists of proteins and outputs metrics on the regions (domains/motifs) shared between common preys.
+
+## Prey prey
+
+Modules for prey-prey analysis
+
+### Module name: `preyprey-subset`
+
+* folder `preyprey/subset`
+
+> Subset a ProHits-viz interactive file to grab a cluster
 
 ### Module name: `organelle-sharedregion`
 

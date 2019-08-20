@@ -28,7 +28,7 @@ func Fetch(s *Service) {
 	}
 
 	client := &http.Client{}
-	req, err := http.NewRequest("Post", s.URL, bytes.NewBuffer(data))
+	req, err := http.NewRequest("POST", s.URL, bytes.NewBuffer(data))
 	if err != nil {
 		log.Fatalln(err)
 	}

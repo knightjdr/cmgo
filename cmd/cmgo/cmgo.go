@@ -9,6 +9,7 @@ import (
 	"github.com/knightjdr/cmgo/internal/assessment/hydropathy"
 	assessLocalization "github.com/knightjdr/cmgo/internal/assessment/localization/evaluate"
 	"github.com/knightjdr/cmgo/internal/assessment/localization/nmfsafe"
+	"github.com/knightjdr/cmgo/internal/enrichment/genes"
 	"github.com/knightjdr/cmgo/internal/enrichment/heatmap"
 	"github.com/knightjdr/cmgo/internal/lba"
 	"github.com/knightjdr/cmgo/internal/network/correlation"
@@ -20,6 +21,7 @@ import (
 	"github.com/knightjdr/cmgo/internal/nmf/uv"
 	"github.com/knightjdr/cmgo/internal/organelle/overlap"
 	"github.com/knightjdr/cmgo/internal/organelle/shared"
+	preypreySubset "github.com/knightjdr/cmgo/internal/preyprey/subset"
 	"github.com/knightjdr/cmgo/internal/summary/crapome"
 	"github.com/knightjdr/cmgo/internal/summary/notsignificant"
 )
@@ -39,6 +41,8 @@ func main() {
 		assessLocalization.Evaluate(options)
 	case "bait-gradient":
 		gradient.Draw(options)
+	case "enrichment-genes":
+		genes.Enrich(options)
 	case "enrichment-heatmap":
 		heatmap.Region(options)
 	case "lba-enrichment":
@@ -65,6 +69,8 @@ func main() {
 		overlap.Metrics(options)
 	case "organelle-sharedregion":
 		shared.Region(options)
+	case "preyprey-subset":
+		preypreySubset.Heatmap(options)
 	case "summary-crapome":
 		crapome.Matrix(options)
 	case "summary-notsignificant":
