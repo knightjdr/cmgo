@@ -8,25 +8,25 @@ import (
 )
 
 type parameters struct {
-	database string
+	ncbigene string
 	outFile  string
 }
 
 func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	args := flags.Parse()
-	database := flags.SetString("database", args, fileOptions, "")
+	ncbigene := flags.SetString("ncbigene", args, fileOptions, "")
 	outFile := flags.SetString("outFile", args, fileOptions, "db-genes.txt")
 
 	// Copy arguments from options file.
 	options := parameters{
-		database: database,
+		ncbigene: ncbigene,
 		outFile:  outFile,
 	}
 
 	// Check for missing arguments.
 	messages := make([]string, 0)
-	if options.database == "" {
-		messages = append(messages, "missing FASTA database file")
+	if options.ncbigene == "" {
+		messages = append(messages, "missing FASTA ncbigene file")
 	}
 
 	// Format error message

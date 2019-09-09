@@ -1,61 +1,80 @@
 package dbgenes
 
 import (
-	"errors"
 	"os"
-	"testing"
 
-	"github.com/stretchr/testify/assert"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
-func TestParseFlags(t *testing.T) {
-	// Argument unmocking.
+var _ = BeforeSuite(func() {
 	oldArgs := os.Args
 	defer func() { os.Args = oldArgs }()
+})
 
-	// TEST1: return options from command line arguments.
-	os.Args = []string{
-		"cmd",
-		"-database", "sequence.fasta",
-		"-outFile", "out.txt",
-	}
-	fileOptions := map[string]interface{}{}
-	wantArgs := parameters{
-		database: "sequence.fasta",
-		outFile:  "out.txt",
-	}
-	args, err := parseFlags(fileOptions)
-	assert.Nil(t, err, "Should not return an error when all required command line arguments are present")
-	assert.Equal(t, wantArgs, args, "Should return arguments as options")
+var _ = Describe("Parseflags", func() {
+	Context("all command line arguments", func() {
+		It("should parse arguments", func() {
+			os.Args = []string{
+				"cmd",
+				"-ncbigene", "sequence.txt",
+				"-outFile", "out.txt",
+			}
+			fileOptions := map[string]interface{}{}
 
-	// TEST2: return defaults when arguments missing.
-	os.Args = []string{
-		"cmd",
-		"-database", "sequence.fasta",
-	}
-	args, err = parseFlags(fileOptions)
-	assert.Equal(t, "db-genes.txt", args.outFile, "Should return default outfile name")
+			expected := parameters{
+				ncbigene: "sequence.txt",
+				outFile:  "out.txt",
+			}
+			options, err := parseFlags(fileOptions)
+			Expect(err).ShouldNot(HaveOccurred())
+			Expect(options).To(Equal(expected), "should set options")
+		})
+	})
 
-	// TEST3: returns error when parameters are missing.
-	os.Args = []string{
-		"cmd",
-	}
-	wantErr := errors.New("missing FASTA database file")
-	args, err = parseFlags(fileOptions)
-	assert.NotNil(t, err, "Should return error when missing arguments")
-	assert.Equal(t, wantErr, err, "Should return correct error message")
+	Context("only required command line arguments", func() {
+		It("should set defaults", func() {
+			os.Args = []string{
+				"cmd",
+				"-ncbigene", "sequence.txt",
+			}
+			fileOptions := map[string]interface{}{}
 
-	// TEST4: reads parameters from file.
-	os.Args = []string{
-		"cmd",
-	}
-	fileOptions["database"] = "file-sequences.fasta"
-	fileOptions["outFile"] = "file-out.txt"
-	wantArgs = parameters{
-		database: "file-sequences.fasta",
-		outFile:  "file-out.txt",
-	}
-	args, err = parseFlags(fileOptions)
-	assert.Nil(t, err, "Should not return an error when all required parameters are present")
-	assert.Equal(t, wantArgs, args, "Should return file parameters as options")
-}
+			options, err := parseFlags(fileOptions)
+			Expect(err).ShouldNot(HaveOccurred())
+			Expect(options.outFile).To(Equal("db-genes.txt"), "should set default out file")
+		})
+	})
+
+	Context("missing required command line arguments", func() {
+		It("should set defaults", func() {
+			os.Args = []string{
+				"cmd",
+			}
+			fileOptions := map[string]interface{}{}
+
+			_, err := parseFlags(fileOptions)
+			Expect(err).Should(HaveOccurred())
+		})
+	})
+
+	Context("argument passed via input file", func() {
+		It("should set defaults", func() {
+			os.Args = []string{
+				"cmd",
+			}
+			fileOptions := map[string]interface{}{
+				"ncbigene": "file-sequence.txt",
+				"outFile":  "file-out.txt",
+			}
+
+			expected := parameters{
+				ncbigene: "file-sequence.txt",
+				outFile:  "file-out.txt",
+			}
+			options, err := parseFlags(fileOptions)
+			Expect(err).ShouldNot(HaveOccurred())
+			Expect(options).To(Equal(expected), "should set options")
+		})
+	})
+})

@@ -12,6 +12,6 @@ func List(fileOptions map[string]interface{}) {
 		log.Fatalln(err)
 	}
 
-	genes := readDatabase(options.database)
+	genes := readList(options.ncbigene)
 	writeGenes(genes, options.outFile)
 }

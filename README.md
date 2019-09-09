@@ -30,7 +30,7 @@ Modules for generating files for upload and query file processing.
 
 * folder `analysis/dbgenes`
 
-Generates a txt file of genes in FASTA database
+> Generates a txt file of official genes used for SAINT
 
 ## Assessment
 
