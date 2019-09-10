@@ -9,10 +9,53 @@ import (
 	"github.com/spf13/afero"
 )
 
-var databaseText = `#tax_id	GeneID	Symbol	LocusTag	Synonyms	dbXrefs	chromosome	map_location	description	type_of_gene	Symbol_from_nomenclature_authority	Full_name_from_nomenclature_authority	Nomenclature_status	Other_designations	Modification_date	Feature_type
-192	36107229	AMK58_RS00870	AMK58_RS00870	AMK58_00870	-	-	-	2-polyprenylphenol 6-hydroxylase	protein-coding	-	-	-	-	20180309	-
-9606	1	A1BG	-	A1B|ABG|GAB|HYST2477	MIM:138670|HGNC:HGNC:5|Ensembl:ENSG00000121410	19	19q13.43	alpha-1-B glycoprotein	protein-coding	A1BG	alpha-1-B glycoprotein	O	alpha-1B-glycoprotein|HEL-S-163pA|epididymis secretory sperm binding protein Li 163pA	20190617	-
-9606	2	A2M	-	A2MD|CPAMD5|FWP007|S863-7	MIM:103950|HGNC:HGNC:7|Ensembl:ENSG00000175899	12	12p13.31	alpha-2-macroglobulin	protein-coding	A2M	alpha-2-macroglobulin	O	alpha-2-macroglobulin|C3 and PZP-like alpha-2-macroglobulin domain-containing protein 5|alpha-2-M	20190817	-
+var databaseText = `
+ID   001R_FRG3G              Reviewed;         256 AA.
+AC   Q6GZX4;
+DT   28-JUN-2011, integrated into UniProtKB/Swiss-Prot.
+DT   19-JUL-2004, sequence version 1.
+DT   27-SEP-2017, entry version 33.
+DE   RecName: Full=Putative transcription factor 001R;
+GN   ORFNames=FV3-001R;
+OS   Frog virus 3 (isolate Goorha) (FV-3).
+OC   Viruses; dsDNA viruses, no RNA stage; Iridoviridae; Alphairidovirinae;
+OC   Ranavirus.
+OX   NCBI_TaxID=654924;
+//
+ID   1433B_HUMAN             Reviewed;         246 AA.
+AC   P31946; A8K9K2; E1P616;
+DT   01-JUL-1993, integrated into UniProtKB/Swiss-Prot.
+DT   23-JAN-2007, sequence version 3.
+DT   28-MAR-2018, entry version 206.
+DE   RecName: Full=14-3-3 protein beta/alpha;
+DE   AltName: Full=Protein 1054;
+DE   AltName: Full=Protein kinase C inhibitor protein 1;
+DE            Short=KCIP-1;
+DE   Contains:
+DE     RecName: Full=14-3-3 protein beta/alpha, N-terminally processed;
+GN   Name=YWHAB;
+OS   Homo sapiens (Human).
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+OC   Mammalia; Eutheria; Euarchontoglires; Primates; Haplorrhini;
+OC   Catarrhini; Hominidae; Homo.
+OX   NCBI_TaxID=9606;
+//
+ID   1433E_HUMAN             Reviewed;         255 AA.
+AC   P62258; B3KY71; D3DTH5; P29360; P42655; Q4VJB6; Q53XZ5; Q63631;
+AC   Q7M4R4;
+DT   05-JUL-2004, integrated into UniProtKB/Swiss-Prot.
+DT   05-JUL-2004, sequence version 1.
+DT   28-MAR-2018, entry version 165.
+DE   RecName: Full=14-3-3 protein epsilon;
+DE            Short=14-3-3E;
+GN   Name=YWHAE;
+OS   Homo sapiens (Human).
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+OC   Mammalia; Eutheria; Euarchontoglires; Primates; Haplorrhini;
+OC   Catarrhini; Hominidae; Homo.
+OX   NCBI_TaxID=9606;
+RN   [1]
+//
 `
 
 var _ = Describe("ReadList", func() {
@@ -30,7 +73,7 @@ var _ = Describe("ReadList", func() {
 			0444,
 		)
 
-		expected := []string{"A1BG", "A2M"}
+		expected := []string{"YWHAB", "YWHAE"}
 		results := readList("test/gene_info.txt")
 		sort.Strings(results)
 		Expect(results).To(Equal(expected), "should read official gene names")

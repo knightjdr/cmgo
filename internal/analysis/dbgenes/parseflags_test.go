@@ -17,13 +17,13 @@ var _ = Describe("Parseflags", func() {
 		It("should parse arguments", func() {
 			os.Args = []string{
 				"cmd",
-				"-ncbigene", "sequence.txt",
+				"-uniprotdb", "sequence.txt",
 				"-outFile", "out.txt",
 			}
 			fileOptions := map[string]interface{}{}
 
 			expected := parameters{
-				ncbigene: "sequence.txt",
+				uniprotdb: "sequence.txt",
 				outFile:  "out.txt",
 			}
 			options, err := parseFlags(fileOptions)
@@ -36,7 +36,7 @@ var _ = Describe("Parseflags", func() {
 		It("should set defaults", func() {
 			os.Args = []string{
 				"cmd",
-				"-ncbigene", "sequence.txt",
+				"-uniprotdb", "sequence.txt",
 			}
 			fileOptions := map[string]interface{}{}
 
@@ -64,12 +64,12 @@ var _ = Describe("Parseflags", func() {
 				"cmd",
 			}
 			fileOptions := map[string]interface{}{
-				"ncbigene": "file-sequence.txt",
+				"uniprotdb": "file-sequence.txt",
 				"outFile":  "file-out.txt",
 			}
 
 			expected := parameters{
-				ncbigene: "file-sequence.txt",
+				uniprotdb: "file-sequence.txt",
 				outFile:  "file-out.txt",
 			}
 			options, err := parseFlags(fileOptions)
