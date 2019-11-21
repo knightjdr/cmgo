@@ -25,7 +25,7 @@ var _ = Describe("Keys", func() {
 	})
 
 	Describe("Map of type map[string]bool", func() {
-		It("should return integer keys", func() {
+		It("should return string keys", func() {
 			m := map[string]bool{
 				"a": true,
 				"d": true,
@@ -39,8 +39,23 @@ var _ = Describe("Keys", func() {
 		})
 	})
 
+	Describe("Map of type map[string]float64", func() {
+		It("should return string keys", func() {
+			m := map[string]float64{
+				"a": 0.01,
+				"d": 0.05,
+				"c": 2,
+			}
+
+			actual := mapfunc.KeysStringFloat(m)
+			sort.Strings(actual)
+			expected := []string{"a", "c", "d"}
+			Expect(actual).To(Equal(expected), "should return string keys")
+		})
+	})
+
 	Describe("Map of type map[string]string", func() {
-		It("should return integer string", func() {
+		It("should return string keys", func() {
 			m := map[string]string{
 				"a": "test",
 				"d": "test",

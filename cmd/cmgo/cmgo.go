@@ -11,6 +11,7 @@ import (
 	"github.com/knightjdr/cmgo/internal/assessment/localization/nmfsafe"
 	"github.com/knightjdr/cmgo/internal/enrichment/genes"
 	"github.com/knightjdr/cmgo/internal/enrichment/heatmap"
+	"github.com/knightjdr/cmgo/internal/interaction/knownbyrank"
 	"github.com/knightjdr/cmgo/internal/lba"
 	"github.com/knightjdr/cmgo/internal/network/correlation"
 	"github.com/knightjdr/cmgo/internal/network/matrix"
@@ -45,6 +46,8 @@ func main() {
 		genes.Enrich(options)
 	case "enrichment-heatmap":
 		heatmap.Region(options)
+	case "interaction-knownbyrank":
+		knownbyrank.CalculateKnownByRank(options)
 	case "lba-enrichment":
 		lba.Enrichment(options)
 	case "lba-localize":
