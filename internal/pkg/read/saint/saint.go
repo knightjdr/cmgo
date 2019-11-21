@@ -23,8 +23,12 @@ type Row struct {
 	AvgP               float64
 	FoldChange         float64
 	FDR                float64
-	PreySequenceLength int64
+	NormalizedSpec     float64
+	PreySequenceLength int
 }
+
+// SAINT is an array of Rows from a SAINT file.
+type SAINT []Row
 
 func mapSaintLine(line []string) Row {
 	avgspec, _ := strconv.ParseFloat(line[5], 64)
@@ -47,7 +51,7 @@ func mapSaintLine(line []string) Row {
 
 	if len(line) >= 21 && line[20] != "" {
 		preylength, _ := strconv.ParseInt(line[20], 10, 64)
-		row.PreySequenceLength = preylength
+		row.PreySequenceLength = int(preylength)
 	}
 	return row
 }

@@ -16,7 +16,6 @@ NP_000402.3	726	HLCS
 `
 
 func TestMapPreyDatLine(t *testing.T) {
-	// TEST1: at least 21 elements
 	line := []string{"NP_000029.2", "2843", "APC"}
 	wanted := PreyDatRow{
 		Accession: "NP_000029.2",
