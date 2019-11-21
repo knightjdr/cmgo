@@ -8,7 +8,7 @@ import (
 )
 
 func TestRemoveSignificant(t *testing.T) {
-	data := []saint.Row{
+	data := &saint.SAINT{
 		{Bait: "a", PreyGene: "prey-1", FDR: 0.01},
 		{Bait: "a", PreyGene: "prey-2", FDR: 0},
 		{Bait: "a", PreyGene: "prey-3", FDR: 0.05},
@@ -18,7 +18,7 @@ func TestRemoveSignificant(t *testing.T) {
 		{Bait: "c", PreyGene: "prey-7", FDR: 0.1},
 		{Bait: "c", PreyGene: "prey-3", FDR: 0},
 	}
-	wanted := []saint.Row{
+	wanted := &saint.SAINT{
 		{Bait: "c", PreyGene: "prey-6", FDR: 0.09},
 		{Bait: "c", PreyGene: "prey-7", FDR: 0.1},
 	}

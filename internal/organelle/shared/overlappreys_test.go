@@ -14,7 +14,7 @@ func TestOverlapPreys(t *testing.T) {
 		{Name: "compartmentA", Proteins: []string{"a", "b", "c"}},
 		{Name: "compartmentB", Proteins: []string{"d", "e", "f"}},
 	}
-	saint := []saint.Row{
+	saint := &saint.SAINT{
 		{Bait: "a", PreyGene: "1"},
 		{Bait: "a", PreyGene: "2"},
 		{Bait: "a", PreyGene: "3"},

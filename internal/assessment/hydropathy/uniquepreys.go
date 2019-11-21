@@ -5,9 +5,9 @@ import (
 	"github.com/knightjdr/cmgo/pkg/mapfunc"
 )
 
-func uniquePreys(saintData []saint.Row) []string {
+func uniquePreys(saintData *saint.SAINT) []string {
 	preys := make(map[string]bool, 0)
-	for _, row := range saintData {
+	for _, row := range *saintData {
 		preys[row.Prey] = true
 	}
 

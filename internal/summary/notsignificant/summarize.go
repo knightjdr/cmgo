@@ -15,10 +15,10 @@ type preySummary struct {
 
 type summary map[string]*preySummary
 
-func summarize(data []saint.Row) map[string]*preySummary {
+func summarize(data *saint.SAINT) map[string]*preySummary {
 	preys := make(map[string]*preySummary, 0)
 
-	for _, preyData := range data {
+	for _, preyData := range *data {
 		bait := preyData.Bait
 		ctrl := preyData.Control
 		fdr := preyData.FDR

@@ -8,7 +8,7 @@ import (
 )
 
 func TestSummarize(t *testing.T) {
-	data := []saint.Row{
+	data := &saint.SAINT{
 		{Bait: "a", PreyGene: "prey-1", Spec: []float64{10, 5}, Control: []float64{0, 4, 8}, FDR: 0.01},
 		{Bait: "a", PreyGene: "prey-2", Spec: []float64{15, 13}, Control: []float64{5, 10, 30}, FDR: 0},
 		{Bait: "a", PreyGene: "prey-3", Spec: []float64{4, 2}, Control: []float64{20, 30, 25}, FDR: 0.05},

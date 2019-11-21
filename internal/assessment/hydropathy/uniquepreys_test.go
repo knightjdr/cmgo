@@ -10,7 +10,7 @@ import (
 
 var _ = Describe("Unique preys", func() {
 	It("should return a slice of unique preys from SAINT data", func() {
-		saintData := []saint.Row{
+		saintData := &saint.SAINT{
 			{Bait: "a", Prey: "W"},
 			{Bait: "a", Prey: "X"},
 			{Bait: "a", Prey: "Y"},

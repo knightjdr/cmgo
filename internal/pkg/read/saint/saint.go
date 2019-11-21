@@ -56,29 +56,8 @@ func mapSaintLine(line []string) Row {
 	return row
 }
 
-func filterBaits(rows []Row, minBaits int) []Row {
-	// Filter by bait number.
-	if minBaits <= 1 {
-		return rows
-	}
-
-	// Count how many times a prey occurs
-	preys := make(map[string]int, 0)
-	for _, row := range rows {
-		preys[row.PreyGene]++
-	}
-
-	filteredRows := make([]Row, 0)
-	for _, row := range rows {
-		if preys[row.PreyGene] >= minBaits {
-			filteredRows = append(filteredRows, row)
-		}
-	}
-	return filteredRows
-}
-
 // Read reads a SAINT file and filters by FDR.
-func Read(filename string, fdr float64, minBaits int) []Row {
+func Read(filename string, fdr float64, minBaits int) *SAINT {
 	file, err := fs.Instance.Open(filename)
 	if err != nil {
 		log.Fatalln(err)
@@ -96,7 +75,7 @@ func Read(filename string, fdr float64, minBaits int) []Row {
 	}
 
 	// Read file and filter by FDR.
-	rows := make([]Row, 0)
+	saint := new(SAINT)
 	for {
 		line, err := reader.Read()
 		if err != nil {
@@ -108,12 +87,12 @@ func Read(filename string, fdr float64, minBaits int) []Row {
 
 		row := mapSaintLine(line)
 		if row.FDR <= fdr {
-			rows = append(rows, row)
+			*saint = append(*saint, row)
 		}
 	}
 
 	// Filter by bait number.
-	rows = filterBaits(rows, minBaits)
+	saint.FilterByBaitNumber(minBaits)
 
-	return rows
+	return saint
 }

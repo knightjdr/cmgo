@@ -8,7 +8,7 @@ import (
 
 var _ = Describe("Associations", func() {
 	It("should count the other preys associated with each prey", func() {
-		saintData := []saint.Row{
+		saintData := &saint.SAINT{
 			{Bait: "a", Prey: "W"},
 			{Bait: "a", Prey: "X"},
 			{Bait: "a", Prey: "Y"},
