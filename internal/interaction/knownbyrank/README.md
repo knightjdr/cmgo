@@ -44,8 +44,7 @@ previously known interactors. There are 8 baits with at least 3 preys and 70% of
 best preys are previously known.
 
 ```
-Nth best prey Proportion known Number of baits
-1 0.8 10
-2 0.75  10
-3 0.7 8
+prey rank proportion number of baits  known pairs
+1 0.8 10  8 "geneA-geneB, geneC-GeneD"
+2 0.7 10  7 "geneA-geneB, geneC-GeneD"
 ```

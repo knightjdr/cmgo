@@ -70,6 +70,16 @@ Modules for calculating term enrichment in compartments and lists.
 
 > Creates a heat map visualizing region (domain/motif) fold enrichment (scaled to Log2) across NMF or SAFE compartments.
 
+## Interactors
+
+# Module name: `interaction-knownbyrank`
+
+* folder `interaction/knownbyrank`
+
+> Calculates the proportion of known interactors for the Nth best prey across
+> all baits in a SAINT report. Prey spectral counts are control subtracted
+> and length normalized to determine their rank.
+
 ## LBA
 
 ### Module name: `lba-correlation`
@@ -126,7 +136,7 @@ Modules for NMF (and related) analysis.
 
 * folder `nmf/subset`
 
-> Subset an NMF basis (prey) matrix to only include preys enriched on in specified compartments.
+> Subset an NMF basis (prey) matrix to only include preys enriched in specified compartments.
 
 ### Module name: `nmf-uv`
 
@@ -161,12 +171,6 @@ Modules for prey-prey analysis
 * folder `preyprey/subset`
 
 > Subset a ProHits-viz interactive file to grab a cluster
-
-### Module name: `organelle-sharedregion`
-
-* folder `organelle/shared`
-
-Takes two lists of proteins and outputs metrics on the regions (domains/motifs) shared between common preys.
 
 ## Summary
 

@@ -24,4 +24,6 @@ func CalculateKnownByRank(fileOptions map[string]interface{}) {
 	sortedPreysPerBait := saint.SortByPreyRank("NormalizedSpec")
 	interactors := interactions.Read(options.biogrid, options.intact, options.species)
 
+	summary := summarizeInteractions(sortedPreysPerBait, interactors)
+	writeSummary(summary, options.outFile)
 }
