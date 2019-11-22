@@ -58,7 +58,7 @@ var _ = Describe("Parseflags", func() {
 	})
 
 	Context("missing required command line arguments", func() {
-		It("should set defaults", func() {
+		It("should report error", func() {
 			os.Args = []string{
 				"cmd",
 			}
@@ -70,7 +70,7 @@ var _ = Describe("Parseflags", func() {
 	})
 
 	Context("argument passed via input file", func() {
-		It("should set defaults", func() {
+		It("should set variables from file", func() {
 			os.Args = []string{
 				"cmd",
 			}
