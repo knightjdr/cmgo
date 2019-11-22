@@ -39,8 +39,8 @@ uniprotkb:P49418        uniprotkb:O43426        intact:EBI-7121510|uniprotkb:Q75
 * `known-by-rank.txt`: table with the proportion for each Nth best prey that are previously
 known interactors.
 
-In the below example, there are 10 baits with at least 1 prey and 80% of the first prey are
-previously known interactors. There are 8 baits with at least 3 preys and 70% of the third
+In the below example, there are 10 baits with at least 1 prey and 80% of the first preys are
+previously known interactors. There are 7 baits with at least 2 preys and 70% of the second
 best preys are previously known.
 
 ```
