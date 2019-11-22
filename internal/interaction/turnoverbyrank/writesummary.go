@@ -1,11 +1,11 @@
-package knownbyrank
+package turnoverbyrank
 
 import (
 	"bytes"
 	"fmt"
-	"strings"
 
 	"github.com/knightjdr/cmgo/pkg/fs"
+	"github.com/knightjdr/cmgo/pkg/stats"
 	"github.com/spf13/afero"
 )
 
@@ -19,15 +19,16 @@ func writeSummary(summary map[int]*rankSummary, outfile string) {
 }
 
 func writeHeader(buffer *bytes.Buffer) {
-	buffer.WriteString("prey rank\tproportion\tnumber of baits\tknown\tpairs\n")
+	buffer.WriteString("prey rank\tturnover rate (mean)\tturnover rate(SD)\tgenes with turnover data\n")
 }
 
 func writeBody(buffer *bytes.Buffer, summary map[int]*rankSummary) {
 	numberOfRanks := len(summary)
 
 	for i := 1; i <= numberOfRanks; i++ {
-		pairs := strings.Join(summary[i].Pairs, ", ")
-		proportion := float64(summary[i].Known) / float64(summary[i].BaitNumber)
-		buffer.WriteString(fmt.Sprintf("%d\t%0.4f\t%d\t%d\t%s\n", i, proportion, summary[i].BaitNumber, summary[i].Known, pairs))
+		turnoverMean := stats.MeanFloat(summary[i].TurnoverRates)
+		turnoverSD := stats.SDFloat(summary[i].TurnoverRates)
+		numberTurnoverGenes := len(summary[i].TurnoverRates)
+		buffer.WriteString(fmt.Sprintf("%d\t%0.4f\t%0.4f\t%d\n", i, turnoverMean, turnoverSD, numberTurnoverGenes))
 	}
 }

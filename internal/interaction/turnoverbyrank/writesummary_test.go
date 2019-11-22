@@ -1,4 +1,4 @@
-package knownbyrank
+package turnoverbyrank
 
 import (
 	"github.com/knightjdr/cmgo/pkg/fs"
@@ -18,32 +18,24 @@ var _ = Describe("Write summary", func() {
 
 		summary := map[int]*rankSummary{
 			1: &rankSummary{
-				BaitNumber: 3,
-				Known:      3,
-				Pairs:      []string{"geneA-gene1", "geneB-gene4", "geneC-gene6"},
+				TurnoverRates: []float64{1, 6},
 			},
 			2: &rankSummary{
-				BaitNumber: 3,
-				Known:      2,
-				Pairs:      []string{"geneB-gene5", "geneC-gene7"},
+				TurnoverRates: []float64{2, 5, 7},
 			},
 			3: &rankSummary{
-				BaitNumber: 2,
-				Known:      1,
-				Pairs:      []string{"geneA-gene3"},
+				TurnoverRates: []float64{3},
 			},
 			4: &rankSummary{
-				BaitNumber: 1,
-				Known:      0,
-				Pairs:      []string{},
+				TurnoverRates: []float64{9},
 			},
 		}
 
-		expected := "prey rank\tproportion\tnumber of baits\tknown\tpairs\n" +
-			"1\t1.0000\t3\t3\tgeneA-gene1, geneB-gene4, geneC-gene6\n" +
-			"2\t0.6667\t3\t2\tgeneB-gene5, geneC-gene7\n" +
-			"3\t0.5000\t2\t1\tgeneA-gene3\n" +
-			"4\t0.0000\t1\t0\t\n"
+		expected := "prey rank\tturnover rate (mean)\tturnover rate(SD)\tgenes with turnover data\n" +
+			"1\t3.5000\t3.5355\t2\n" +
+			"2\t4.6667\t2.5166\t3\n" +
+			"3\t3.0000\t0.0000\t1\n" +
+			"4\t9.0000\t0.0000\t1\n"
 
 		writeSummary(summary, "test/out.txt")
 		bytes, _ := afero.ReadFile(fs.Instance, "test/out.txt")

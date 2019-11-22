@@ -9,11 +9,13 @@ import (
 var _ = Describe("SD", func() {
 	It("should generate the standard deviation", func() {
 		slices := [][]float64{
+			{3},
 			{1, 2, 3, 4},
 			{8, 2, 17, 34},
 			{5.5, 7.2, 100.9, 3.35, 53.9},
 		}
 		expected := []float64{
+			0,
 			1.290994449,
 			13.93735986,
 			42.84095004,

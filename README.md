@@ -72,13 +72,20 @@ Modules for calculating term enrichment in compartments and lists.
 
 ## Interactors
 
-# Module name: `interaction-knownbyrank`
+### Module name: `interaction-knownbyrank`
 
 * folder `interaction/knownbyrank`
 
 > Calculates the proportion of known interactors for the Nth best prey across
 > all baits in a SAINT report. Prey spectral counts are control subtracted
 > and length normalized to determine their rank.
+
+### Module name: `interaction-turnoverbyrank`
+
+* folder `interaction/turnoverbyrank`
+
+> Calculates the average turnover rate for preys, ranked by
+> their control-subtracted length-adjusted spectral counts
 
 ## LBA
 
