@@ -21,8 +21,8 @@ func Assess(fileOptions map[string]interface{}) {
 	// Define genes that could characterize an NMF rank but fall outside the
 	// options.maxGenesPerRank level.
 	nmfLocalizations := readNMF.Localization(options.nmfLocalization)
-	basis, _, rows := readNMF.Basis(options.basisMatrix)
-	characterizingGeneIndices := nmf.FilterBasis(basis, options.maxGenesPerRank, options.minRankValue, options.withinRankMax)
+	basis, _, rows := readNMF.ReadBasis(options.basisMatrix)
+	characterizingGeneIndices := nmf.FilterBasisForRankDefiningPreys(basis, options.maxGenesPerRank, options.minRankValue, options.withinRankMax)
 	characterizingGenes := geneFromIndex(characterizingGeneIndices, rows)
 	nonCharacterizingGenes := defineNonCharacterizingGenes(characterizingGenes, nmfLocalizations)
 

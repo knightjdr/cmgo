@@ -23,7 +23,7 @@ func NMF(fileOptions map[string]interface{}) {
 		log.Fatalln(err)
 	}
 
-	basis, columns, rows := nmf.Basis(options.basisMatrix)
+	basis, columns, rows := nmf.ReadBasis(options.basisMatrix)
 
 	// Define columns that are specifed by rank names
 	rank1Indices, rank2Indices, err := defineColumns(columns, options.ranks1, options.ranks2)

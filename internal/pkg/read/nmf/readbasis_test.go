@@ -37,7 +37,7 @@ func TestReadBasis(t *testing.T) {
 		{0.0, 0.0, 0.002},
 	}
 	wantedRows := []string{"AAAS", "AAK1", "AAR2", "AARS2"}
-	matrix, columns, rows := Basis("test/basis.csv")
+	matrix, columns, rows := ReadBasis("test/basis.csv")
 	assert.Equal(t, wantedColumns, columns, "Should return columns")
 	assert.Equal(t, wantedMatrix, matrix, "Should read basis matrix")
 	assert.Equal(t, wantedRows, rows, "Should return rows")

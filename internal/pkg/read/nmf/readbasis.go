@@ -9,8 +9,8 @@ import (
 	"github.com/knightjdr/cmgo/pkg/fs"
 )
 
-// Basis reads an NMF basis matrix.
-func Basis(filename string) ([][]float64, []string, []string) {
+// ReadBasis reads an NMF basis matrix.
+func ReadBasis(filename string) ([][]float64, []string, []string) {
 	file, err := fs.Instance.Open(filename)
 	if err != nil {
 		log.Fatalln(err)

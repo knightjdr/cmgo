@@ -9,8 +9,8 @@ import (
 	customSort "github.com/knightjdr/cmgo/pkg/sort"
 )
 
-// FilterBasis filters a basis matrix to return genes used for defining localization.
-func FilterBasis(matrix [][]float64, maxGenesPerRank int, minRankValue, withinRankMax float64) [][]int {
+// FilterBasisForRankDefiningPreys filters a basis matrix to return genes used for defining localization.
+func FilterBasisForRankDefiningPreys(matrix [][]float64, maxGenesPerRank int, minRankValue, withinRankMax float64) [][]int {
 	// For each rank store all genes that satisfy filtering criteria.
 	filteredRanks := make(map[int]map[int]float64)
 	for i := 0; i < len(matrix[0]); i++ {

@@ -6,7 +6,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("Filterbasis", func() {
+var _ = Describe("FilterBasisForRankDefiningPreys", func() {
 	It("should return row numbers for the top 'genes' in each rank", func() {
 		matrix := [][]float64{
 			{0.4, 0.31, 0.2},
@@ -22,7 +22,7 @@ var _ = Describe("Filterbasis", func() {
 			{2},
 		}
 
-		actual := nmf.FilterBasis(matrix, 3, 0.25, 0.75)
+		actual := nmf.FilterBasisForRankDefiningPreys(matrix, 3, 0.25, 0.75)
 		Expect(actual).To(Equal(expected), "should return matrix of top rows per rank")
 	})
 })

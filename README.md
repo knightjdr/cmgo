@@ -129,6 +129,12 @@ Modules for creating networks
 
 Modules for NMF (and related) analysis.
 
+### Module name: `nmf-moonlighting`
+
+* folder `nmf/moonlighting`
+
+> Calculates a moonlighting score for preys in an NMF basis matrix
+
 ### Module name: `nmf-robustness`
 
 * folder `nmf/robustness`

@@ -18,6 +18,7 @@ import (
 	"github.com/knightjdr/cmgo/internal/network/matrix"
 	"github.com/knightjdr/cmgo/internal/network/svg"
 	"github.com/knightjdr/cmgo/internal/network/tsnecytoscape"
+	"github.com/knightjdr/cmgo/internal/nmf/moonlighting"
 	"github.com/knightjdr/cmgo/internal/nmf/robustness"
 	"github.com/knightjdr/cmgo/internal/nmf/subset"
 	"github.com/knightjdr/cmgo/internal/nmf/uv"
@@ -63,12 +64,14 @@ func main() {
 		svg.Draw(options)
 	case "network-tsnecytoscape":
 		tsnecytoscape.Create(options)
+	case "nmf-moonlighting":
+		moonlighting.Calculate(options)
 	case "nmf-robustness":
 		robustness.Evaluate(options)
-	case "nmf-uv":
-		uv.Assess(options)
 	case "nmf-subset":
 		subset.NMF(options)
+	case "nmf-uv":
+		uv.Assess(options)
 	case "nmf-v-safe":
 		nmfsafe.Concordance(options)
 	case "organelle-overlap":

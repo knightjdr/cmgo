@@ -16,8 +16,8 @@ func Evaluate(fileOptions map[string]interface{}) {
 		log.Fatalln(err)
 	}
 
-	basis, columns, rows := readNMF.Basis(options.basisMatrix)
-	characterizingGenes := nmf.FilterBasis(basis, options.maxGenesPerRank, options.minRankValue, options.withinRankMax)
+	basis, columns, rows := readNMF.ReadBasis(options.basisMatrix)
+	characterizingGenes := nmf.FilterBasisForRankDefiningPreys(basis, options.maxGenesPerRank, options.minRankValue, options.withinRankMax)
 	rankDefinitions := defineRanks(characterizingGenes, rows)
 
 	dataPoints := make([][][]float64, len(columns))
