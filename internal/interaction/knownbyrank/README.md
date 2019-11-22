@@ -9,7 +9,7 @@
 | biogrid | file with BioGRID interactions | |
 | fdr | FDR threshold | 0.01 |
 | intact | file with IntAct interactions | |
-| outFile | output file prey rank and proportion that are known interactors | known-by-rank.txt |
+| outFile | output file | known-by-rank.txt |
 | saint | SAINT file | |
 | species | taxonID for IntAct entries (should be passed as string) | 9606 |
 
@@ -29,14 +29,14 @@
 663	54464	226	119970	106728	-	-	XRN1	ALDOA
 ```
 
-## intact
+### intact
 ```
 #ID(s) interactor A     ID(s) interactor B      Alt. ID(s) interactor A Alt. ID(s) interactor B Alias(es) interactor A  Alias(es) interactor B  Interaction detection method(s) Publication 1st author(s)       Publication Identifier(s)       Taxid interactor A      Taxid interactor B      Interaction type(s)     Source database(s)      Interaction identifier(s)       Confidence value(s)     Expansion method(s)     Biological role(s) interactor A Biological role(s) interactor B Experimental role(s) interactor A       Experimental role(s) interactor B       Type(s) interactor A    Type(s) interactor B    Xref(s) interactor A    Xref(s) interactor B    Interaction Xref(s)     Annotation(s) interactor A      Annotation(s) interactor B      Interaction annotation(s)       Host organism(s)        Interaction parameter(s)        Creation date   Update date     Checksum(s) interactor A        Checksum(s) interactor B        Interaction Checksum(s) Negative        Feature(s) interactor A Feature(s) interactor B Stoichiometry(s) interactor A   Stoichiometry(s) interactor B   Identification method participant A     Identification method participant B
 uniprotkb:P49418        uniprotkb:O43426        intact:EBI-7121510|uniprotkb:Q75MK5|uniprotkb:Q75MM3|uniprotkb:A4D1X9|intact:MINT-109264|uniprotkb:O43538|uniprotkb:A4D1X8|uniprotkb:Q75MJ8|uniprotkb:Q8N4G0    intact:EBI-2821539|uniprotkb:O43425|uniprotkb:O94984|uniprotkb:Q4KMR1   psi-mi:amph_human(display_long)|uniprotkb:AMPH(gene name)|psi-mi:AMPH(display_short)|uniprotkb:AMPH1(gene name synonym)
 ```
 
 ### Output
-* ` known-interactors.txt`: table with the proportion for each Nth best prey that are previously
+* `known-by-rank.txt`: table with the proportion for each Nth best prey that are previously
 known interactors.
 
 In the below example, there are 10 baits with at least 1 prey and 80% of the first prey are
