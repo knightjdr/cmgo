@@ -9,6 +9,21 @@ import (
 )
 
 var _ = Describe("Keys", func() {
+	Describe("Map of type map[int]bool", func() {
+		It("should return integer keys", func() {
+			m := map[int]bool{
+				3: true,
+				1: true,
+				5: true,
+			}
+
+			actual := mapfunc.KeysIntBool(m)
+			sort.Ints(actual)
+			expected := []int{1, 3, 5}
+			Expect(actual).To(Equal(expected), "should return integer keys")
+		})
+	})
+
 	Describe("Map of type map[int]float64", func() {
 		It("should return integer keys", func() {
 			m := map[int]float64{

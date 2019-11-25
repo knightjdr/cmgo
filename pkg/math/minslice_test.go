@@ -11,4 +11,19 @@ var _ = Describe("MinSlice", func() {
 		slice := []float64{0.5, 0.3, 0.31, 4.1}
 		Expect(customMath.MinSliceFloat(slice)).To(Equal(0.3))
 	})
+
+	Context("Slice of ints", func() {
+		It("should return the minimum in a slice of ints", func() {
+			slice := []int{50, 30, 31, 41}
+			actual, _ := customMath.MinSliceInt(slice)
+			Expect(actual).To(Equal(30))
+		})
+
+		It("should return an error when slice is of length 0", func() {
+			slice := []int{}
+			min, err := customMath.MinSliceInt(slice)
+			Expect(err).Should(HaveOccurred())
+			Expect(min).To(Equal(0), "should return 0 for min value")
+		})
+	})
 })

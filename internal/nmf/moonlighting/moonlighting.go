@@ -5,8 +5,17 @@ import (
 	"log"
 
 	"github.com/knightjdr/cmgo/internal/pkg/nmf"
+	readLocalization "github.com/knightjdr/cmgo/internal/pkg/read/localization"
+	"github.com/knightjdr/cmgo/internal/pkg/read/matrix"
 	readNMF "github.com/knightjdr/cmgo/internal/pkg/read/nmf"
 )
+
+type outputOptions struct {
+	localization readLocalization.Summary
+	minRankValue float64
+	outfile      string
+	preyNames    []string
+}
 
 // Calculate calculates prey moonlighting scores from an NMF basis file
 // and a dissimilarity matrix.
@@ -16,6 +25,23 @@ func Calculate(fileOptions map[string]interface{}) {
 		log.Fatalln(err)
 	}
 
-	basis, _, rows := readNMF.ReadBasis(options.nmfBasis)
-	basis, rows = nmf.FilterBasisByTreshold(basis, rows, options.minimumNmfScore)
+	basis, _, rowNames := readNMF.ReadBasis(options.basisMatrix)
+	basis, rowNames = nmf.FilterBasisByTreshold(basis, rowNames, options.minRankValue)
+	nmfSummary := readLocalization.SummaryFile(options.nmfSummary)
+
+	_, _, dissimilarityMatrix := matrix.Read(options.dissimilarityMatrix)
+	compatibleRanks := defineCompatibleRanks(dissimilarityMatrix)
+	moonlightingScores := calculateMoonlightingScores(basis, compatibleRanks)
+
+	outputOpts := outputOptions{
+		localization: nmfSummary,
+		minRankValue: options.minRankValue,
+		outfile:      options.outFileScores,
+		preyNames:    rowNames,
+	}
+	writeMoonlightingScores(moonlightingScores, outputOpts)
+
+	rankMoonlightingMatrix := countRankMoonlighting(moonlightingScores, len(compatibleRanks), options.minRankValue)
+	writeRankMoonlightingMatrix(rankMoonlightingMatrix, options.outFileMatrix)
+	writeHeatmap(rankMoonlightingMatrix, options.outFileHeatmap)
 }

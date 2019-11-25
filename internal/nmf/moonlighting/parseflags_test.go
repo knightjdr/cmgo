@@ -17,18 +17,24 @@ var _ = Describe("Parseflags", func() {
 		It("should parse arguments", func() {
 			os.Args = []string{
 				"cmd",
-				"-dissimilarityFile", "dissimilarity.txt",
-				"-minimumNmfScore", "0.05",
-				"-nmfBasis", "nmf.txt",
-				"-outFile", "out.txt",
+				"-basisMatrix", "basis.txt",
+				"-dissimilarityMatrix", "dissimilarity.txt",
+				"-minRankValue", "0.05",
+				"-nmfSummary", "nmf-summary.txt",
+				"-outFileHeatmap", "out-heatmap.svg",
+				"-outFileMatrix", "out-matrix.txt",
+				"-outFileScores", "out-scores.txt",
 			}
 			fileOptions := map[string]interface{}{}
 
 			expected := parameters{
-				dissimilarityFile: "dissimilarity.txt",
-				minimumNmfScore:   0.05,
-				nmfBasis:          "nmf.txt",
-				outFile:           "out.txt",
+				basisMatrix:         "basis.txt",
+				dissimilarityMatrix: "dissimilarity.txt",
+				minRankValue:        0.05,
+				nmfSummary:          "nmf-summary.txt",
+				outFileHeatmap:      "out-heatmap.svg",
+				outFileMatrix:       "out-matrix.txt",
+				outFileScores:       "out-scores.txt",
 			}
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())
@@ -40,15 +46,18 @@ var _ = Describe("Parseflags", func() {
 		It("should set defaults", func() {
 			os.Args = []string{
 				"cmd",
-				"-dissimilarityFile", "dissimilarity.txt",
-				"-nmfBasis", "nmf.txt",
+				"-basisMatrix", "basis.txt",
+				"-dissimilarityMatrix", "dissimilarity.txt",
+				"-nmfSummary", "nmf-summary.txt",
 			}
 			fileOptions := map[string]interface{}{}
 
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())
-			Expect(options.minimumNmfScore).To(Equal(0.15), "should set default minimum NMF score")
-			Expect(options.outFile).To(Equal("moonlighting.txt"), "should set default out file")
+			Expect(options.minRankValue).To(Equal(0.15), "should set default minimum NMF score")
+			Expect(options.outFileHeatmap).To(Equal("heatmap.svg"), "should set default out file for heatmap")
+			Expect(options.outFileMatrix).To(Equal("matrix.txt"), "should set default out file for matrix")
+			Expect(options.outFileScores).To(Equal("moonlighting.txt"), "should set default out file for moonlighting scores")
 		})
 	})
 
@@ -70,17 +79,23 @@ var _ = Describe("Parseflags", func() {
 				"cmd",
 			}
 			fileOptions := map[string]interface{}{
-				"dissimilarityFile": "file-dissimilarity.txt",
-				"minimumNmfScore":   "0.05",
-				"nmfBasis":          "file-nmf.txt",
-				"outFile":           "file-out.txt",
+				"basisMatrix":         "file-basis.txt",
+				"dissimilarityMatrix": "file-dissimilarity.txt",
+				"minRankValue":        "0.05",
+				"nmfSummary":          "file-nmf-summary.txt",
+				"outFileHeatmap":      "file-heatmap.txt",
+				"outFileMatrix":       "file-matrix.txt",
+				"outFileScores":       "file-moonlighting.txt",
 			}
 
 			expected := parameters{
-				dissimilarityFile: "file-dissimilarity.txt",
-				minimumNmfScore:   0.05,
-				nmfBasis:          "file-nmf.txt",
-				outFile:           "file-out.txt",
+				basisMatrix:         "file-basis.txt",
+				dissimilarityMatrix: "file-dissimilarity.txt",
+				minRankValue:        0.05,
+				nmfSummary:          "file-nmf-summary.txt",
+				outFileHeatmap:      "file-heatmap.txt",
+				outFileMatrix:       "file-matrix.txt",
+				outFileScores:       "file-moonlighting.txt",
 			}
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())

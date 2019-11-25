@@ -32,7 +32,7 @@ func NMF(fileOptions map[string]interface{}) {
 	}
 
 	// Remove rows that do not have a maximum in one of the desired ranks,
-	// then rows that do not have desired rank values within threshold, and finally remove
+	// then rows that do not have desired rank values within threshold, and finally
 	// remove rows where the fold-change differential between the desired ranks
 	// and the rest is less than the specified cutoff.
 	basis, rows = filterByRank(basis, rows, rank1Indices, rank2Indices, options.minNMFScore)
