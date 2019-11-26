@@ -11,7 +11,7 @@ type ID struct {
 	UniProtList []string `json:"uniprot_ids"`
 }
 
-// Response contains docs individual gene entries.
+// Response contains individual gene entries.
 type Response struct {
 	Docs []ID `json:"docs"`
 }

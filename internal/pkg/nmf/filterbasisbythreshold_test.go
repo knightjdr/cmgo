@@ -6,7 +6,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("FilterBasisByTreshold", func() {
+var _ = Describe("Filter basis matrix by treshold", func() {
 	It("should return rows with at least one member passing rank minimum", func() {
 		matrix := [][]float64{
 			{0.4, 0.31, 0.2},

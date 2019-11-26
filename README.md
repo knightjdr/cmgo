@@ -54,6 +54,13 @@ Modules for generating files for upload and query file processing.
 
 > Report on which localizations are previously known.
 
+### Module name: `assessment-transmembrane`
+
+* folder `assessment/transmembrane`
+
+> Information about the transmembrane proteins residing between two NMF
+> compartments.
+
 ## Enrichment
 
 Modules for calculating term enrichment in compartments and lists.
