@@ -30,22 +30,44 @@ var _ = Describe("Summarize prey information", func() {
 			},
 			rows:               []string{"preyA", "preyB", "preyC"},
 			transmembranePreys: []string{"preyA", "preyC"},
+			transmembranePreyData: map[string]orientationData{
+				"preyA": orientationData{
+					Cytosolic: 64,
+					Length:    100,
+					Lumenal:   25,
+					UniProt:   "id1",
+				},
+				"preyC": orientationData{
+					Cytosolic: 78,
+					Length:    200,
+					Lumenal:   56,
+					UniProt:   "id2",
+				},
+			},
 		}
 
 		expected := map[string]preySummary{
 			"preyA": preySummary{
-				cytosolicBaits: 3,
-				cytosolicScore: 0.3,
-				localization:   "cytosolic",
-				lumenalBaits:   1,
-				lumenalScore:   0.2,
+				cytosolicBaits:    3,
+				cytosolicFraction: 0.6400,
+				cytosolicScore:    0.3,
+				length:            100,
+				localization:      "cytosolic",
+				lumenalBaits:      1,
+				lumenalFraction:   0.2500,
+				lumenalScore:      0.2,
+				uniprotID:         "id1",
 			},
 			"preyC": preySummary{
-				cytosolicBaits: 2,
-				cytosolicScore: 0.15,
-				localization:   "lumenal",
-				lumenalBaits:   2,
-				lumenalScore:   0.6,
+				cytosolicBaits:    2,
+				cytosolicFraction: 0.3900,
+				cytosolicScore:    0.15,
+				length:            200,
+				localization:      "lumenal",
+				lumenalBaits:      2,
+				lumenalFraction:   0.2800,
+				lumenalScore:      0.6,
+				uniprotID:         "id2",
 			},
 		}
 		Expect(summarize(summOptions)).To(Equal(expected))

@@ -25,7 +25,7 @@ func Orientation(fileOptions map[string]interface{}) {
 	preysPerRank := nmf.GetPreysPerRank(basis, preys)
 	cytosolicPreys := getPreysInCompartment(preysPerRank, options.cytosolicCompartments)
 	lumenalPreys := getPreysInCompartment(preysPerRank, options.lumenalCompartments)
-	transmembranePreys := getTransmembraneProteins(append(cytosolicPreys, lumenalPreys...))
+	transmembranePreys, transmembranePreyData := getTransmembraneProteins(append(cytosolicPreys, lumenalPreys...))
 
 	baitsPerPrey := findBaitsPerPrey(transmembranePreys, saintData)
 	organelleBaitsPerPrey := countOrganelleBaitsPerPrey(baitsPerPrey, options.cytosolicBaits, options.lumenalBaits)
@@ -39,6 +39,7 @@ func Orientation(fileOptions map[string]interface{}) {
 		organelleBaitsPerPrey: organelleBaitsPerPrey,
 		rows:                  preys,
 		transmembranePreys:    transmembranePreys,
+		transmembranePreyData: transmembranePreyData,
 	}
 	summary := summarize(sumOptions)
 	writeSummary(summary, options.outFile)

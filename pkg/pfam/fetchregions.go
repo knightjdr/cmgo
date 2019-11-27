@@ -53,6 +53,6 @@ func fetchRegions(s *pfamService, ids []string) {
 func showProgress(i, queries int) {
 	iteration := i + 1
 	if math.Mod(float64(iteration), 25) == 0 {
-		fmt.Println(fmt.Sprintf("%d of %d", iteration, queries))
+		fmt.Println(fmt.Sprintf("Pfam: %d of %d", iteration, queries))
 	}
 }
