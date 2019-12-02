@@ -6,6 +6,7 @@ import (
 
 	"github.com/knightjdr/cmgo/internal/analysis/dbgenes"
 	"github.com/knightjdr/cmgo/internal/assessment/bait/gradient"
+	"github.com/knightjdr/cmgo/internal/assessment/countgo"
 	"github.com/knightjdr/cmgo/internal/assessment/hydropathy"
 	assessLocalization "github.com/knightjdr/cmgo/internal/assessment/localization/evaluate"
 	"github.com/knightjdr/cmgo/internal/assessment/localization/nmfsafe"
@@ -39,6 +40,8 @@ func main() {
 	switch module := options["module"]; module {
 	case "analysis-dbgenes":
 		dbgenes.List(options)
+	case "assessment-countgo":
+		countgo.Sum(options)
 	case "assessment-hydropathy":
 		hydropathy.Assess(options)
 	case "assessment-localization":

@@ -26,6 +26,8 @@ Module specific parameters can be found in the README files in the corresponding
 
 Modules for generating files for upload and query file processing.
 
+> Count the number of genes with a GO term specified by the supplied namespace.
+
 ### Module name: `analysis-dbgenes`
 
 * folder `analysis/dbgenes`
@@ -33,6 +35,10 @@ Modules for generating files for upload and query file processing.
 > Generates a txt file of official genes used for SAINT
 
 ## Assessment
+
+### Module name: `assessment-countgo`
+
+* folder `assessment/countgo`
 
 ### Module name: `bait-gradient`
 
