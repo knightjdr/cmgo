@@ -50,7 +50,7 @@ func compare(compartments organelle.Compartments, similarity map[string]map[stri
 	}
 
 	var buffer bytes.Buffer
-	buffer.WriteString("\tmedian\tmean\tmin\tmax\n")
+	buffer.WriteString("\tmedian\tmean\tmin\tmax\tSD\n")
 
 	for i := 0; i < 3; i++ {
 		var name string
@@ -63,7 +63,8 @@ func compare(compartments organelle.Compartments, similarity map[string]map[stri
 		mean := customMath.Round(stats.MeanFloat(ranges[i]), 0.001)
 		median := customMath.Round(stats.MedianFloat(ranges[i]), 0.001)
 		min := customMath.Round(customMath.MinSliceFloat(ranges[i]), 0.001)
-		buffer.WriteString(fmt.Sprintf("%s\t%.3f\t%.3f\t%.3f\t%.3f\n", name, median, mean, min, max))
+		sd := customMath.Round(stats.SDFloat(ranges[i]), 0.001)
+		buffer.WriteString(fmt.Sprintf("%s\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\n", name, median, mean, min, max, sd))
 	}
 	afero.WriteFile(fs.Instance, outfile, buffer.Bytes(), 0644)
 }

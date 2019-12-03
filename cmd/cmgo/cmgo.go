@@ -10,6 +10,7 @@ import (
 	"github.com/knightjdr/cmgo/internal/assessment/hydropathy"
 	assessLocalization "github.com/knightjdr/cmgo/internal/assessment/localization/evaluate"
 	"github.com/knightjdr/cmgo/internal/assessment/localization/nmfsafe"
+	"github.com/knightjdr/cmgo/internal/assessment/localization/recovered"
 	"github.com/knightjdr/cmgo/internal/assessment/transmembrane"
 	"github.com/knightjdr/cmgo/internal/enrichment/genes"
 	"github.com/knightjdr/cmgo/internal/enrichment/heatmap"
@@ -40,6 +41,8 @@ func main() {
 	switch module := options["module"]; module {
 	case "analysis-dbgenes":
 		dbgenes.List(options)
+	case "assessment-compartment-recovered":
+		recovered.AssessCompartment(options)
 	case "assessment-countgo":
 		countgo.Sum(options)
 	case "assessment-hydropathy":

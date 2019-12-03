@@ -3,8 +3,8 @@ package overlap
 import (
 	"testing"
 
-	"github.com/knightjdr/cmgo/pkg/fs"
 	"github.com/knightjdr/cmgo/internal/organelle"
+	"github.com/knightjdr/cmgo/pkg/fs"
 	"github.com/spf13/afero"
 	"github.com/stretchr/testify/assert"
 )
@@ -69,7 +69,11 @@ func TestCompare(t *testing.T) {
 		"d": {"e": 0.4, "f": 0.2},
 		"e": {"f": 0.2},
 	}
-	wanted := "\tmedian\tmean\tmin\tmax\ncompartment 1\t0.500\t0.450\t0.250\t0.600\ncompartment 2\t0.200\t0.267\t0.200\t0.400\nbetween\t0.300\t0.344\t0.100\t0.700\n"
+
+	wanted := "\tmedian\tmean\tmin\tmax\tSD\n" +
+		"compartment 1\t0.500\t0.450\t0.250\t0.600\t0.180\n" +
+		"compartment 2\t0.200\t0.267\t0.200\t0.400\t0.115\n" +
+		"between\t0.300\t0.344\t0.100\t0.700\t0.196\n"
 	compare(compartments, similarity, "test/out.txt")
 	bytes, _ := afero.ReadFile(fs.Instance, "test/out.txt")
 	assert.Equal(t, wanted, string(bytes), "Should write summary metrics to file")

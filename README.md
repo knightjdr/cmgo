@@ -36,6 +36,13 @@ Modules for generating files for upload and query file processing.
 
 ## Assessment
 
+### Module name: `assessment-compartment-recovered`
+
+* folder `assessment/localization/recovered`
+
+> Get the genes assigned to a specific compartment by GO and report on those
+> seen from a list of genes.
+
 ### Module name: `assessment-countgo`
 
 * folder `assessment/countgo`
