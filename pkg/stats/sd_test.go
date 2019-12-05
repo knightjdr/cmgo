@@ -7,7 +7,7 @@ import (
 )
 
 var _ = Describe("SD", func() {
-	It("should generate the standard deviation", func() {
+	It("should generate the standard deviation of []float64", func() {
 		slices := [][]float64{
 			{3},
 			{1, 2, 3, 4},
@@ -22,6 +22,22 @@ var _ = Describe("SD", func() {
 		}
 		for i, slice := range slices {
 			Expect(stats.SDFloat(slice)).To(BeNumerically("~", expected[i], 0.00000001))
+		}
+	})
+
+	It("should generate the standard deviation of []int", func() {
+		slices := [][]int{
+			{3},
+			{1, 2, 3, 4},
+			{8, 2, 17, 34},
+		}
+		expected := []float64{
+			0,
+			1.290994449,
+			13.93735986,
+		}
+		for i, slice := range slices {
+			Expect(stats.SDInt(slice)).To(BeNumerically("~", expected[i], 0.00000001))
 		}
 	})
 })

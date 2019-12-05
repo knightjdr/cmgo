@@ -9,7 +9,6 @@
 | turnoverFile | file with turnover rates per gene | |
 | outFile | output file | turnover-by-rank.txt |
 | saint | SAINT file | |
-| species | taxonID for IntAct entries (should be passed as string) | 9606 |
 
 ## Example file formats
 

@@ -15,6 +15,7 @@ import (
 	"github.com/knightjdr/cmgo/internal/enrichment/genes"
 	"github.com/knightjdr/cmgo/internal/enrichment/heatmap"
 	"github.com/knightjdr/cmgo/internal/interaction/knownbyrank"
+	"github.com/knightjdr/cmgo/internal/interaction/rankaverage"
 	"github.com/knightjdr/cmgo/internal/interaction/turnoverbyrank"
 	"github.com/knightjdr/cmgo/internal/lba"
 	"github.com/knightjdr/cmgo/internal/network/correlation"
@@ -59,6 +60,8 @@ func main() {
 		heatmap.Region(options)
 	case "interaction-knownbyrank":
 		knownbyrank.CalculateKnownByRank(options)
+	case "interaction-rankaverage":
+		rankaverage.CalculateRankAverages(options)
 	case "interaction-turnoverbyrank":
 		turnoverbyrank.CalculateTurnoverByRank(options)
 	case "lba-enrichment":

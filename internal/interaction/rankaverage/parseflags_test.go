@@ -1,4 +1,4 @@
-package turnoverbyrank
+package rankaverage
 
 import (
 	"os"
@@ -19,16 +19,16 @@ var _ = Describe("Parseflags", func() {
 				"cmd",
 				"-fdr", "0.05",
 				"-outFile", "out.txt",
+				"-preys", "preys.txt",
 				"-saint", "saint.txt",
-				"-turnoverFile", "turnover-rates.txt",
 			}
 			fileOptions := map[string]interface{}{}
 
 			expected := parameters{
-				fdr:          0.05,
-				outFile:      "out.txt",
-				saint:        "saint.txt",
-				turnoverFile: "turnover-rates.txt",
+				fdr:     0.05,
+				outFile: "out.txt",
+				preys:   "preys.txt",
+				saint:   "saint.txt",
 			}
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())
@@ -40,16 +40,15 @@ var _ = Describe("Parseflags", func() {
 		It("should set defaults", func() {
 			os.Args = []string{
 				"cmd",
+				"-preys", "preys.txt",
 				"-saint", "saint.txt",
-				"-turnoverFile", "turnover-rates.txt",
 			}
 			fileOptions := map[string]interface{}{}
 
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())
 			Expect(options.fdr).To(Equal(0.01), "should set default FDR")
-			Expect(options.outFile).To(Equal("turnover-by-rank.txt"), "should set default out file")
-			Expect(options.).To(Equal("9606"), "should set default species taxon ID")
+			Expect(options.outFile).To(Equal("prey-rank-average.txt"), "should set default out file")
 		})
 	})
 
@@ -71,17 +70,17 @@ var _ = Describe("Parseflags", func() {
 				"cmd",
 			}
 			fileOptions := map[string]interface{}{
-				"fdr":          "0.05",
-				"outFile":      "file-out.txt",
-				"saint":        "file-saint.txt",
-				"turnoverFile": "file-turnover-rates.txt",
+				"fdr":     "0.05",
+				"outFile": "file-out.txt",
+				"preys":   "file-preys.txt",
+				"saint":   "file-saint.txt",
 			}
 
 			expected := parameters{
-				fdr:          0.05,
-				outFile:      "file-out.txt",
-				saint:        "file-saint.txt",
-				turnoverFile: "file-turnover-rates.txt",
+				fdr:     0.05,
+				outFile: "file-out.txt",
+				preys:   "file-preys.txt",
+				saint:   "file-saint.txt",
 			}
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())

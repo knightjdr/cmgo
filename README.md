@@ -100,6 +100,12 @@ Modules for calculating term enrichment in compartments and lists.
 > all baits in a SAINT report. Prey spectral counts are control subtracted
 > and length normalized to determine their rank.
 
+### Module name: `interaction-rankaverage`
+
+* folder `interaction/rankaverage`
+
+> Calculates the average bait interaction rank for a list of preys.
+
 ### Module name: `interaction-turnoverbyrank`
 
 * folder `interaction/turnoverbyrank`
