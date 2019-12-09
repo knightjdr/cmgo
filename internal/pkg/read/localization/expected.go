@@ -12,19 +12,22 @@ import (
 
 // ExpectedLocalization contains the ID and localization terms for a bait
 type ExpectedLocalization struct {
+	GoID  []string
 	ID    int
 	Terms []string
 }
 
-// ExpectedLocalizations is a map of bait name to ID and localization terms.
+// ExpectedLocalizations is a map of bait name to ID, GO ID and localization terms.
 type ExpectedLocalizations map[string]ExpectedLocalization
 
 func mapExpectedLine(line []string) (string, ExpectedLocalization) {
 	bait := line[1]
+	goids := line[3]
 	id, _ := strconv.Atoi(line[0])
 	termString := strings.Replace(line[2], "\"", "", -1)
 
 	localization := ExpectedLocalization{
+		GoID:  strings.Split(goids, ";"),
 		ID:    id,
 		Terms: strings.Split(termString, ";"),
 	}

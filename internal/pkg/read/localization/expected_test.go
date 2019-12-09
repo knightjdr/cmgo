@@ -7,18 +7,19 @@ import (
 	"github.com/spf13/afero"
 )
 
-var expectedText = `id	bait	localization
-1	AARS2	mitochondrial matrix
-2	ACBD5	peroxisome
-3	ACTB	actin cytoskeleton
-12	ANAPC2	"cytoplasm;nucleoplasm;nucleus"
-13	ANK3	"cell junction;plasma membrane"
+var expectedText = `id	bait	localization	go_id
+1	AARS2	mitochondrial matrix	GO:0005759
+2	ACBD5	peroxisome	GO:0005777
+3	ACTB	actin cytoskeleton	GO:0015629
+12	ANAPC2	"cytoplasm;nucleoplasm;nucleus"	GO:0005829;GO:0005654;GO:0005634
+13	ANK3	"cell junction;plasma membrane"	GO:0030054;GO:0005886
 `
 
 var _ = Describe("Map expected bait localization line", func() {
 	It("should read line with a single localization", func() {
-		line := []string{"5", "baitA", "membrane"}
+		line := []string{"5", "baitA", "membrane", "GO:111111"}
 		expected := ExpectedLocalization{
+			GoID:  []string{"GO:111111"},
 			ID:    5,
 			Terms: []string{"membrane"},
 		}
@@ -28,8 +29,9 @@ var _ = Describe("Map expected bait localization line", func() {
 	})
 
 	It("should read line with multiple localizations", func() {
-		line := []string{"6", "baitB", "membrane;nucleus"}
+		line := []string{"6", "baitB", "membrane;nucleus", "GO:111111;GO:222222"}
 		expected := ExpectedLocalization{
+			GoID:  []string{"GO:111111", "GO:222222"},
 			ID:    6,
 			Terms: []string{"membrane", "nucleus"},
 		}
@@ -39,8 +41,9 @@ var _ = Describe("Map expected bait localization line", func() {
 	})
 
 	It("should read line with multiple localizations with leading and trailing quotes", func() {
-		line := []string{"7", "baitC", "\"membrane;nucleus\""}
+		line := []string{"7", "baitC", "\"membrane;nucleus\"", "GO:111111;GO:222222"}
 		expected := ExpectedLocalization{
+			GoID:  []string{"GO:111111", "GO:222222"},
 			ID:    7,
 			Terms: []string{"membrane", "nucleus"},
 		}
@@ -68,22 +71,27 @@ var _ = Describe("Read expected bait localizations", func() {
 		// TEST
 		expected := ExpectedLocalizations{
 			"AARS2": ExpectedLocalization{
+				GoID:  []string{"GO:0005759"},
 				ID:    1,
 				Terms: []string{"mitochondrial matrix"},
 			},
 			"ACBD5": ExpectedLocalization{
+				GoID:  []string{"GO:0005777"},
 				ID:    2,
 				Terms: []string{"peroxisome"},
 			},
 			"ACTB": ExpectedLocalization{
+				GoID:  []string{"GO:0015629"},
 				ID:    3,
 				Terms: []string{"actin cytoskeleton"},
 			},
 			"ANAPC2": ExpectedLocalization{
+				GoID:  []string{"GO:0005829", "GO:0005654", "GO:0005634"},
 				ID:    12,
 				Terms: []string{"cytoplasm", "nucleoplasm", "nucleus"},
 			},
 			"ANK3": ExpectedLocalization{
+				GoID:  []string{"GO:0030054", "GO:0005886"},
 				ID:    13,
 				Terms: []string{"cell junction", "plasma membrane"},
 			},

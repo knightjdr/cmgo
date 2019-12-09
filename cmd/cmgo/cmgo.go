@@ -10,6 +10,7 @@ import (
 	"github.com/knightjdr/cmgo/internal/assessment/hydropathy"
 	assessLocalization "github.com/knightjdr/cmgo/internal/assessment/localization/evaluate"
 	"github.com/knightjdr/cmgo/internal/assessment/localization/nmfsafe"
+	"github.com/knightjdr/cmgo/internal/assessment/localization/prediction"
 	"github.com/knightjdr/cmgo/internal/assessment/localization/recovered"
 	"github.com/knightjdr/cmgo/internal/assessment/transmembrane"
 	"github.com/knightjdr/cmgo/internal/enrichment/genes"
@@ -50,6 +51,8 @@ func main() {
 		hydropathy.Assess(options)
 	case "assessment-localization":
 		assessLocalization.Evaluate(options)
+	case "assessment-prediction":
+		prediction.Score(options)
 	case "assessment-transmembrane":
 		transmembrane.Orientation(options)
 	case "bait-gradient":
