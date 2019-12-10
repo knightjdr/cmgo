@@ -7,7 +7,7 @@ func countRecoveredGenes(localizedGenes, compartmentGenes []string) map[string]b
 
 	for _, gene := range compartmentGenes {
 		recovered := false
-		if slice.Contains(gene, localizedGenes) {
+		if slice.ContainsString(gene, localizedGenes) {
 			recovered = true
 		}
 		summary[gene] = recovered

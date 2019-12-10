@@ -1,6 +1,8 @@
 package prediction
 
 import (
+	"sort"
+
 	"github.com/knightjdr/cmgo/internal/pkg/read/geneontology"
 	"github.com/knightjdr/cmgo/internal/pkg/read/localization"
 	"github.com/knightjdr/cmgo/pkg/slice"
@@ -11,11 +13,10 @@ type baitInformation struct {
 	compartmentCounts map[int]int
 }
 
-func readBaitLocalizationsAsCompartments(options parameters, goHierarchy *geneontology.GOhierarchy) {
-	baitLocalizations := localization.Expected(options.baitExpected)
-	compartmentSummary := localization.SummaryFile(options.predictionSummary)
-	compartmentGoTerms := addCompartmentChildren(compartmentSummary, goHierarchy)
-	mapLocalizationToCompartment(baitLocalizations, compartmentGoTerms)
+func getBaitLocalizationsAsCompartments(baitExpected string, inputFiles fileContent) baitInformation {
+	baitLocalizations := localization.Expected(baitExpected)
+	compartmentGoTerms := addCompartmentChildren(inputFiles.predictionSummary, inputFiles.goHierarchy)
+	return mapLocalizationToCompartment(baitLocalizations, compartmentGoTerms)
 }
 
 func addCompartmentChildren(compartmentSummary localization.Summary, goHierarchy *geneontology.GOhierarchy) map[int][]string {
@@ -33,7 +34,7 @@ func addCompartmentChildren(compartmentSummary localization.Summary, goHierarchy
 	return compartmentGoTerms
 }
 
-func mapLocalizationToCompartment(baitLocalizations localization.ExpectedLocalizations, compartmentGoTerms map[int][]string) {
+func mapLocalizationToCompartment(baitLocalizations localization.ExpectedLocalizations, compartmentGoTerms map[int][]string) baitInformation {
 	baitCompartments := make(map[string][]int, 0)
 	compartmentCounts := make(map[int]int, 0)
 
@@ -41,11 +42,17 @@ func mapLocalizationToCompartment(baitLocalizations localization.ExpectedLocaliz
 		baitCompartments[bait] = make([]int, 0)
 		for _, localization := range localizations.GoID {
 			for rank, ids := range compartmentGoTerms {
-				if slice.Contains(localization, ids) {
+				if slice.ContainsString(localization, ids) {
 					baitCompartments[bait] = append(baitCompartments[bait], rank)
 					compartmentCounts[rank]++
 				}
 			}
 		}
+		sort.Ints(baitCompartments[bait])
+	}
+
+	return baitInformation{
+		compartmentCounts: compartmentCounts,
+		localizations:     baitCompartments,
 	}
 }

@@ -61,7 +61,7 @@ func sumFeature(features []uniprot.Feature, description []string) int {
 	length := 0
 
 	for _, feature := range features {
-		if slice.Contains(feature.Description, description) {
+		if slice.ContainsString(feature.Description, description) {
 			length += feature.End - feature.Begin + 1
 		}
 	}

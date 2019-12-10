@@ -72,7 +72,7 @@ func findMaxScore(row []float64, ranks []string) float64 {
 }
 
 func getPreyLocalization(prey string, cytosolicPreys []string) string {
-	if slice.Contains(prey, cytosolicPreys) {
+	if slice.ContainsString(prey, cytosolicPreys) {
 		return "cytosolic"
 	}
 	return "lumenal"

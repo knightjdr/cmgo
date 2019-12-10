@@ -3,10 +3,12 @@ package prediction
 
 import (
 	"log"
-
-	"github.com/knightjdr/cmgo/internal/pkg/read/geneontology"
-	"github.com/knightjdr/cmgo/internal/pkg/read/saint"
 )
+
+type preyScore struct {
+	Bait   *preyBaitScore
+	Domain *preyDomainScore
+}
 
 // Score calculates a prediction score for each prey.
 func Score(fileOptions map[string]interface{}) {
@@ -15,13 +17,12 @@ func Score(fileOptions map[string]interface{}) {
 		log.Fatalln(err)
 	}
 
-	goHierarchy := geneontology.OBO(options.goHierarchy)
-	goHierarchy.GetChildren("CC")
+	inputFiles := readSharedInputFiles(options)
 
-	readBaitLocalizations(options, goHierarchy)
+	scores := preyScore{
+		Bait:   calculateBaitComponent(options, inputFiles),
+		Domain: calculateDomainComponent(options, inputFiles),
+	}
 
-	saintData := saint.Read(options.baitExpected, options.fdr, 0)
-	saintData.ParseInteractors(options.fdr)
-
-	getPredictions(options)
+	writeScores(scores, options.outFile)
 }

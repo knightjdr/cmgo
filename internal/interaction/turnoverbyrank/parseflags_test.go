@@ -49,7 +49,6 @@ var _ = Describe("Parseflags", func() {
 			Expect(err).ShouldNot(HaveOccurred())
 			Expect(options.fdr).To(Equal(0.01), "should set default FDR")
 			Expect(options.outFile).To(Equal("turnover-by-rank.txt"), "should set default out file")
-			Expect(options.).To(Equal("9606"), "should set default species taxon ID")
 		})
 	})
 

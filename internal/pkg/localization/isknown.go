@@ -21,7 +21,7 @@ func IsKnown(gene string, assignedIDs []string, annotations map[string]map[strin
 	}
 
 	for _, id := range assignedIDs {
-		isKnown := slice.Contains(id, knownIDs)
+		isKnown := slice.ContainsString(id, knownIDs)
 		if isKnown {
 			return true
 		}

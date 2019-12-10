@@ -20,7 +20,7 @@ func summarizeInteractions(sortedPreysPerBait, knownInteractions map[string][]st
 			preyRank := index + 1
 			allocateMap(preyRank, &knownInteractionsByRank)
 			knownInteractionsByRank[preyRank].BaitNumber++
-			if slice.Contains(prey, knownInteractions[bait]) {
+			if slice.ContainsString(prey, knownInteractions[bait]) {
 				knownInteractionsByRank[preyRank].Known++
 				pair := fmt.Sprintf("%s-%s", bait, prey)
 				knownInteractionsByRank[preyRank].Pairs = append(knownInteractionsByRank[preyRank].Pairs, pair)

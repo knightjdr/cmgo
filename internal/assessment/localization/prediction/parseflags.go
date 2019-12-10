@@ -8,19 +8,24 @@ import (
 )
 
 type parameters struct {
-	baitExpected      string
-	fdr               float64
-	goHierarchy       string
-	outFile           string
-	predictions       string
-	predictionSummary string
-	predictionType    string
-	saint             string
+	baitExpected          string
+	domainsPerCompartment string
+	domainsPerGene        string
+	fdr                   float64
+	goHierarchy           string
+	outFile               string
+	predictions           string
+	predictionSummary     string
+	predictionType        string
+	saint                 string
+	uniprot               string
 }
 
 func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	args := flags.Parse()
 	baitExpected := flags.SetString("baitExpected", args, fileOptions, "")
+	domainsPerCompartment := flags.SetString("domainsPerCompartment", args, fileOptions, "")
+	domainsPerGene := flags.SetString("domainsPerGene", args, fileOptions, "")
 	fdr := flags.SetFloat("fdr", args, fileOptions, 0.01)
 	goHierarchy := flags.SetString("goHierarchy", args, fileOptions, "")
 	outFile := flags.SetString("outFile", args, fileOptions, "prediction-score.txt")
@@ -28,23 +33,33 @@ func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	predictionSummary := flags.SetString("predictionSummary", args, fileOptions, "")
 	predictionType := flags.SetString("predictionType", args, fileOptions, "nmf")
 	saint := flags.SetString("saint", args, fileOptions, "")
+	uniprot := flags.SetString("uniprot", args, fileOptions, "")
 
 	// Copy arguments from options file.
 	options := parameters{
-		baitExpected:      baitExpected,
-		fdr:               fdr,
-		goHierarchy:       goHierarchy,
-		outFile:           outFile,
-		predictions:       predictions,
-		predictionSummary: predictionSummary,
-		predictionType:    predictionType,
-		saint:             saint,
+		baitExpected:          baitExpected,
+		domainsPerCompartment: domainsPerCompartment,
+		domainsPerGene:        domainsPerGene,
+		fdr:                   fdr,
+		goHierarchy:           goHierarchy,
+		outFile:               outFile,
+		predictions:           predictions,
+		predictionSummary:     predictionSummary,
+		predictionType:        predictionType,
+		saint:                 saint,
+		uniprot:               uniprot,
 	}
 
 	// Check for missing arguments.
 	messages := make([]string, 0)
 	if options.baitExpected == "" {
 		messages = append(messages, "missing expected bait localizations")
+	}
+	if options.domainsPerCompartment == "" {
+		messages = append(messages, "missing list of domains per compartment")
+	}
+	if options.domainsPerGene == "" {
+		messages = append(messages, "missing list of domains per gene")
 	}
 	if options.goHierarchy == "" {
 		messages = append(messages, "missing GO .obo file")
@@ -57,6 +72,9 @@ func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	}
 	if options.saint == "" {
 		messages = append(messages, "missing SAINT file")
+	}
+	if options.uniprot == "" {
+		messages = append(messages, "missing UniProt file")
 	}
 
 	// Format error message

@@ -90,7 +90,7 @@ func monoDirection(colorSpace string, numColors int) (gradient []string) {
 // ColorGradient defines a color gradient to use for fill values. It defines
 // the colors to use via HSL and then converts those to HEX.
 func ColorGradient(colorSpace string, numColors int, invertColor bool) (gradient []string) {
-	if slice.Contains(colorSpace, twoColor) {
+	if slice.ContainsString(colorSpace, twoColor) {
 		gradient = biDirection(colorSpace, numColors)
 	} else {
 		gradient = monoDirection(colorSpace, numColors)

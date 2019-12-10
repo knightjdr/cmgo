@@ -18,6 +18,8 @@ var _ = Describe("Parseflags", func() {
 			os.Args = []string{
 				"cmd",
 				"-baitExpected", "bait-expected.txt",
+				"-domainsPerCompartment", "compartment-domains.txt",
+				"-domainsPerGene", "gene-domains.txt",
 				"-fdr", "0.05",
 				"-goHierarchy", "go.obo",
 				"-outFile", "out.txt",
@@ -25,18 +27,22 @@ var _ = Describe("Parseflags", func() {
 				"-predictionSummary", "prediction-summary.txt",
 				"-predictionType", "safe",
 				"-saint", "saint.txt",
+				"-uniprot", "uniprot.dat",
 			}
 			fileOptions := map[string]interface{}{}
 
 			expected := parameters{
-				baitExpected:      "bait-expected.txt",
-				fdr:               0.05,
-				goHierarchy:       "go.obo",
-				outFile:           "out.txt",
-				predictions:       "predictions.txt",
-				predictionSummary: "prediction-summary.txt",
-				predictionType:    "safe",
-				saint:             "saint.txt",
+				baitExpected:          "bait-expected.txt",
+				domainsPerCompartment: "compartment-domains.txt",
+				domainsPerGene:        "gene-domains.txt",
+				fdr:                   0.05,
+				goHierarchy:           "go.obo",
+				outFile:               "out.txt",
+				predictions:           "predictions.txt",
+				predictionSummary:     "prediction-summary.txt",
+				predictionType:        "safe",
+				saint:                 "saint.txt",
+				uniprot:               "uniprot.dat",
 			}
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())
@@ -49,10 +55,13 @@ var _ = Describe("Parseflags", func() {
 			os.Args = []string{
 				"cmd",
 				"-baitExpected", "bait-expected.txt",
+				"-domainsPerCompartment", "compartment-domains.txt",
+				"-domainsPerGene", "gene-domains.txt",
 				"-goHierarchy", "go.obo",
 				"-predictions", "predictions.txt",
 				"-predictionSummary", "prediction-summary.txt",
 				"-saint", "saint.txt",
+				"-uniprot", "uniprot.dat",
 			}
 			fileOptions := map[string]interface{}{}
 
@@ -82,25 +91,31 @@ var _ = Describe("Parseflags", func() {
 				"cmd",
 			}
 			fileOptions := map[string]interface{}{
-				"baitExpected":      "file-bait-expected.txt",
-				"fdr":               0.05,
-				"goHierarchy":       "file-go.obo",
-				"outFile":           "file-out.txt",
-				"predictions":       "file-predictions.txt",
-				"predictionSummary": "file-prediction-summary.txt",
-				"predictionType":    "safe",
-				"saint":             "file-saint.txt",
+				"baitExpected":          "file-bait-expected.txt",
+				"domainsPerCompartment": "file-compartment-domains.txt",
+				"domainsPerGene":        "file-gene-domains.txt",
+				"fdr":                   0.05,
+				"goHierarchy":           "file-go.obo",
+				"outFile":               "file-out.txt",
+				"predictions":           "file-predictions.txt",
+				"predictionSummary":     "file-prediction-summary.txt",
+				"predictionType":        "safe",
+				"saint":                 "file-saint.txt",
+				"uniprot":               "file-uniprot.dat",
 			}
 
 			expected := parameters{
-				baitExpected:      "file-bait-expected.txt",
-				fdr:               0.05,
-				goHierarchy:       "file-go.obo",
-				outFile:           "file-out.txt",
-				predictions:       "file-predictions.txt",
-				predictionSummary: "file-prediction-summary.txt",
-				predictionType:    "safe",
-				saint:             "file-saint.txt",
+				baitExpected:          "file-bait-expected.txt",
+				domainsPerCompartment: "file-compartment-domains.txt",
+				domainsPerGene:        "file-gene-domains.txt",
+				fdr:                   0.05,
+				goHierarchy:           "file-go.obo",
+				outFile:               "file-out.txt",
+				predictions:           "file-predictions.txt",
+				predictionSummary:     "file-prediction-summary.txt",
+				predictionType:        "safe",
+				saint:                 "file-saint.txt",
+				uniprot:               "file-uniprot.dat",
 			}
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())

@@ -5,6 +5,8 @@
 | parameters | definition | default |
 |------------|------------|---------|
 | baitExpected | expected bait localizations | |
+| domainsPerCompartment | file with a list of domains for each NMR rank or SAFE domain | |
+| domainsPerGene | file with a list of domains for each gene | |
 | fdr | FDR for significant prey in SAINT file | |
 | goHierarchy | GO hierarchy in .obo format | |
 | outFile | output file | prediction-score.txt |
@@ -12,6 +14,7 @@
 | predictionSummary | summary information for NMF or SAFE ranks | |
 | predictionType | type of prediction: NMF or SAFE | nmf |
 | saint | SAINT file | |
+| uniprot | UniProt file in .dat format | |
 
 ## Example file formats
 
@@ -21,6 +24,21 @@ id	bait	term	GO_ID
 1	AARS2	mitochondrial matrix	GO:0005759
 2	ACBD5	peroxisome	GO:0005777
 3	ACTB	actin cytoskeleton	GO:0015629
+```
+
+### domainsPerCompartment
+```
+rank	term	matched	background_size	fold enrichment	pvalue	adj. pvalue	bhfdr	genes
+1	PDZ	23	48	8.906	1.62980740014973e-13	4.27009538839229e-11	3.81679389312977e-05	AFDN,CASK
+1	FERM_C	12	17	13.120	2.1798629399977e-12	2.85562045139698e-10	7.63358778625954e-05	EPB41,EPB41L5
+```
+
+### domainsPerGene
+```
+#<seq id> <alignment start> <alignment end> <envelope start> <envelope end> <hmm acc> <hmm name> <type> <hmm start> <hmm end> <hmm length> <bit score> <E-value> <clan>
+O95863	153	176	153	177	PF13912	zf-C2H2_6	PfamLive::Result::SequenceOntology=HASH(0x108198b8)	1	24	27	20.50	0.9	CL0361
+O95863	208	230	208	230	PF00096	zf-C2H2	PfamLive::Result::SequenceOntology=HASH(0x89b8a80)	1	23	23	26.70	0.013	CL0361
+O95863	181	202	180	202	PF00096	zf-C2H2	PfamLive::Result::SequenceOntology=HASH(0x89b8a80)	2	23	23	23.40	0.14	CL0361
 ```
 
 ### goHierarchy
