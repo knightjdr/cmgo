@@ -42,8 +42,8 @@ var _ = Describe("Write prey scores", func() {
 		}
 
 		expected := "prey\tbait component\tdomain component\ttotal score\tbaits\tsupporting domains\tconflicting domains\n" +
-			"prey1\t0.11111\t0.75000\t0.86111\tbait1\tdomain1;domain1;domain2\tdomainX\n" +
-			"prey2\t0.22222\t0.25000\t0.47222\tbait2;bait3\tdomain2;domain3\tdomainY;domainZ\n"
+			"prey1\t0.11111\t0.75000\t0.43056\tbait1\tdomain1;domain1;domain2\tdomainX\n" +
+			"prey2\t0.22222\t0.25000\t0.23611\tbait2;bait3\tdomain2;domain3\tdomainY;domainZ\n"
 
 		writeScores(scores, "test/out.txt")
 		bytes, _ := afero.ReadFile(fs.Instance, "test/out.txt")

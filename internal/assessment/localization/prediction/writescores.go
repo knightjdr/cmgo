@@ -36,7 +36,7 @@ func writeBody(buffer *bytes.Buffer, scores preyScore) {
 				prey,
 				(*scores.Bait)[prey].score,
 				(*scores.Domain)[prey].score,
-				(*scores.Bait)[prey].score+(*scores.Domain)[prey].score,
+				((*scores.Bait)[prey].score+(*scores.Domain)[prey].score)/2,
 				baitString,
 				supportingDomainString,
 				conflictingDomainString,

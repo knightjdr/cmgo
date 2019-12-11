@@ -15,30 +15,30 @@ var _ = Describe("Calculate domain score component", func() {
 			"prey1": []string{"domain1", "domain1", "domain3", "domain5"},
 			"prey2": []string{"domain2", "domain2", "domain4", "domain5"},
 			"prey3": []string{"domain2", "domain3", "domain4", "domain5"},
-			"prey4": []string{"domain2"},
+			"prey4": []string{"domain1"},
 		}
 		predictions := map[string]int{
-			"prey1": 2,
+			"prey1": 1,
 			"prey2": 1,
 			"prey3": 2,
 			"prey4": 1,
 		}
 
-		expected := &preyDomainScore{
+		expected := preyDomainScore{
 			"prey1": &domainScoreComponents{
-				conflictingDomains: []string{},
-				score:              0.25,
-				supportingDomains:  []string{"domain3"},
+				conflictingDomains: []string{"domain3"},
+				score:              0.5,
+				supportingDomains:  []string{"domain1", "domain1"},
 				totalDomains:       4,
 			},
 			"prey2": &domainScoreComponents{
-				conflictingDomains: []string{},
+				conflictingDomains: []string{"domain2", "domain2", "domain4"},
 				score:              0.5,
 				supportingDomains:  []string{"domain2", "domain2"},
 				totalDomains:       4,
 			},
 			"prey3": &domainScoreComponents{
-				conflictingDomains: []string{},
+				conflictingDomains: []string{"domain2"},
 				score:              0.75,
 				supportingDomains:  []string{"domain2", "domain3", "domain4"},
 				totalDomains:       4,
@@ -46,10 +46,16 @@ var _ = Describe("Calculate domain score component", func() {
 			"prey4": &domainScoreComponents{
 				conflictingDomains: []string{},
 				score:              1,
-				supportingDomains:  []string{"domain2"},
+				supportingDomains:  []string{"domain1"},
 				totalDomains:       1,
 			},
 		}
-		Expect(calculateDomainComponentScore(geneDomains, compartmentDomains, predictions)).To(Equal(expected))
+		actual := calculateDomainComponentScore(geneDomains, compartmentDomains, predictions)
+		for prey, scoreComponent := range *actual {
+			Expect(scoreComponent.conflictingDomains).To(Equal(expected[prey].conflictingDomains), "should have conflicting domains")
+			Expect(scoreComponent.score).To(BeNumerically("~", expected[prey].score, 0.00001))
+			Expect(scoreComponent.supportingDomains).To(Equal(expected[prey].supportingDomains), "should have supporting domains")
+			Expect(scoreComponent.totalDomains).To(Equal(expected[prey].totalDomains), "should have total domain number")
+		}
 	})
 })

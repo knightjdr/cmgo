@@ -1,10 +1,8 @@
 package prediction
 
 import (
-	"fmt"
-	"github.com/knightjdr/cmgo/pkg/math"
+	customMath "github.com/knightjdr/cmgo/pkg/math"
 	"github.com/knightjdr/cmgo/pkg/slice"
-	"strconv"
 )
 
 type preyDomainScore map[string]*domainScoreComponents
@@ -25,23 +23,42 @@ func calculateDomainComponentScore(geneDomains map[string][]string, compartmentD
 			supportingDomains:  make([]string, 0),
 			totalDomains:       len(domains),
 		}
-		compartment := predictions[gene]
+		predictedCompartment := predictions[gene]
 		for _, domain := range domains {
-			if slice.ContainsString(domain, compartmentDomains[compartment]) {
+			if isDomainSupportive(domain, compartmentDomains, predictedCompartment) {
 				(*scores)[gene].supportingDomains = append((*scores)[gene].supportingDomains, domain)
 			}
+			if isDomainConflicting(domain, compartmentDomains, predictedCompartment) {
+				(*scores)[gene].conflictingDomains = append((*scores)[gene].conflictingDomains, domain)
+			}
 		}
-		(*scores)[gene].score = calculateDomainScore((*scores)[gene].supportingDomains, (*scores)[gene].totalDomains)
+		(*scores)[gene].score = calculateDomainScore((*scores)[gene])
 	}
 	return scores
 }
 
-func calculateDomainScore(supporting []string, total int) float64 {
-	score := float64(0)
-	if total > 0 {
-		score = math.Round(float64(len(supporting))/float64(total), 0.00001)
+func isDomainSupportive(domain string, compartmentDomains map[int][]string, predictedPreyCompartment int) bool {
+	if slice.ContainsString(domain, compartmentDomains[predictedPreyCompartment]) {
+		return true
 	}
-	scoreString := fmt.Sprintf("%0.5f", score)
-	scoreFloat, _ := strconv.ParseFloat(scoreString, 64)
-	return scoreFloat
+	return false
+}
+
+func isDomainConflicting(domain string, compartmentDomains map[int][]string, predictedPreyCompartment int) bool {
+	for compartment := range compartmentDomains {
+		if compartment != predictedPreyCompartment && isDomainSupportive(domain, compartmentDomains, compartment) {
+			return true
+		}
+	}
+	return false
+}
+
+func calculateDomainScore(scoreComponents *domainScoreComponents) float64 {
+	score := float64(0)
+	if scoreComponents.totalDomains > 0 {
+		supporting := float64(len(scoreComponents.supportingDomains))
+		total := float64(scoreComponents.totalDomains)
+		score = customMath.Round(supporting/total, 0.00001)
+	}
+	return score
 }
