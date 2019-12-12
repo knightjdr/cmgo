@@ -12,7 +12,9 @@ type parameters struct {
 	domainsPerCompartment string
 	domainsPerGene        string
 	fdr                   float64
+	fractionation         string
 	goHierarchy           string
+	hpa                   string
 	outFile               string
 	predictions           string
 	predictionSummary     string
@@ -27,7 +29,9 @@ func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	domainsPerCompartment := flags.SetString("domainsPerCompartment", args, fileOptions, "")
 	domainsPerGene := flags.SetString("domainsPerGene", args, fileOptions, "")
 	fdr := flags.SetFloat("fdr", args, fileOptions, 0.01)
+	fractionation := flags.SetString("fractionation", args, fileOptions, "")
 	goHierarchy := flags.SetString("goHierarchy", args, fileOptions, "")
+	hpa := flags.SetString("hpa", args, fileOptions, "")
 	outFile := flags.SetString("outFile", args, fileOptions, "prediction-score.txt")
 	predictions := flags.SetString("predictions", args, fileOptions, "")
 	predictionSummary := flags.SetString("predictionSummary", args, fileOptions, "")
@@ -41,7 +45,9 @@ func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 		domainsPerCompartment: domainsPerCompartment,
 		domainsPerGene:        domainsPerGene,
 		fdr:                   fdr,
+		fractionation:         fractionation,
 		goHierarchy:           goHierarchy,
+		hpa:                   hpa,
 		outFile:               outFile,
 		predictions:           predictions,
 		predictionSummary:     predictionSummary,
@@ -61,8 +67,14 @@ func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	if options.domainsPerGene == "" {
 		messages = append(messages, "missing list of domains per gene")
 	}
+	if options.fractionation == "" {
+		messages = append(messages, "missing fractionation predictions")
+	}
 	if options.goHierarchy == "" {
 		messages = append(messages, "missing GO .obo file")
+	}
+	if options.hpa == "" {
+		messages = append(messages, "missing HPA predictions")
 	}
 	if options.predictions == "" {
 		messages = append(messages, "missing localization predictions")

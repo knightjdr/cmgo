@@ -10,36 +10,45 @@ import (
 	"github.com/spf13/afero"
 )
 
-func writeScores(scores preyScore, outFile string) {
+func writeScores(scores preyScore, inputFiles fileContent, outFile string) {
 	var buffer bytes.Buffer
 
 	writeHeader(&buffer)
-	writeBody(&buffer, scores)
+	writeBody(&buffer, scores, inputFiles)
 
 	afero.WriteFile(fs.Instance, outFile, buffer.Bytes(), 0644)
 }
 
 func writeHeader(buffer *bytes.Buffer) {
-	buffer.WriteString("prey\tbait component\tdomain component\ttotal score\tbaits\tsupporting domains\tconflicting domains\n")
+	buffer.WriteString("prey\tcompartment\tGO term(s)\tGO ID(s)\tbait component\tdomain component\tstudy component\ttotal score\tbaits\tsupporting domains\tconflicting domains\tHPA supporting\tFractionation supporting\n")
 }
 
-func writeBody(buffer *bytes.Buffer, scores preyScore) {
+func writeBody(buffer *bytes.Buffer, scores preyScore, inputFiles fileContent) {
 	outputOrder := orderPreys(scores.Bait)
 
 	for _, prey := range outputOrder {
 		baitString := strings.Join((*scores.Bait)[prey].baits, ";")
+		compartment := inputFiles.predictions[prey]
 		conflictingDomainString := strings.Join((*scores.Domain)[prey].conflictingDomains, ";")
 		supportingDomainString := strings.Join((*scores.Domain)[prey].supportingDomains, ";")
+		supportingFractionation := strings.Join((*scores.Study)[prey].fractionation, ";")
+		supportingHPA := strings.Join((*scores.Study)[prey].hpa, ";")
 		buffer.WriteString(
 			fmt.Sprintf(
-				"%s\t%0.5f\t%0.5f\t%0.5f\t%s\t%s\t%s\n",
+				"%s\t%d\t%s\t%s\t%0.5f\t%0.5f\t%0.5f\t%0.5f\t%s\t%s\t%s\t%s\t%s\n",
 				prey,
+				compartment,
+				strings.Join(inputFiles.predictionSummary[compartment].GOterms, ";"),
+				strings.Join(inputFiles.predictionSummary[compartment].GOid, ";"),
 				(*scores.Bait)[prey].score,
 				(*scores.Domain)[prey].score,
-				((*scores.Bait)[prey].score+(*scores.Domain)[prey].score)/2,
+				(*scores.Study)[prey].score,
+				((*scores.Bait)[prey].score+(*scores.Domain)[prey].score+(*scores.Study)[prey].score)/3,
 				baitString,
 				supportingDomainString,
 				conflictingDomainString,
+				supportingHPA,
+				supportingFractionation,
 			),
 		)
 	}

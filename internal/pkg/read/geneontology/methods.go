@@ -60,3 +60,13 @@ func (g *GOhierarchy) GetParents(namespace string) {
 		(*g)[namespace][id].Parents = allParents
 	}
 }
+
+// AreConsistent determines if two GO ids are consistent (equal or one is a child of the other).
+func (g *GOhierarchy) AreConsistent(namespace, id1, id2 string) bool {
+	if id1 == id2 ||
+		slice.ContainsString(id1, (*g)[namespace][id2].Children) ||
+		slice.ContainsString(id2, (*g)[namespace][id1].Children) {
+		return true
+	}
+	return false
+}

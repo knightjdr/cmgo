@@ -8,7 +8,9 @@
 | domainsPerCompartment | file with a list of domains for each NMR rank or SAFE domain | |
 | domainsPerGene | file with a list of domains for each gene | |
 | fdr | FDR for significant prey in SAINT file | |
+| fractionation | predictions from fractionation studies of Christoforou and Itzhak | |
 | goHierarchy | GO hierarchy in .obo format | |
+| hpa | human protein atlas predictions | |
 | outFile | output file | prediction-score.txt |
 | predictions | file with localization predictions by NMF rank or SAFE domain | |
 | predictionSummary | summary information for NMF or SAFE ranks | |
@@ -41,6 +43,14 @@ O95863	208	230	208	230	PF00096	zf-C2H2	PfamLive::Result::SequenceOntology=HASH(0
 O95863	181	202	180	202	PF00096	zf-C2H2	PfamLive::Result::SequenceOntology=HASH(0x89b8a80)	2	23	23	23.40	0.14	CL0361
 ```
 
+### fractionation
+```
+gene	localization Christoforou	localization Itzhak	ID Christoforou	ID Itzhak	combined
+AARS	Cytosol	Mostly Cytosolic	GO:0005829	GO:0005829	GO:0005829
+AARS2	Mitochondrion	Mitochondrion Matrix	GO:0005739	GO:0005759	GO:0005739;GO:0005759
+AARSD1	Cytosol	Mostly Cytosolic	GO:0005829	GO:0005829	GO:0005829
+```
+
 ### goHierarchy
 ```
 [Term]
@@ -65,6 +75,16 @@ xref: NIF_Subcellular:sao661522542
 xref: Wikipedia:Nucleoplasm
 is_a: GO:0044428 ! nuclear part
 relationship: part_of GO:0031981 ! nuclear lumen
+```
+
+### hpa
+```
+gene	terms	go_id
+TSPAN6	Cytosol	GO:0005829
+SCYL3	Microtubules;Nuclear bodies	GO:0015630;GO:0016604
+C1orf112	Mitochondria	GO:0005739
+FGR	Aggresome;Plasma membrane	GO:0016235;GO:0005886
+CFH	Vesicles	GO:0043231
 ```
 
 ### predictions

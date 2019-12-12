@@ -8,6 +8,7 @@ import (
 type preyScore struct {
 	Bait   *preyBaitScore
 	Domain *preyDomainScore
+	Study  *preyStudyScore
 }
 
 // Score calculates a prediction score for each prey.
@@ -22,7 +23,8 @@ func Score(fileOptions map[string]interface{}) {
 	scores := preyScore{
 		Bait:   calculateBaitComponent(options, inputFiles),
 		Domain: calculateDomainComponent(options, inputFiles),
+		Study:  calculateStudyComponent(options, inputFiles),
 	}
 
-	writeScores(scores, options.outFile)
+	writeScores(scores, inputFiles, options.outFile)
 }

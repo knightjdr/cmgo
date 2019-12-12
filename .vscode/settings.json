@@ -13,7 +13,8 @@
       "editor.formatOnSave": true,
       "editor.codeActionsOnSave": {
           "source.organizeImports": true,
-      }
+      },
+      "editor.codeActionsOnSaveTimeout": 2000
   },
   "gopls": {
       "usePlaceholders": true, // add parameter placeholders when completing a function
