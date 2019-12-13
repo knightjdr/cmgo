@@ -67,6 +67,12 @@ Modules for generating files for upload and query file processing.
 
 > Report on which localizations are previously known.
 
+### Module name: `assessment-prediction`
+
+* folder `assessment/localization/prediction`
+
+> Assign a prediction score for every prey localized by NMF or SAFE
+
 ### Module name: `assessment-transmembrane`
 
 * folder `assessment/transmembrane`

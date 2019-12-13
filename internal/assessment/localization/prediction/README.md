@@ -115,4 +115,4 @@ rank	term	displayname	go	synonyms	ic
 ```
 
 ## Output
-`prediction-score.txt`:
+`prediction-score.txt`: output prediction score components for each prey
