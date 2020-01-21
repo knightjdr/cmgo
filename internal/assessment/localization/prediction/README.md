@@ -5,6 +5,7 @@
 | parameters | definition | default |
 |------------|------------|---------|
 | baitExpected | expected bait localizations | |
+| compartmentsText | text-mining score from Comportments DB | |
 | domainsPerCompartment | file with a list of domains for each NMR rank or SAFE domain | |
 | domainsPerGene | file with a list of domains for each gene | |
 | fdr | FDR for significant prey in SAINT file | |
@@ -16,6 +17,7 @@
 | predictionSummary | summary information for NMF or SAFE ranks | |
 | predictionType | type of prediction: NMF or SAFE | nmf |
 | saint | SAINT file | |
+
 | uniprot | UniProt file in .dat format | |
 
 ## Example file formats
@@ -26,6 +28,15 @@ id	bait	term	GO_ID
 1	AARS2	mitochondrial matrix	GO:0005759
 2	ACBD5	peroxisome	GO:0005777
 3	ACTB	actin cytoskeleton	GO:0015629
+```
+
+### compartmentsText
+```
+ENSP00000255087	MTL5	GO:0042645	Mitochondrial nucleoid	1.010	0.505	
+ENSP00000255087	MTL5	GO:0000229	Cytoplasmic chromosome	1.009	0.504	
+ENSP00000255087	MTL5	GO:0045495	Pole plasm	1.004	0.502	
+ENSP00000255108	DPH2	GO:0005840	Ribosome	3.332	1.666	
+ENSP00000255108	DPH2	GO:1990904	Ribonucleoprotein complex	3.077	1.538
 ```
 
 ### domainsPerCompartment

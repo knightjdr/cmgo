@@ -29,6 +29,7 @@ var _ = Describe("Parseflags", func() {
 				"-predictionSummary", "prediction-summary.txt",
 				"-predictionType", "safe",
 				"-saint", "saint.txt",
+				"-compartmentsText", "compartments.txt",
 				"-uniprot", "uniprot.dat",
 			}
 			fileOptions := map[string]interface{}{}
@@ -46,6 +47,7 @@ var _ = Describe("Parseflags", func() {
 				predictionSummary:     "prediction-summary.txt",
 				predictionType:        "safe",
 				saint:                 "saint.txt",
+				compartmentsText:      "compartments.txt",
 				uniprot:               "uniprot.dat",
 			}
 			options, err := parseFlags(fileOptions)
@@ -67,6 +69,7 @@ var _ = Describe("Parseflags", func() {
 				"-predictions", "predictions.txt",
 				"-predictionSummary", "prediction-summary.txt",
 				"-saint", "saint.txt",
+				"-compartmentsText", "compartments.txt",
 				"-uniprot", "uniprot.dat",
 			}
 			fileOptions := map[string]interface{}{}
@@ -109,6 +112,7 @@ var _ = Describe("Parseflags", func() {
 				"predictionSummary":     "file-prediction-summary.txt",
 				"predictionType":        "safe",
 				"saint":                 "file-saint.txt",
+				"compartmentsText":      "file-compartments.txt",
 				"uniprot":               "file-uniprot.dat",
 			}
 
@@ -125,6 +129,7 @@ var _ = Describe("Parseflags", func() {
 				predictionSummary:     "file-prediction-summary.txt",
 				predictionType:        "safe",
 				saint:                 "file-saint.txt",
+				compartmentsText:      "file-compartments.txt",
 				uniprot:               "file-uniprot.dat",
 			}
 			options, err := parseFlags(fileOptions)

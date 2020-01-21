@@ -20,6 +20,7 @@ type parameters struct {
 	predictionSummary     string
 	predictionType        string
 	saint                 string
+	compartmentsText      string
 	uniprot               string
 }
 
@@ -37,6 +38,7 @@ func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	predictionSummary := flags.SetString("predictionSummary", args, fileOptions, "")
 	predictionType := flags.SetString("predictionType", args, fileOptions, "nmf")
 	saint := flags.SetString("saint", args, fileOptions, "")
+	compartmentsText := flags.SetString("compartmentsText", args, fileOptions, "")
 	uniprot := flags.SetString("uniprot", args, fileOptions, "")
 
 	// Copy arguments from options file.
@@ -53,6 +55,7 @@ func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 		predictionSummary:     predictionSummary,
 		predictionType:        predictionType,
 		saint:                 saint,
+		compartmentsText:      compartmentsText,
 		uniprot:               uniprot,
 	}
 
@@ -84,6 +87,9 @@ func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	}
 	if options.saint == "" {
 		messages = append(messages, "missing SAINT file")
+	}
+	if options.compartmentsText == "" {
+		messages = append(messages, "missing Compartments DB text annotations")
 	}
 	if options.uniprot == "" {
 		messages = append(messages, "missing UniProt file")

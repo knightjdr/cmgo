@@ -20,7 +20,7 @@ func writeScores(scores preyScore, inputFiles fileContent, outFile string) {
 }
 
 func writeHeader(buffer *bytes.Buffer) {
-	buffer.WriteString("prey\tcompartment\tGO term(s)\tGO ID(s)\tbait component\tdomain component\tstudy component\ttotal score\tbaits\tsupporting domains\tconflicting domains\tHPA supporting\tFractionation supporting\n")
+	buffer.WriteString("prey\tcompartment\tGO term(s)\tGO ID(s)\tbait component\tstudy component\ttext component\tdomain component\ttotal score\tbaits\tHPA supporting\tFractionation supporting\tbest text term\tsupporting domains\tconflicting domains\n")
 }
 
 func writeBody(buffer *bytes.Buffer, scores preyScore, inputFiles fileContent) {
@@ -35,20 +35,22 @@ func writeBody(buffer *bytes.Buffer, scores preyScore, inputFiles fileContent) {
 		supportingHPA := strings.Join((*scores.Study)[prey].hpa, ";")
 		buffer.WriteString(
 			fmt.Sprintf(
-				"%s\t%d\t%s\t%s\t%0.5f\t%0.5f\t%0.5f\t%0.5f\t%s\t%s\t%s\t%s\t%s\n",
+				"%s\t%d\t%s\t%s\t%0.5f\t%0.5f\t%0.5f\t%0.5f\t%0.5f\t%s\t%s\t%s\t%s\t%s\t%s\n",
 				prey,
 				compartment,
 				strings.Join(inputFiles.predictionSummary[compartment].GOterms, ";"),
 				strings.Join(inputFiles.predictionSummary[compartment].GOid, ";"),
 				(*scores.Bait)[prey].score,
-				(*scores.Domain)[prey].score,
 				(*scores.Study)[prey].score,
-				((*scores.Bait)[prey].score+(*scores.Domain)[prey].score+(*scores.Study)[prey].score)/3,
+				(*scores.Text)[prey].score,
+				(*scores.Domain)[prey].score,
+				((*scores.Bait)[prey].score+(*scores.Text)[prey].score+(*scores.Study)[prey].score)/3,
 				baitString,
-				supportingDomainString,
-				conflictingDomainString,
 				supportingHPA,
 				supportingFractionation,
+				(*scores.Text)[prey].GOID,
+				supportingDomainString,
+				conflictingDomainString,
 			),
 		)
 	}

@@ -1,6 +1,8 @@
 package prediction
 
 import (
+	"sort"
+
 	"github.com/knightjdr/cmgo/internal/pkg/read/geneontology"
 	"github.com/knightjdr/cmgo/internal/pkg/read/localization"
 	"github.com/knightjdr/cmgo/pkg/math"
@@ -53,7 +55,10 @@ func getConsitentIDs(prey string, cellmapIDs []string, studyPredictions map[stri
 		}
 	}
 
-	return slice.UniqueStrings(consistentIDs)
+	consistentIDs = slice.UniqueStrings(consistentIDs)
+	sort.Strings(consistentIDs)
+
+	return consistentIDs
 }
 
 func calculateFinalStudyScore(scoreComponents *studyScoreComponents) float64 {
