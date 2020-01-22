@@ -10,33 +10,41 @@ import (
 type preyBaitScore map[string]*baitScoreComponents
 
 type baitScoreComponents struct {
-	baits []string
-	score float64
+	interactorBaits  []string
+	organelleBaits   []string
+	scoreOrganelle   float64
+	scoreSpecificity float64
 }
 
-func calculateBaitScoreComponent(predictions map[string]int, baitCompartments baitInformation, baitInteractors map[string][]string) *preyBaitScore {
+func calculateBaitScoreComponent(inputFiles fileContent, baitCompartments baitInformation, baitsPerPrey map[string][]string) *preyBaitScore {
 	preyScores := &preyBaitScore{}
 
-	for prey, prediction := range predictions {
+	for prey, prediction := range inputFiles.predictions {
 		(*preyScores)[prey] = &baitScoreComponents{
-			baits: make([]string, 0),
+			interactorBaits: baitsPerPrey[prey],
+			organelleBaits:  make([]string, 0),
 		}
-		for bait, interactors := range baitInteractors {
+		for bait, interactors := range inputFiles.baitInteractors {
 			if slice.ContainsString(prey, interactors) && slice.ContainsInt(prediction, baitCompartments.localizations[bait]) {
-				(*preyScores)[prey].baits = append((*preyScores)[prey].baits, bait)
-				(*preyScores)[prey].score++
+				(*preyScores)[prey].organelleBaits = append((*preyScores)[prey].organelleBaits, bait)
+				(*preyScores)[prey].scoreOrganelle++
 			}
 		}
-		sort.Strings((*preyScores)[prey].baits)
-		(*preyScores)[prey].score = computeFinalBaitComponentScore((*preyScores)[prey].score, baitCompartments.compartmentCounts[prediction])
+		sort.Strings((*preyScores)[prey].organelleBaits)
+		(*preyScores)[prey].scoreOrganelle = computeFinalBaitComponentOrganelleScore((*preyScores)[prey].scoreOrganelle, baitCompartments.compartmentCounts[prediction])
+		(*preyScores)[prey].scoreSpecificity = computeFinalBaitComponentSpecificityScore((*preyScores)[prey].organelleBaits, (*preyScores)[prey].interactorBaits)
 	}
 
 	return preyScores
 }
 
-func computeFinalBaitComponentScore(baitCount float64, compartmentCount int) float64 {
+func computeFinalBaitComponentOrganelleScore(baitCount float64, compartmentCount int) float64 {
 	if compartmentCount > 0 {
 		return math.Round(baitCount/float64(compartmentCount), 0.00001)
 	}
 	return 0
+}
+
+func computeFinalBaitComponentSpecificityScore(organelleBaits, interactorBaits []string) float64 {
+	return math.Round(float64(len(organelleBaits))/float64(len(interactorBaits)), 0.00001)
 }

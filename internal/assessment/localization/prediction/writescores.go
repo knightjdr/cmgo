@@ -20,37 +20,36 @@ func writeScores(scores preyScore, inputFiles fileContent, outFile string) {
 }
 
 func writeHeader(buffer *bytes.Buffer) {
-	buffer.WriteString("prey\tcompartment\tGO term(s)\tGO ID(s)\tbait component\tstudy component\ttext component\tdomain component\ttotal score\tbaits\tHPA supporting\tFractionation supporting\tbest text term\tsupporting domains\tconflicting domains\n")
+	header := "prey\tcompartment\tGO term(s)\tGO ID(s)\t" +
+		"bait-organelle recovery component\tbait-organelle specificity component\tstudy component\ttext component\ttotal score\t" +
+		"organelle specific baits\tHPA supporting\tFractionation supporting\tbest text term\n"
+	buffer.WriteString(header)
 }
 
 func writeBody(buffer *bytes.Buffer, scores preyScore, inputFiles fileContent) {
 	outputOrder := orderPreys(scores.Bait)
 
 	for _, prey := range outputOrder {
-		baitString := strings.Join((*scores.Bait)[prey].baits, ";")
+		baitString := strings.Join((*scores.Bait)[prey].organelleBaits, ";")
 		compartment := inputFiles.predictions[prey]
-		conflictingDomainString := strings.Join((*scores.Domain)[prey].conflictingDomains, ";")
-		supportingDomainString := strings.Join((*scores.Domain)[prey].supportingDomains, ";")
 		supportingFractionation := strings.Join((*scores.Study)[prey].fractionation, ";")
 		supportingHPA := strings.Join((*scores.Study)[prey].hpa, ";")
 		buffer.WriteString(
 			fmt.Sprintf(
-				"%s\t%d\t%s\t%s\t%0.5f\t%0.5f\t%0.5f\t%0.5f\t%0.5f\t%s\t%s\t%s\t%s\t%s\t%s\n",
+				"%s\t%d\t%s\t%s\t%0.5f\t%0.5f\t%0.5f\t%0.5f\t%0.5f\t%s\t%s\t%s\t%s\n",
 				prey,
 				compartment,
 				strings.Join(inputFiles.predictionSummary[compartment].GOterms, ";"),
 				strings.Join(inputFiles.predictionSummary[compartment].GOid, ";"),
-				(*scores.Bait)[prey].score,
+				(*scores.Bait)[prey].scoreOrganelle,
+				(*scores.Bait)[prey].scoreSpecificity,
 				(*scores.Study)[prey].score,
 				(*scores.Text)[prey].score,
-				(*scores.Domain)[prey].score,
-				((*scores.Bait)[prey].score+(*scores.Text)[prey].score+(*scores.Study)[prey].score)/3,
+				((*scores.Bait)[prey].scoreOrganelle+(*scores.Bait)[prey].scoreSpecificity+(*scores.Study)[prey].score+(*scores.Text)[prey].score)/4,
 				baitString,
 				supportingHPA,
 				supportingFractionation,
 				(*scores.Text)[prey].GOID,
-				supportingDomainString,
-				conflictingDomainString,
 			),
 		)
 	}

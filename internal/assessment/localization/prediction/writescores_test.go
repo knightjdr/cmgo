@@ -34,12 +34,14 @@ var _ = Describe("Write prey scores", func() {
 		scores := preyScore{
 			Bait: &preyBaitScore{
 				"prey1": &baitScoreComponents{
-					baits: []string{"bait1"},
-					score: 0.11111,
+					organelleBaits:   []string{"bait1"},
+					scoreOrganelle:   0.11111,
+					scoreSpecificity: 0.8,
 				},
 				"prey2": &baitScoreComponents{
-					baits: []string{"bait2", "bait3"},
-					score: 0.22222,
+					organelleBaits:   []string{"bait2", "bait3"},
+					scoreOrganelle:   0.22222,
+					scoreSpecificity: 0.3,
 				},
 			},
 			Domain: &preyDomainScore{
@@ -82,9 +84,9 @@ var _ = Describe("Write prey scores", func() {
 			predictionSummary: predictionSummary,
 		}
 
-		expected := "prey\tcompartment\tGO term(s)\tGO ID(s)\tbait component\tstudy component\ttext component\tdomain component\ttotal score\tbaits\tHPA supporting\tFractionation supporting\tbest text term\tsupporting domains\tconflicting domains\n" +
-			"prey1\t1\tTerm 1\tGO:111111\t0.11111\t0.50000\t0.75000\t0.45000\t0.45370\tbait1\t\tGO:111111;GO:222222\tGO:111111\tdomain1;domain1;domain2\tdomainX\n" +
-			"prey2\t2\tTerm 2\tGO:222222\t0.22222\t1.00000\t0.25000\t0.48000\t0.49074\tbait2;bait3\tGO:444444\tGO:333333\tGO:444444\tdomain2;domain3\tdomainY;domainZ\n"
+		expected := "prey\tcompartment\tGO term(s)\tGO ID(s)\tbait-organelle recovery component\tbait-organelle specificity component\tstudy component\ttext component\torganelle specific baits\tHPA supporting\tFractionation supporting\tbest text term\n" +
+			"prey1\t1\tTerm 1\tGO:111111\t0.11111\t0.80000\t0.50000\t0.75000\tbait1\t\tGO:111111;GO:222222\tGO:111111\n" +
+			"prey2\t2\tTerm 2\tGO:222222\t0.22222\t0.30000\t1.00000\t0.25000\tbait2;bait3\tGO:444444\tGO:333333\tGO:444444\n"
 
 		writeScores(scores, inputFiles, "test/out.txt")
 		bytes, _ := afero.ReadFile(fs.Instance, "test/out.txt")
