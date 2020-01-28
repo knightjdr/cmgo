@@ -27,6 +27,7 @@ import (
 	"github.com/knightjdr/cmgo/internal/nmf/robustness"
 	"github.com/knightjdr/cmgo/internal/nmf/subset"
 	"github.com/knightjdr/cmgo/internal/nmf/uv"
+	"github.com/knightjdr/cmgo/internal/organelle/isolation"
 	"github.com/knightjdr/cmgo/internal/organelle/overlap"
 	"github.com/knightjdr/cmgo/internal/organelle/shared"
 	preypreySubset "github.com/knightjdr/cmgo/internal/preyprey/subset"
@@ -91,6 +92,8 @@ func main() {
 		nmfsafe.Concordance(options)
 	case "organelle-overlap":
 		overlap.Metrics(options)
+	case "organelle-isolation":
+		isolation.Calculate(options)
 	case "organelle-sharedregion":
 		shared.Region(options)
 	case "preyprey-subset":

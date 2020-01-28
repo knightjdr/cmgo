@@ -195,17 +195,25 @@ Modules for NMF (and related) analysis.
 
 Modules for comparing cell map compartments.
 
+### Module name: `organelle-isolation`
+
+* folder `organelle/isolation`
+
+> Calculates how isolated an NMF compartment is, i.e. for genes localizing to the compartment
+> the number of edges between members of the compartment relative to the number of edges to proteins
+> outside the compartment.
+
 ### Module name: `organelle-overlap`
 
 * folder `organelle/overlap`
 
-Takes two lists of proteins and a txt file with similarity scores between proteins and outputs metrics on the similarity within and between the lists.
+> Takes two lists of proteins and a txt file with similarity scores between proteins and outputs metrics on the similarity within and between the lists.
 
 ### Module name: `organelle-sharedregion`
 
 * folder `organelle/shared`
 
-Takes two lists of proteins and outputs metrics on the regions (domains/motifs) shared between common preys.
+> Takes two lists of proteins and outputs metrics on the regions (domains/motifs) shared between common preys.
 
 ## Prey prey
 

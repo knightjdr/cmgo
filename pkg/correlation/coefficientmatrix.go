@@ -23,8 +23,14 @@ func CoefficientMatrix(inputMatrix [][]float64, row bool, method string) [][]flo
 	cc := make([][]float64, n)
 	for i := 0; i < n; i++ {
 		cc[i] = make([]float64, n)
-		for j := 0; j < n; j++ {
-			cc[i][j] = Pearson(x[i], x[j])
+	}
+
+	for i := 0; i < n; i++ {
+		cc[i][i] = 1
+		for j := i + 1; j < n; j++ {
+			value := Pearson(x[i], x[j])
+			cc[i][j] = value
+			cc[j][i] = value
 		}
 	}
 
