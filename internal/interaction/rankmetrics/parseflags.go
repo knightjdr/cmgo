@@ -1,4 +1,4 @@
-package turnoverbyrank
+package rankmetrics
 
 import (
 	"errors"
@@ -8,6 +8,7 @@ import (
 )
 
 type parameters struct {
+	fasta        string
 	fdr          float64
 	outFile      string
 	saint        string
@@ -16,6 +17,7 @@ type parameters struct {
 
 func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	args := flags.Parse()
+	fasta := flags.SetString("fasta", args, fileOptions, "")
 	fdr := flags.SetFloat("fdr", args, fileOptions, 0.01)
 	outFile := flags.SetString("outFile", args, fileOptions, "turnover-by-rank.txt")
 	saint := flags.SetString("saint", args, fileOptions, "")
@@ -23,6 +25,7 @@ func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 
 	// Copy arguments from options file.
 	options := parameters{
+		fasta:        fasta,
 		fdr:          fdr,
 		outFile:      outFile,
 		saint:        saint,
@@ -31,6 +34,9 @@ func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 
 	// Check for missing arguments.
 	messages := make([]string, 0)
+	if options.fasta == "" {
+		messages = append(messages, "missing fasta database")
+	}
 	if options.saint == "" {
 		messages = append(messages, "missing SAINT file")
 	}

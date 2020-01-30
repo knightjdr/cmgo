@@ -1,4 +1,4 @@
-package turnoverbyrank
+package rankmetrics
 
 import (
 	"github.com/knightjdr/cmgo/internal/pkg/read/csv"

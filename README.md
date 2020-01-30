@@ -112,12 +112,12 @@ Modules for calculating term enrichment in compartments and lists.
 
 > Calculates the average bait interaction rank for a list of preys.
 
-### Module name: `interaction-turnoverbyrank`
+### Module name: `interaction-rankmetrics`
 
-* folder `interaction/turnoverbyrank`
+* folder `interaction/rankmetrics`
 
-> Calculates the average turnover rate for preys, ranked by
-> their control-subtracted length-adjusted spectral counts
+> Calculates metrics for preys by interaction rank, including
+> expression level, number of lysines and turnover rate.
 
 ## LBA
 

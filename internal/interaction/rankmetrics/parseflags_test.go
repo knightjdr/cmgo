@@ -1,4 +1,4 @@
-package turnoverbyrank
+package rankmetrics
 
 import (
 	"os"
@@ -17,6 +17,7 @@ var _ = Describe("Parseflags", func() {
 		It("should parse arguments", func() {
 			os.Args = []string{
 				"cmd",
+				"-fasta", "database.fasta",
 				"-fdr", "0.05",
 				"-outFile", "out.txt",
 				"-saint", "saint.txt",
@@ -25,6 +26,7 @@ var _ = Describe("Parseflags", func() {
 			fileOptions := map[string]interface{}{}
 
 			expected := parameters{
+				fasta:        "database.fasta",
 				fdr:          0.05,
 				outFile:      "out.txt",
 				saint:        "saint.txt",
@@ -40,6 +42,7 @@ var _ = Describe("Parseflags", func() {
 		It("should set defaults", func() {
 			os.Args = []string{
 				"cmd",
+				"-fasta", "database.fasta",
 				"-saint", "saint.txt",
 				"-turnoverFile", "turnover-rates.txt",
 			}
@@ -70,6 +73,7 @@ var _ = Describe("Parseflags", func() {
 				"cmd",
 			}
 			fileOptions := map[string]interface{}{
+				"fasta":        "file-database.txt",
 				"fdr":          "0.05",
 				"outFile":      "file-out.txt",
 				"saint":        "file-saint.txt",
@@ -77,6 +81,7 @@ var _ = Describe("Parseflags", func() {
 			}
 
 			expected := parameters{
+				fasta:        "file-database.txt",
 				fdr:          0.05,
 				outFile:      "file-out.txt",
 				saint:        "file-saint.txt",
