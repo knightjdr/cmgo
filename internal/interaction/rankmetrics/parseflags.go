@@ -19,7 +19,7 @@ func parseFlags(fileOptions map[string]interface{}) (parameters, error) {
 	args := flags.Parse()
 	fasta := flags.SetString("fasta", args, fileOptions, "")
 	fdr := flags.SetFloat("fdr", args, fileOptions, 0.01)
-	outFile := flags.SetString("outFile", args, fileOptions, "turnover-by-rank.txt")
+	outFile := flags.SetString("outFile", args, fileOptions, "prey-rank-metrics.txt")
 	saint := flags.SetString("saint", args, fileOptions, "")
 	turnoverFile := flags.SetString("turnoverFile", args, fileOptions, "")
 

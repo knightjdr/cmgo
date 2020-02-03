@@ -51,7 +51,7 @@ var _ = Describe("Parseflags", func() {
 			options, err := parseFlags(fileOptions)
 			Expect(err).ShouldNot(HaveOccurred())
 			Expect(options.fdr).To(Equal(0.01), "should set default FDR")
-			Expect(options.outFile).To(Equal("turnover-by-rank.txt"), "should set default out file")
+			Expect(options.outFile).To(Equal("prey-rank-metrics.txt"), "should set default out file")
 		})
 	})
 
