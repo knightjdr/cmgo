@@ -8,7 +8,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var responseText = `{
+var hgncResponseText = `{
 	"responseHeader":{"status":0,"QTime":18},
 	"response":{
 		"numFound":41851,
@@ -39,7 +39,7 @@ var _ = Describe("Fetch from HGNC", func() {
 			var apiStub = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				w.Header().Set("Content-Type", "application/json")
 				w.WriteHeader(http.StatusCreated)
-				w.Write([]byte(responseText))
+				w.Write([]byte(hgncResponseText))
 			}))
 
 			service := &hgncService{

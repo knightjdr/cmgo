@@ -19,6 +19,7 @@ var _ = Describe("Parseflags", func() {
 				"cmd",
 				"-fasta", "database.fasta",
 				"-fdr", "0.05",
+				"-gixDB", "gix.json",
 				"-outFile", "out.txt",
 				"-saint", "saint.txt",
 				"-turnoverFile", "turnover-rates.txt",
@@ -28,6 +29,7 @@ var _ = Describe("Parseflags", func() {
 			expected := parameters{
 				fasta:        "database.fasta",
 				fdr:          0.05,
+				gixDB:        "gix.json",
 				outFile:      "out.txt",
 				saint:        "saint.txt",
 				turnoverFile: "turnover-rates.txt",
@@ -43,6 +45,7 @@ var _ = Describe("Parseflags", func() {
 			os.Args = []string{
 				"cmd",
 				"-fasta", "database.fasta",
+				"-gixDB", "gix.json",
 				"-saint", "saint.txt",
 				"-turnoverFile", "turnover-rates.txt",
 			}
@@ -75,6 +78,7 @@ var _ = Describe("Parseflags", func() {
 			fileOptions := map[string]interface{}{
 				"fasta":        "file-database.txt",
 				"fdr":          "0.05",
+				"gixDB":        "file-gix.json",
 				"outFile":      "file-out.txt",
 				"saint":        "file-saint.txt",
 				"turnoverFile": "file-turnover-rates.txt",
@@ -83,6 +87,7 @@ var _ = Describe("Parseflags", func() {
 			expected := parameters{
 				fasta:        "file-database.txt",
 				fdr:          0.05,
+				gixDB:        "file-gix.json",
 				outFile:      "file-out.txt",
 				saint:        "file-saint.txt",
 				turnoverFile: "file-turnover-rates.txt",

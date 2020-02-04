@@ -5,19 +5,22 @@ import (
 )
 
 type rankSummary struct {
-	LysinePreys   map[string]bool
-	Lysines       []int
-	TurnoverPreys map[string]bool
-	TurnoverRates []float64
+	ExpressionPreys map[string]bool
+	Expression      []float64
+	LysinePreys     map[string]bool
+	Lysines         []int
+	TurnoverPreys   map[string]bool
+	TurnoverRates   []float64
 }
 
-func summarizeMetrics(sortedPreysPerBait map[string][]string, lysines map[string]int, turnoverRates map[string]float64) map[int]*rankSummary {
+func summarizeMetrics(sortedPreysPerBait map[string][]string, expression map[string]float64, lysines map[string]int, turnoverRates map[string]float64) map[int]*rankSummary {
 	metricsByRank := make(map[int]*rankSummary, 0)
 
 	for _, preys := range sortedPreysPerBait {
 		for index, prey := range preys {
 			preyRank := index + 1
 			allocateMap(preyRank, &metricsByRank)
+			addExpression(prey, expression, metricsByRank[preyRank])
 			addLysines(prey, lysines, metricsByRank[preyRank])
 			addTurnoverRate(prey, turnoverRates, metricsByRank[preyRank])
 		}
@@ -31,10 +34,21 @@ func summarizeMetrics(sortedPreysPerBait map[string][]string, lysines map[string
 func allocateMap(key int, knownInteractions *map[int]*rankSummary) {
 	if _, ok := (*knownInteractions)[key]; !ok {
 		(*knownInteractions)[key] = &rankSummary{
-			LysinePreys:   make(map[string]bool, 0),
-			Lysines:       make([]int, 0),
-			TurnoverPreys: make(map[string]bool, 0),
-			TurnoverRates: make([]float64, 0),
+			ExpressionPreys: make(map[string]bool, 0),
+			Expression:      make([]float64, 0),
+			LysinePreys:     make(map[string]bool, 0),
+			Lysines:         make([]int, 0),
+			TurnoverPreys:   make(map[string]bool, 0),
+			TurnoverRates:   make([]float64, 0),
+		}
+	}
+}
+
+func addExpression(prey string, expression map[string]float64, rankSummary *rankSummary) {
+	if _, hasExpression := expression[prey]; hasExpression {
+		if _, hasBeenUsedAlready := rankSummary.ExpressionPreys[prey]; !hasBeenUsedAlready {
+			rankSummary.ExpressionPreys[prey] = true
+			rankSummary.Expression = append(rankSummary.Expression, expression[prey])
 		}
 	}
 }
@@ -59,8 +73,10 @@ func addTurnoverRate(prey string, turnoverRates map[string]float64, rankSummary 
 
 func sortMetrics(knownInteractions *map[int]*rankSummary) {
 	for rank, rankSummary := range *knownInteractions {
+		sort.Float64s(rankSummary.Expression)
 		sort.Ints(rankSummary.Lysines)
 		sort.Float64s(rankSummary.TurnoverRates)
+		(*knownInteractions)[rank].Expression = rankSummary.Expression
 		(*knownInteractions)[rank].Lysines = rankSummary.Lysines
 		(*knownInteractions)[rank].TurnoverRates = rankSummary.TurnoverRates
 	}

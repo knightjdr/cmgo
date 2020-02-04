@@ -7,6 +7,13 @@ import (
 
 var _ = Describe("Summarize metrics", func() {
 	It("should calculate metrics for preys at the Nth rank", func() {
+		expression := map[string]float64{
+			"gene1": 1.00,
+			"gene2": 2.00,
+			"gene3": 3.00,
+			"gene5": 5.00,
+			"gene9": 9.00,
+		}
 		lysines := map[string]int{
 			"gene1": 11,
 			"gene2": 12,
@@ -32,30 +39,38 @@ var _ = Describe("Summarize metrics", func() {
 
 		expected := map[int]*rankSummary{
 			1: &rankSummary{
-				LysinePreys:   map[string]bool{"gene1": true, "gene6": true},
-				Lysines:       []int{11, 16},
-				TurnoverPreys: map[string]bool{"gene1": true, "gene6": true},
-				TurnoverRates: []float64{1, 6},
+				ExpressionPreys: map[string]bool{"gene1": true},
+				Expression:      []float64{1.00},
+				LysinePreys:     map[string]bool{"gene1": true, "gene6": true},
+				Lysines:         []int{11, 16},
+				TurnoverPreys:   map[string]bool{"gene1": true, "gene6": true},
+				TurnoverRates:   []float64{1, 6},
 			},
 			2: &rankSummary{
-				LysinePreys:   map[string]bool{"gene2": true, "gene7": true},
-				Lysines:       []int{12, 17},
-				TurnoverPreys: map[string]bool{"gene2": true, "gene5": true, "gene7": true},
-				TurnoverRates: []float64{2, 5, 7},
+				ExpressionPreys: map[string]bool{"gene2": true, "gene5": true},
+				Expression:      []float64{2.00, 5.00},
+				LysinePreys:     map[string]bool{"gene2": true, "gene7": true},
+				Lysines:         []int{12, 17},
+				TurnoverPreys:   map[string]bool{"gene2": true, "gene5": true, "gene7": true},
+				TurnoverRates:   []float64{2, 5, 7},
 			},
 			3: &rankSummary{
-				LysinePreys:   map[string]bool{"gene3": true},
-				Lysines:       []int{13},
-				TurnoverPreys: map[string]bool{"gene3": true},
-				TurnoverRates: []float64{3},
+				ExpressionPreys: map[string]bool{"gene3": true},
+				Expression:      []float64{3.00},
+				LysinePreys:     map[string]bool{"gene3": true},
+				Lysines:         []int{13},
+				TurnoverPreys:   map[string]bool{"gene3": true},
+				TurnoverRates:   []float64{3},
 			},
 			4: &rankSummary{
-				LysinePreys:   map[string]bool{"gene9": true},
-				Lysines:       []int{19},
-				TurnoverPreys: map[string]bool{"gene9": true},
-				TurnoverRates: []float64{9},
+				ExpressionPreys: map[string]bool{"gene9": true},
+				Expression:      []float64{9.00},
+				LysinePreys:     map[string]bool{"gene9": true},
+				Lysines:         []int{19},
+				TurnoverPreys:   map[string]bool{"gene9": true},
+				TurnoverRates:   []float64{9},
 			},
 		}
-		Expect(summarizeMetrics(sortedPreysPerBait, lysines, turnoverRates)).To(Equal(expected))
+		Expect(summarizeMetrics(sortedPreysPerBait, expression, lysines, turnoverRates)).To(Equal(expected))
 	})
 })

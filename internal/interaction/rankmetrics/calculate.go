@@ -2,7 +2,6 @@
 package rankmetrics
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/knightjdr/cmgo/internal/pkg/read/saint"
@@ -28,13 +27,13 @@ func Calculate(fileOptions map[string]interface{}) {
 	saint.LengthNormalizeSpectralCounts()
 	saint.FilterByFDR(data.parameters.fdr)
 
-	data.uniprotMapping = saint.CreateIDmap("UniProt")
-	fmt.Println(data.uniprotMapping)
+	data.uniprotMapping = saint.GetUniProtMapping()
 
-	/* lysines := countLysines(data.parameters.fasta)
+	expression := readExpression(data)
+	lysines := countLysines(data.parameters.fasta)
 	turnoverRates := readTurnoverRates(data)
 
 	sortedPreysPerBait := saint.SortByPreyRank("NormalizedSpec")
-	summary := summarizeMetrics(sortedPreysPerBait, lysines, turnoverRates)
-	writeSummary(summary, data.parameters.outFile) */
+	summary := summarizeMetrics(sortedPreysPerBait, expression, lysines, turnoverRates)
+	writeSummary(summary, data.parameters.outFile)
 }

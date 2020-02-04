@@ -14,7 +14,7 @@ var _ = Describe("Map IDs", func() {
 			var apiStub = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				w.Header().Set("Content-Type", "application/json")
 				w.WriteHeader(http.StatusCreated)
-				w.Write([]byte(responseText))
+				w.Write([]byte(hgncResponseText))
 			}))
 
 			ids := []string{"503538", "1"}

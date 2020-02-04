@@ -7,6 +7,7 @@
 |------------|------------|---------|
 | fdr | FDR threshold | 0.01 |
 | fasta | sequence database in fasta format | |
+| gixDB | GIX database for parsing protein expression | |
 | turnoverFile | file with turnover rates per gene | |
 | outFile | output file | turnover-by-rank.txt |
 | saint | SAINT file | |

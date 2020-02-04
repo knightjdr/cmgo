@@ -19,13 +19,21 @@ func writeSummary(summary map[int]*rankSummary, outfile string) {
 }
 
 func writeHeader(buffer *bytes.Buffer) {
-	buffer.WriteString("prey rank\tlysines (mean)\tlysines (SD)\tgene with lysine data\tturnover rate (mean)\tturnover rate(SD)\tgenes with turnover data\n")
+	buffer.WriteString(
+		"prey rank\t" +
+			"expression (mean)\texpression (SD)\tgenes with expression data\t" +
+			"lysines (mean)\tlysines (SD)\tgenes with lysine data\t" +
+			"turnover rate (mean)\tturnover rate(SD)\tgenes with turnover data\n",
+	)
 }
 
 func writeBody(buffer *bytes.Buffer, summary map[int]*rankSummary) {
 	numberOfRanks := len(summary)
 
 	for i := 1; i <= numberOfRanks; i++ {
+		expressionMean := stats.MeanFloat(summary[i].Expression)
+		expressionSD := stats.SDFloat(summary[i].Expression)
+		numberExpression := len(summary[i].Expression)
 		lysineMean := stats.MeanInt(summary[i].Lysines)
 		lysineSD := stats.SDInt(summary[i].Lysines)
 		numberLysines := len(summary[i].Lysines)
@@ -34,8 +42,11 @@ func writeBody(buffer *bytes.Buffer, summary map[int]*rankSummary) {
 		numberTurnoverGenes := len(summary[i].TurnoverRates)
 		buffer.WriteString(
 			fmt.Sprintf(
-				"%d\t%0.4f\t%0.4f\t%d\t%0.4f\t%0.4f\t%d\n",
+				"%d\t%0.4f\t%0.4f\t%d\t%0.4f\t%0.4f\t%d\t%0.4f\t%0.4f\t%d\n",
 				i,
+				expressionMean,
+				expressionSD,
+				numberExpression,
 				lysineMean,
 				lysineSD,
 				numberLysines,
