@@ -13,19 +13,25 @@ type BaitDatRow struct {
 	ID      string
 	Name    string
 	Control bool
+	Type    string // This is for an optional 4th column that I can add to the file.
 }
 
 func mapBaitDatLine(line []string) BaitDatRow {
 	id := line[0]
 	name := line[1]
 	var control bool
+	var baitType string
 	if line[2] == "C" {
 		control = true
+	}
+	if len(line) >= 4 {
+		baitType = line[3]
 	}
 	row := BaitDatRow{
 		Control: control,
 		ID:      id,
 		Name:    name,
+		Type:    baitType,
 	}
 	return row
 }

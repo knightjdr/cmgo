@@ -80,6 +80,14 @@ Modules for generating files for upload and query file processing.
 > Information about the transmembrane proteins residing between two NMF
 > compartments.
 
+## Control
+
+* folder `assessment/controls/preys`
+
+### Module name: `control-preys`
+
+> Output statistics on prey proteins in controls using SAINT input files.
+
 ## Enrichment
 
 Modules for calculating term enrichment in compartments and lists.

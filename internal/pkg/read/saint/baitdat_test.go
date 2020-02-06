@@ -17,14 +17,35 @@ var baitDatText = `128_468	ACTB	T
 `
 
 func TestMapBaitDatLine(t *testing.T) {
-	// TEST1: at least 21 elements
+	// TEST1: control column
 	line := []string{"128_737", "737_BirAFLAG", "C"}
 	wanted := BaitDatRow{
 		Control: true,
 		ID:      "128_737",
 		Name:    "737_BirAFLAG",
+		Type:    "",
 	}
-	assert.Equal(t, wanted, mapBaitDatLine(line), "Should map line from bait.dat file to struct")
+	assert.Equal(t, wanted, mapBaitDatLine(line), "should map line with control")
+
+	// TEST2: control column
+	line = []string{"128_737", "737_BirAFLAG", "T"}
+	wanted = BaitDatRow{
+		Control: false,
+		ID:      "128_737",
+		Name:    "737_BirAFLAG",
+		Type:    "",
+	}
+	assert.Equal(t, wanted, mapBaitDatLine(line), "should map line")
+
+	// TEST3: type
+	line = []string{"128_737", "737_BirAFLAG", "T", "empty"}
+	wanted = BaitDatRow{
+		Control: false,
+		ID:      "128_737",
+		Name:    "737_BirAFLAG",
+		Type:    "empty",
+	}
+	assert.Equal(t, wanted, mapBaitDatLine(line), "should map line with bait type")
 }
 
 func TestBaitDat(t *testing.T) {

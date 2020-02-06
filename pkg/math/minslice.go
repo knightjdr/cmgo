@@ -5,7 +5,7 @@ import (
 	"math"
 )
 
-// MinSliceFloat calculates the minimum value in a []float64
+// MinSliceFloat calculates the minimum value in a []float64.
 func MinSliceFloat(slice []float64) float64 {
 	min := math.MaxFloat64
 	for _, value := range slice {
@@ -16,7 +16,7 @@ func MinSliceFloat(slice []float64) float64 {
 	return min
 }
 
-// MinSliceInt calculates the minimum value in a []float64
+// MinSliceInt calculates the minimum value in a []int.
 func MinSliceInt(slice []int) (min int, err error) {
 	if len(slice) == 0 {
 		return 0, errors.New("slice has length 0")

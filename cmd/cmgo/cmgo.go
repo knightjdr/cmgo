@@ -6,6 +6,7 @@ import (
 
 	"github.com/knightjdr/cmgo/internal/analysis/dbgenes"
 	"github.com/knightjdr/cmgo/internal/assessment/bait/gradient"
+	"github.com/knightjdr/cmgo/internal/assessment/controls/preys"
 	"github.com/knightjdr/cmgo/internal/assessment/countgo"
 	"github.com/knightjdr/cmgo/internal/assessment/hydropathy"
 	assessLocalization "github.com/knightjdr/cmgo/internal/assessment/localization/evaluate"
@@ -58,6 +59,8 @@ func main() {
 		transmembrane.Orientation(options)
 	case "bait-gradient":
 		gradient.Draw(options)
+	case "control-preys":
+		preys.Assess(options)
 	case "enrichment-genes":
 		genes.Enrich(options)
 	case "enrichment-heatmap":
