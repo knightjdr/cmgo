@@ -25,7 +25,7 @@ func CSV(filename string, sep rune) []map[string]string {
 		log.Fatalln(err)
 	}
 
-	// Read compartment information.
+	// Read information.
 	data := make([]map[string]string, 0)
 	for {
 		line, err := reader.Read()
