@@ -8,6 +8,7 @@ import (
 	"github.com/knightjdr/cmgo/internal/assessment/bait/gradient"
 	"github.com/knightjdr/cmgo/internal/assessment/controls/preys"
 	"github.com/knightjdr/cmgo/internal/assessment/countgo"
+	"github.com/knightjdr/cmgo/internal/assessment/goenrich"
 	"github.com/knightjdr/cmgo/internal/assessment/hydropathy"
 	assessLocalization "github.com/knightjdr/cmgo/internal/assessment/localization/evaluate"
 	"github.com/knightjdr/cmgo/internal/assessment/localization/nmfsafe"
@@ -49,6 +50,8 @@ func main() {
 		recovered.AssessCompartment(options)
 	case "assessment-countgo":
 		countgo.Sum(options)
+	case "assessment-go":
+		goenrich.Enrich(options)
 	case "assessment-hydropathy":
 		hydropathy.Assess(options)
 	case "assessment-localization":

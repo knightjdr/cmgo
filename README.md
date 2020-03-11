@@ -49,6 +49,12 @@ Modules for generating files for upload and query file processing.
 
 > Count the number of genes with a GO term specified by the supplied namespace.
 
+### Module name: `assessment-go`
+
+* folder `assessment/go`
+
+> Perform GO analysis on baits in a SAINT file
+
 ### Module name: `bait-gradient`
 
 * folder `assessment/bait/gradient`
