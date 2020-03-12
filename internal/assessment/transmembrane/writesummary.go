@@ -19,7 +19,11 @@ func writeSummary(summary map[string]preySummary, outfile string) {
 }
 
 func writeHeader(buffer *bytes.Buffer) {
-	buffer.WriteString("prey\tuniprot\tlocalization\tcytosolic baits\tlumenal baits\tcytosolic score\tlumenal score\tAA length\tcytosolic fraction\tlumenal fraction\n")
+	buffer.WriteString("prey\tuniprot\tlocalization\tcytosolic baits\t" +
+		"lumenal baits\tcytosolic score\tlumenal score\tmax cytosolic score\tmax lumenal score\t" +
+		"sequence length\tcytosolic fraction\tlumenal fraction\t" +
+		"NMF orientation score\tsequence orientation score\n",
+	)
 }
 
 func writeBody(buffer *bytes.Buffer, summary map[string]preySummary) {
@@ -29,7 +33,7 @@ func writeBody(buffer *bytes.Buffer, summary map[string]preySummary) {
 		data := summary[prey]
 		buffer.WriteString(
 			fmt.Sprintf(
-				"%s\t%s\t%s\t%d\t%d\t%0.3f\t%0.3f\t%d\t%0.4f\t%0.4f\n",
+				"%s\t%s\t%s\t%d\t%d\t%0.3f\t%0.3f\t%0.3f\t%0.3f\t%d\t%0.4f\t%0.4f\t%0.4f\t%0.4f\n",
 				prey,
 				data.uniprotID,
 				data.localization,
@@ -37,9 +41,13 @@ func writeBody(buffer *bytes.Buffer, summary map[string]preySummary) {
 				data.lumenalBaits,
 				data.cytosolicScore,
 				data.lumenalScore,
+				data.maxCytosolicScore,
+				data.maxLumenalScore,
 				data.length,
 				data.cytosolicFraction,
 				data.lumenalFraction,
+				(data.cytosolicScore/data.maxCytosolicScore)-(data.lumenalScore/data.maxLumenalScore),
+				data.cytosolicFraction-data.lumenalFraction,
 			),
 		)
 	}

@@ -56,6 +56,8 @@ var _ = Describe("Summarize prey information", func() {
 				lumenalBaits:      1,
 				lumenalFraction:   0.2500,
 				lumenalScore:      0.2,
+				maxCytosolicScore: 0.35,
+				maxLumenalScore:   0.6,
 				uniprotID:         "id1",
 			},
 			"preyC": preySummary{
@@ -67,6 +69,8 @@ var _ = Describe("Summarize prey information", func() {
 				lumenalBaits:      2,
 				lumenalFraction:   0.2800,
 				lumenalScore:      0.6,
+				maxCytosolicScore: 0.35,
+				maxLumenalScore:   0.6,
 				uniprotID:         "id2",
 			},
 		}
